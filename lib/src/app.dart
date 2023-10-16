@@ -24,14 +24,14 @@ class MyApp extends ConsumerWidget{
 
 //localstorelocal(context: context,ref:ref).getLangLoad()
     Future.delayed(Duration(seconds: 2), () {
-      localLangLoad=localstorelocal(context: context,ref:ref).getLangLoad();
+      //localLangLoad=localstorelocal(context: context,ref:ref).getLangLoad();
 
-      print("*********************** $localLangLoad");
+     // print("*********************** $localLangLoad");
     });
 
 
     return MaterialApp(
-      locale: Locale(localLangLoad),
+      locale: Locale(ref.watch(localLangProvider)),
       theme:getThemeData(),
       restorationScopeId: 'app',
       localizationsDelegates: AppLocalizations.localizationsDelegates,

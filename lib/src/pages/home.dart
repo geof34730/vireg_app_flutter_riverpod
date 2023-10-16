@@ -21,8 +21,8 @@ class Home extends ConsumerWidget  {
       body: Center(
         child: Column(
           children: [
-            Text(localLang),
-            Text(View.of(context).platformDispatcher.locale.toString().substring(0,2)),
+            Text("lang provider: $localLang"),
+            Text("lang device: ${View.of(context).platformDispatcher.locale.toString().substring(0,2)}"),
             ElevatedButton(
                 style:getButtonStyle(lang: "de",localLang: localLang),
                 onPressed: () => ref.read(localLangProvider.notifier).change(lang: "de"),

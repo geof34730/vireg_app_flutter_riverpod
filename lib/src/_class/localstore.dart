@@ -13,7 +13,7 @@ class localstorelocal {
 
   final BuildContext context;
   final WidgetRef ref;
-  final String langSelect="fr";
+  final dynamic langSelect=null;
 
   void updateLocalstore({required String lang}) {
     ref.read(localLangProvider.notifier).change(lang: lang);
