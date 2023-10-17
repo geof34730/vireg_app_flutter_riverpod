@@ -6,7 +6,9 @@ import 'package:flutter/widgets.dart';
 
 
 
+import 'package:localstorage/localstorage.dart';
 
+final LocalStorage storageConfig =  new LocalStorage('config');
 
 
 void main() async {

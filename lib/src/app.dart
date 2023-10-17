@@ -9,10 +9,9 @@ import 'localization/app_localizations_context.dart';
 import 'pages/home.dart';
 
 
-
 class MyApp extends ConsumerWidget{
    MyApp({super.key});
-  String localLangLoad="en";
+
 
 
 
@@ -20,16 +19,6 @@ class MyApp extends ConsumerWidget{
 
   @override
   Widget build(BuildContext context, WidgetRef ref)   {
-
-
-//localstorelocal(context: context,ref:ref).getLangLoad()
-    Future.delayed(Duration(seconds: 2), () {
-      //localLangLoad=localstorelocal(context: context,ref:ref).getLangLoad();
-
-     // print("*********************** $localLangLoad");
-    });
-
-
     return MaterialApp(
       locale: Locale(ref.watch(localLangProvider)),
       theme:getThemeData(),
