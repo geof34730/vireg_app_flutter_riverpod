@@ -16,13 +16,10 @@ class Home extends ConsumerWidget  {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-    /*******BEGIN Manage lang*********/
-    Future.delayed(Duration(milliseconds: 20), () {
-      late localstorelocal localstoreLang =localstorelocal(context: context, ref: ref);
-      localstoreLang.updateLocalstore(lang: localstoreLang.getLangLoad());
-    });
+
     String localLang=ref.watch(localLangProvider);
-    /*******BEGIN Manage lang*********/
+
+
 
 
     return Scaffold(
@@ -33,6 +30,11 @@ class Home extends ConsumerWidget  {
             Text("lang provider: $localLang"),
             Text("lang device: ${View.of(context).platformDispatcher.locale.toString().substring(0,2)}"),
             Text("lang localstore: ${localstorelocal(context: context, ref: ref).getLangLoad()}"),
+
+
+
+
+
 
 
             ElevatedButton(
