@@ -8,5 +8,5 @@ final LocalStorage storageConfig = new LocalStorage('config');
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(ProviderScope(child: MyApp()));
+  runApp(ProviderScope(child:MyApp()));
 }

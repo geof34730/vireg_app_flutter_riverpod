@@ -1,41 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:Vireg/src/localization/app_localizations_context.dart';
-import '../../main.dart';
+import 'package:go_router/go_router.dart';
+
 import '../_class/localLang.dart';
 import '../_widgets/EasySearchBar.dart';
 
 class List extends ConsumerWidget {
   const List({super.key});
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    String localLang = ref.watch(localLangProvider);
     return Scaffold(
       appBar: WidgetsEasySearchBar(),
       body: Center(
         child: Column(
           children: [
-            Text(ref.watch(localLangProvider)),
+            Text("List"),
             ElevatedButton(
-                onPressed: () => ref.read(localLangProvider.notifier).change(lang: "it"),
-                child: Text('IT')
-            ),
-            ElevatedButton(
-                onPressed: () => ref.read(localLangProvider.notifier).change(lang: "fr"),
-                child: Text('FR')
-            ),
-            ElevatedButton(
-                onPressed: () => ref.read(localLangProvider.notifier).change(lang: "rn"),
-                child: Text('EN')
+              onPressed: () => context.go('/home'),
+              child: const Text('Go to home'),
             ),
           ],
         ),
       ),
     );
   }
-
 }
-
-
-
-

@@ -9,7 +9,7 @@ import '../_class/localLang.dart';
 import '../_class/localstore.dart';
 
 class WidgetsEasySearchBar extends ConsumerWidget
-    implements PreferredSizeWidget {
+  implements PreferredSizeWidget {
   const WidgetsEasySearchBar({super.key});
 
   final bool errorSearchValue = false;
@@ -22,13 +22,11 @@ class WidgetsEasySearchBar extends ConsumerWidget
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     /*******BEGIN Manage lang*********/
-    Future.delayed(Duration(milliseconds: 20), () {
-      late localstorelocal localstoreLang =
-          localstorelocal(context: context, ref: ref);
+    Future.delayed(Duration(milliseconds: 100), () {
+      late localstorelocal localstoreLang = localstorelocal(context: context, ref: ref);
       localstoreLang.updateLocalstore(lang: localstoreLang.getLangLoad());
     });
-    var listLangSupported =
-        context.findAncestorWidgetOfExactType<MaterialApp>()?.supportedLocales;
+    var listLangSupported = context.findAncestorWidgetOfExactType<MaterialApp>()?.supportedLocales;
     int numItemLang = 0;
     int numItemLangSelect = 0;
     for (var langs in listLangSupported!) {
@@ -42,12 +40,10 @@ class WidgetsEasySearchBar extends ConsumerWidget
 
     return EasySearchBar(
         animationDuration: const Duration(milliseconds: 100),
-        systemOverlayStyle:
-            const SystemUiOverlayStyle(statusBarColor: Colors.blue),
+        systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Colors.blue),
         searchBackgroundColor: Colors.blue,
         searchHintText: context.loc.widgetsEasySearchBarLabelInputSearch,
-        searchHintStyle: TextStyle(
-            color: Colors.blue.withOpacity(0.8), fontWeight: FontWeight.bold),
+        searchHintStyle: TextStyle(color: Colors.blue.withOpacity(0.8), fontWeight: FontWeight.bold),
         searchCursorColor: Colors.blue,
         actions: [
           DropdownButtonHideUnderline(
@@ -56,9 +52,7 @@ class WidgetsEasySearchBar extends ConsumerWidget
               iconEnabledColor: Colors.white,
               dropdownColor: Colors.blue,
               alignment: Alignment.topRight,
-              onChanged: (langSelect) {
-                localstorelocal(context: context, ref: ref)
-                    .updateLocalstore(lang: langSelect.toString());
+              onChanged: (langSelect) {localstorelocal(context: context, ref: ref).updateLocalstore(lang: langSelect.toString());
               },
               items: listLangSupported.map<DropdownMenuItem<Locale>>((value) {
                 return DropdownMenuItem<Locale>(
@@ -68,14 +62,8 @@ class WidgetsEasySearchBar extends ConsumerWidget
                     capitalize(value.toString()),
                     style: TextStyle(
                       color: Colors.white,
-                      fontWeight: (value !=
-                              listLangSupported.elementAt(numItemLangSelect)
-                          ? FontWeight.normal
-                          : FontWeight.bold),
-                      decoration: (value !=
-                              listLangSupported.elementAt(numItemLangSelect)
-                          ? TextDecoration.none
-                          : TextDecoration.underline),
+                      fontWeight: (value != listLangSupported.elementAt(numItemLangSelect) ? FontWeight.normal : FontWeight.bold),
+                      decoration: (value != listLangSupported.elementAt(numItemLangSelect) ? TextDecoration.none : TextDecoration.underline),
                     ),
                   ),
                   onTap: () {},
@@ -84,8 +72,7 @@ class WidgetsEasySearchBar extends ConsumerWidget
             ),
           )
         ],
-        searchTextStyle:
-            TextStyle(color: (errorSearchValue ? Colors.red : Colors.black)),
+        searchTextStyle:TextStyle(color: (errorSearchValue ? Colors.red : Colors.white)),
         searchBackIconTheme: IconThemeData(
           color: (errorSearchValue ? Colors.red : Colors.blue),
         ),
@@ -112,8 +99,7 @@ class WidgetsEasySearchBar extends ConsumerWidget
                       // _persoListForm = false;
                       //  });
                     },
-                    tooltip:
-                        MaterialLocalizations.of(context).openAppDrawerTooltip,
+                    tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
                   )
                 : const SizedBox());
           },
@@ -121,7 +107,6 @@ class WidgetsEasySearchBar extends ConsumerWidget
         onSearch: (value) => {print('value')},
         asyncSuggestions: (value) async => await _fetchSuggestions(value));
   }
-
   Future<List<String>> _fetchSuggestions(String searchValue) async {
     return [];
   }
