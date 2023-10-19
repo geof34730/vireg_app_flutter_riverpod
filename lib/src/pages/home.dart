@@ -1,77 +1,62 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../main.dart';
+import 'package:go_router/go_router.dart';
+
 import '../_class/localLang.dart';
 import '../_class/localstore.dart';
 import '../_widgets/EasySearchBar.dart';
+import '../_widgets/button.dart';
 
-
-class Home extends ConsumerWidget  {
+class Home extends ConsumerWidget {
   const Home({super.key});
-
-
-
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
-
-    String localLang=ref.watch(localLangProvider);
-
-
-
+    String localLang = ref.watch(localLangProvider);
 
     return Scaffold(
       appBar: WidgetsEasySearchBar(),
       body: Center(
         child: Column(
           children: [
+            Text("HOME"),
             Text("lang provider: $localLang"),
-            Text("lang device: ${View.of(context).platformDispatcher.locale.toString().substring(0,2)}"),
-            Text("lang localstore: ${localstorelocal(context: context, ref: ref).getLangLoad()}"),
-
-
-
-
-
-
-
+            Text(
+                "lang device: ${View.of(context).platformDispatcher.locale.toString().substring(0, 2)}"),
+            Text(
+                "lang localstore: ${localstorelocal(context: context, ref: ref).getLangLoad()}"),
             ElevatedButton(
-                style:getButtonStyle(lang: "de",localLang: localLang),
-                onPressed: () => localstorelocal(context: context, ref: ref).updateLocalstore(lang: "de"),
-                child: Text('DE')
-            ),
+                style: getButtonStyleLang(lang: "de", localLang: localLang),
+                onPressed: () => localstorelocal(context: context, ref: ref)
+                    .updateLocalstore(lang: "de"),
+                child: Text('DE')),
             ElevatedButton(
-                style:getButtonStyle(lang: "it",localLang: localLang),
-                onPressed: () => localstorelocal(context: context, ref: ref).updateLocalstore(lang: "it"),
-                child: Text('IT')
-            ),
+                style: getButtonStyleLang(lang: "it", localLang: localLang),
+                onPressed: () => localstorelocal(context: context, ref: ref)
+                    .updateLocalstore(lang: "it"),
+                child: Text('IT')),
             ElevatedButton(
-                style:getButtonStyle(lang: "fr",localLang: localLang),
-                onPressed: () => localstorelocal(context: context, ref: ref).updateLocalstore(lang: "fr"),
-                child: Text('FR')
-            ),
+                style: getButtonStyleLang(lang: "fr", localLang: localLang),
+                onPressed: () => localstorelocal(context: context, ref: ref)
+                    .updateLocalstore(lang: "fr"),
+                child: Text('FR')),
             ElevatedButton(
-                style:getButtonStyle(lang: "en",localLang: localLang),
-                onPressed: () => localstorelocal(context: context, ref: ref).updateLocalstore(lang: "en"),
-                child: Text('EN')
+                style: getButtonStyleLang(lang: "en", localLang: localLang),
+                onPressed: () => localstorelocal(context: context, ref: ref)
+                    .updateLocalstore(lang: "en"),
+                child: Text('EN')),
+            ElevatedButton(
+                style: getButtonStyleLang(lang: "ru", localLang: localLang),
+                onPressed: () => localstorelocal(context: context, ref: ref)
+                    .updateLocalstore(lang: "ru"),
+                child: Text('RU')),
+            ElevatedButton(
+              onPressed: () => context.go('/learn'),
+              child: const Text('Go to learn'),
             ),
           ],
         ),
       ),
     );
   }
-
 }
-
-ButtonStyle getButtonStyle({required String lang,required String localLang}){
-  return ButtonStyle(
-    backgroundColor: MaterialStateProperty.all<Color>((localLang == lang ? Colors.green : Colors.blue))
-  );
-}
-
-
-
-
-
