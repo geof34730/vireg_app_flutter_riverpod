@@ -5,24 +5,20 @@ import 'package:go_router/go_router.dart';
 import '../_class/localLang.dart';
 import '../_widgets/EasySearchBar.dart';
 
-
-class Learn extends ConsumerWidget {
-  const Learn({super.key});
-
-
+class ListPersoStep2 extends ConsumerWidget {
+  const ListPersoStep2({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final personalListId = GoRouterState.of(context).pathParameters["personalListId"];
     String localLang = ref.watch(localLangProvider);
     return Scaffold(
       appBar: WidgetsEasySearchBar(),
       body: Center(
         child: Column(
           children: [
-            Text("LEARN $personalListId"),
+            Text("List Perso Step 2"),
             ElevatedButton(
-              onPressed: () => context.go('/ListPersoStep1'),
-              child: const Text('Go to List perso 1'),
+              onPressed: () => context.go('/home'),
+              child: const Text('Go to home'),
             ),
           ],
         ),

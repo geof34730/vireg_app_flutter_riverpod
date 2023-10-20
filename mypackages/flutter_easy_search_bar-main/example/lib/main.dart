@@ -33,6 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       home: Scaffold(
         appBar: EasySearchBar(
+          callBackBackNav: (){print('action back');},
           title: const Text('Example'),
           onSearch: (value) => setState(() => searchValue = value),
           actions: [
@@ -45,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
           asyncSuggestions: (value) async => await _fetchSuggestions(value)
         ),
-        /*drawer: Drawer(
+        drawer: Drawer(
           child: ListView(
             padding: EdgeInsets.zero,
             children: [
@@ -65,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
               )
             ]
           )
-        ),*/
+        ),
         body: Center(
           child: Text('Value: $searchValue')
         )

@@ -158,10 +158,12 @@ class EasySearchBar extends StatefulWidget implements PreferredSizeWidget {
       this.suggestionBackgroundColor,
       this.animationDuration = const Duration(milliseconds: 450),
       this.debounceDuration = const Duration(milliseconds: 400),
+      required this.callBackBackNav,
       this.searchTextKeyboardType = TextInputType.text})
+
       : assert(elevation == null || elevation >= 0.0),
         super(key: key);
-
+  final dynamic Function() callBackBackNav;
   @override
   State<EasySearchBar> createState() => _EasySearchBarState();
 
@@ -473,11 +475,8 @@ class _EasySearchBarState extends State<EasySearchBar>
                                                       child: IconButton(
                                                           icon: const Icon(Icons
                                                               .arrow_back_outlined),
-                                                          onPressed: () =>
-                                                              Navigator.pop(
-                                                                  context),
-                                                          tooltip: MaterialLocalizations
-                                                                  .of(context)
+                                                          onPressed:(){widget.callBackBackNav();},
+                                                          tooltip: MaterialLocalizations.of(context)
                                                               .backButtonTooltip),
                                                     ),
                                                   ),
@@ -487,7 +486,7 @@ class _EasySearchBarState extends State<EasySearchBar>
                                                     child: Padding(
                                                       padding:
                                                           const EdgeInsets.only(
-                                                              right: 10),
+                                                              right: 80),
                                                       child: widget.leading,
                                                     ),
                                                     replacement:

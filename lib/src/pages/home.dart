@@ -8,7 +8,6 @@ import '../_utils/string.dart';
 import '../_widgets/EasySearchBar.dart';
 import '../_widgets/button.dart';
 
-
 class Home extends ConsumerWidget {
   const Home({super.key});
   @override

@@ -6,8 +6,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '_class/localLang.dart';
 import 'router.dart';
 
+
 class MyApp extends ConsumerWidget {
   MyApp({super.key});
+
+
+
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

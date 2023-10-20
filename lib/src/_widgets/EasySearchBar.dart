@@ -4,6 +4,7 @@ import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../_class/localLang.dart';
 import '../_class/localstore.dart';
@@ -13,8 +14,6 @@ class WidgetsEasySearchBar extends ConsumerWidget
   const WidgetsEasySearchBar({super.key});
 
   final bool errorSearchValue = false;
-  final bool _choseListVers = false;
-  final bool _persoListForm = false;
 
   @override
   Size get preferredSize => Size.fromHeight(AppBar().preferredSize.height);
@@ -39,12 +38,34 @@ class WidgetsEasySearchBar extends ConsumerWidget
     /*******BEGIN Manage lang*********/
 
     return EasySearchBar(
+        callBackBackNav: () => {
+          Navigator.pop(context)
+        },
         animationDuration: const Duration(milliseconds: 100),
         systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Colors.blue),
         searchBackgroundColor: Colors.blue,
         searchHintText: context.loc.widgetsEasySearchBarLabelInputSearch,
         searchHintStyle: TextStyle(color: Colors.blue.withOpacity(0.8), fontWeight: FontWeight.bold),
         searchCursorColor: Colors.blue,
+        searchTextStyle:TextStyle(color: (errorSearchValue ? Colors.red : Colors.black)),
+        searchBackIconTheme: IconThemeData(color: (errorSearchValue ? Colors.red : Colors.blue),),
+        openOverlayOnSearch: false,
+
+        title:Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/images/logonav.png',
+              fit: BoxFit.fitHeight,
+            )
+          ],
+        ),
+        leading:Builder(
+            builder: (BuildContext context) {
+              return SizedBox();
+              },
+          ),
+
         actions: [
           DropdownButtonHideUnderline(
             child: DropdownButton<Locale>(
@@ -63,7 +84,7 @@ class WidgetsEasySearchBar extends ConsumerWidget
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: (value != listLangSupported.elementAt(numItemLangSelect) ? FontWeight.normal : FontWeight.bold),
-                      decoration: (value != listLangSupported.elementAt(numItemLangSelect) ? TextDecoration.none : TextDecoration.underline),
+                      // decoration: (value != listLangSupported.elementAt(numItemLangSelect) ? TextDecoration.none : TextDecoration.underline),
                     ),
                   ),
                   onTap: () {},
@@ -72,46 +93,11 @@ class WidgetsEasySearchBar extends ConsumerWidget
             ),
           )
         ],
-        searchTextStyle:TextStyle(color: (errorSearchValue ? Colors.red : Colors.black)),
-        searchBackIconTheme: IconThemeData(
-          color: (errorSearchValue ? Colors.red : Colors.blue),
-        ),
-        openOverlayOnSearch: false,
-        title: Padding(
-            padding: EdgeInsets.only(
-                right: (_choseListVers || _persoListForm ? 34.0 : 0.0),
-                left: (_choseListVers || _persoListForm ? 10.0 : 70.0)),
-            child: Image.asset(
-              'assets/images/logonav.png',
-              fit: BoxFit.fitHeight,
-            )),
-        leading:
-        Builder(
-          builder: (BuildContext context) {
-            return (_choseListVers || _persoListForm
-                ? IconButton(
-                    icon: const Icon(Icons.ac_unit),
-                    color: Colors.white,
-                    onPressed: () {
-                      //_onItemTapped(0);
-                      //  setState(() {
-                      //  _compteurInterstitial = 0;
-                      //_choseListVers = false;
-                      // _persoListForm = false;
-                      //  });
-                    },
-                    tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
-                  )
-                : const SizedBox());
-          },
-        ),
+
 
         onSearch: (value) => {print('value')},
         asyncSuggestions: (value) async => await _fetchSuggestions(value));
   }
-
-
-
 
   Future<List<String>> _fetchSuggestions(String searchValue) async {
     return [];
