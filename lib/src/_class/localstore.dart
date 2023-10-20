@@ -26,8 +26,7 @@ class localstorelocal {
 
   void updateLocalstore({required String lang, bool withChange = true}) {
     storageConfig.setItem('lang', lang);
-    var currentRoute =
-        GoRouter.of(context).routeInformationProvider.value.uri.toString();
+    var currentRoute = GoRouter.of(context).routeInformationProvider.value.uri.toString();
     ref.read(localLangProvider.notifier).change(lang: lang);
 /*
     if (currentRoute != "/" && withChange) {
@@ -41,12 +40,7 @@ class localstorelocal {
 
   dynamic getLangLocalStore() => storageConfig.getItem('lang');
 
-  String getLangDevice() => View.of(this.context)
-      .platformDispatcher
-      .locale
-      .toString()
-      .substring(0, 2);
+  String getLangDevice() => View.of(this.context).platformDispatcher.locale.toString().substring(0, 2);
 
-  String getLangLoad() =>
-      (getLangLocalStore() == null ? getLangDevice() : getLangLocalStore());
+  String getLangLoad() => (getLangLocalStore() == null ? getLangDevice() : getLangLocalStore());
 }

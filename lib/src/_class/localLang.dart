@@ -7,7 +7,6 @@ class localLang extends _$localLang {
   @override
   String build() => "fr";
 
-// ignore: avoid_build_context_in_providers
   void change({required String lang}) {
     state = lang;
   }
