@@ -15,19 +15,19 @@ class viregrouter {
         },
         routes: <RouteBase>[
           GoRoute(
-            path: 'learn::personalListId',
+            path: 'learn/:personalListId',
             builder: (BuildContext context, GoRouterState state) {
               return Learn();
             },
           ),
           GoRoute(
-            path: 'list::personalListId',
+            path: 'list/:personalListId',
             builder: (BuildContext context, GoRouterState state) {
               return List();
             },
           ),
           GoRoute(
-            path: 'test::personalListId',
+            path: 'test/:personalListId',
             builder: (BuildContext context, GoRouterState state) {
               return Test();
             },

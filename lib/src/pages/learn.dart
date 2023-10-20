@@ -10,13 +10,15 @@ class Learn extends ConsumerWidget {
   const Learn({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final personalListId = GoRouterState.of(context).pathParameters["personalListId"];
+
     String localLang = ref.watch(localLangProvider);
     return Scaffold(
       appBar: WidgetsEasySearchBar(),
       body: Center(
         child: Column(
           children: [
-            Text("LEARN"),
+            Text("LEARN $personalListId"),
             ElevatedButton(
               onPressed: () => context.go('/test'),
               child: const Text('Go to test'),

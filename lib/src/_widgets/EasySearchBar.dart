@@ -72,7 +72,7 @@ class WidgetsEasySearchBar extends ConsumerWidget
             ),
           )
         ],
-        searchTextStyle:TextStyle(color: (errorSearchValue ? Colors.red : Colors.white)),
+        searchTextStyle:TextStyle(color: (errorSearchValue ? Colors.red : Colors.black)),
         searchBackIconTheme: IconThemeData(
           color: (errorSearchValue ? Colors.red : Colors.blue),
         ),
@@ -85,11 +85,12 @@ class WidgetsEasySearchBar extends ConsumerWidget
               'assets/images/logonav.png',
               fit: BoxFit.fitHeight,
             )),
-        leading: Builder(
+        leading:
+        Builder(
           builder: (BuildContext context) {
             return (_choseListVers || _persoListForm
                 ? IconButton(
-                    icon: const Icon(Icons.arrow_back),
+                    icon: const Icon(Icons.ac_unit),
                     color: Colors.white,
                     onPressed: () {
                       //_onItemTapped(0);
@@ -104,9 +105,14 @@ class WidgetsEasySearchBar extends ConsumerWidget
                 : const SizedBox());
           },
         ),
+
         onSearch: (value) => {print('value')},
         asyncSuggestions: (value) async => await _fetchSuggestions(value));
   }
+
+
+
+
   Future<List<String>> _fetchSuggestions(String searchValue) async {
     return [];
   }
