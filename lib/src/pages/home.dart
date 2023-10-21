@@ -4,9 +4,10 @@ import 'package:go_router/go_router.dart';
 
 import '../_class/localLang.dart';
 import '../_class/localstore.dart';
-import '../_utils/string.dart';
-import '../_widgets/EasySearchBar.dart';
 import '../_widgets/button.dart';
+
+
+
 
 class Home extends ConsumerWidget {
   const Home({super.key});
@@ -14,9 +15,7 @@ class Home extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     String localLang = ref.watch(localLangProvider);
 
-    return Scaffold(
-      appBar: WidgetsEasySearchBar(),
-      body: Center(
+    return Center(
         child: Column(
           children: [
             Text("HOME"),
@@ -49,7 +48,11 @@ class Home extends ConsumerWidget {
             ),
           ],
         ),
-      ),
-    );
+      );
+
+
+
+
+
   }
 }
