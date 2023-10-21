@@ -9,9 +9,11 @@ import 'package:go_router/go_router.dart';
 import '../_class/localLang.dart';
 import '../_class/localstore.dart';
 
-class WidgetsEasySearchBar extends ConsumerWidget
-  implements PreferredSizeWidget {
+class WidgetsEasySearchBar extends ConsumerWidget implements PreferredSizeWidget {
   const WidgetsEasySearchBar({super.key});
+
+
+
 
   final bool errorSearchValue = false;
 
@@ -24,7 +26,7 @@ class WidgetsEasySearchBar extends ConsumerWidget
 
     Future.delayed(Duration(milliseconds: 100), () {
       late localstorelocal localstoreLang = localstorelocal(context: context, ref: ref);
-      localstoreLang.updateLocalstore(lang: localstoreLang.getLangLoad());
+     // localstoreLang.updateLocalstore(lang: localstoreLang.getLangLoad(),withChange:false);
     });
 
     var listLangSupported = context.findAncestorWidgetOfExactType<MaterialApp>()?.supportedLocales;
@@ -77,8 +79,9 @@ class WidgetsEasySearchBar extends ConsumerWidget
               ),
               dropdownColor: Colors.blue,
               alignment: Alignment.topRight,
-              onChanged: (langSelect) {localstorelocal(context: context, ref: ref).updateLocalstore(lang: langSelect.toString());
-              },
+              onChanged: (langSelect) {
+                localstorelocal(context: context, ref: ref).updateLocalstore(lang: langSelect.toString());
+                },
               items: listLangSupported.map<DropdownMenuItem<Locale>>((value) {
                 return DropdownMenuItem<Locale>(
                   value: value,

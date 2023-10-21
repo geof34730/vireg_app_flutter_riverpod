@@ -1,3 +1,4 @@
+import 'package:Vireg/src/_class/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,16 +27,11 @@ class localstorelocal {
 
   void updateLocalstore({required String lang, bool withChange = true}) {
     storageConfig.setItem('lang', lang);
-    var currentRoute = GoRouter.of(context).routeInformationProvider.value.uri.toString();
-    ref.read(localLangProvider.notifier).change(lang: lang);
-/*
-    if (currentRoute != "/" && withChange) {
-      Future.delayed(Duration(milliseconds: 500), () {
-        print(currentRoute);
-        context.go(currentRoute);
-      });
+    if(withChange) {
+      var currentRoute = GoRouter.of(context).routeInformationProvider.value.uri.toString();
+      ref.read(routerProvider.notifier).change(path: currentRoute);
+      ref.read(localLangProvider.notifier).change(lang: lang);
     }
-    */
   }
 
   dynamic getLangLocalStore() => storageConfig.getItem('lang');

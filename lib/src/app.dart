@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '_widgets/EasySearchBar.dart';
 import '_class/localLang.dart';
-import 'router.dart';
+import '_class/router.dart';
 
 
 class MyApp extends ConsumerWidget {
@@ -15,7 +15,7 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp.router(
         theme: getThemeData(),
-        routerConfig: viregrouter().getRouter(),
+        routerConfig: viregrouter(ref: ref).getRouter(),
         locale: Locale(ref.watch(localLangProvider)),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,

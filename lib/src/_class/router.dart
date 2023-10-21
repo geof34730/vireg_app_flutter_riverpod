@@ -8,10 +8,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '_widgets/EasySearchBar.dart';
+import '../_widgets/EasySearchBar.dart';
+
+
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'router.g.dart';
+
+@riverpod
+class router extends _$router {
+  @override
+  String build() => "/";
+  void change({required String path}) {
+    state = path;
+  }
+}
 
 class viregrouter {
+  viregrouter({ required this.ref});
+  final WidgetRef ref;
+
   getRouter() => GoRouter(
+          initialLocation: ref.watch(routerProvider),
           routes: <RouteBase>[
           GoRoute(
             path: '/',
@@ -55,4 +73,6 @@ class viregrouter {
       ),
     ],
   );
+
+
 }

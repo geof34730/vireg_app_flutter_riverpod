@@ -11,6 +11,9 @@ class Learn extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
+
+
     final personalListId = GoRouterState.of(context).pathParameters["personalListId"];
     String localLang = ref.watch(localLangProvider);
     return Center(
