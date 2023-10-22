@@ -11,10 +11,6 @@ import '../_class/localstore.dart';
 
 class WidgetsEasySearchBar extends ConsumerWidget implements PreferredSizeWidget {
   const WidgetsEasySearchBar({super.key});
-
-
-
-
   final bool errorSearchValue = false;
 
   @override
@@ -23,23 +19,11 @@ class WidgetsEasySearchBar extends ConsumerWidget implements PreferredSizeWidget
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     /*******BEGIN Manage lang*********/
-
-    Future.delayed(Duration(milliseconds: 100), () {
-      late localstorelocal localstoreLang = localstorelocal(context: context, ref: ref);
-     // localstoreLang.updateLocalstore(lang: localstoreLang.getLangLoad(),withChange:false);
-    });
-
-    var listLangSupported = context.findAncestorWidgetOfExactType<MaterialApp>()?.supportedLocales;
-    int numItemLang = 0;
-    int numItemLangSelect = 0;
-    for (var langs in listLangSupported!) {
-      if (langs.toString() == ref.watch(localLangProvider).toString()) {
-        numItemLangSelect = numItemLang;
-        break;
-      }
-      numItemLang++;
-    }
-    /*******BEGIN Manage lang*********/
+    var getlocalstorelocal = localstorelocal(context: context, ref: ref);
+      getlocalstorelocal.initLang();
+      int numItemLangSelect = getlocalstorelocal.getItemLangSelect();
+      var listLangSupported = getlocalstorelocal.listLangSupported();
+    /*******END Manage lang*********/
 
     return EasySearchBar(
         callBackBackNav: () => {
