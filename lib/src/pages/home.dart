@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../_class/localLang.dart';
 import '../_class/localstore.dart';
 import '../_class/router.dart';
+import '../_models/VerbsModel.dart';
 import '../_widgets/button.dart';
 
 
@@ -15,6 +16,11 @@ class Home extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     String localLang = ref.watch(localLangProvider);
+
+    VerbsModel verbsGeof =VerbsModel(id: 1, fr: "fr", pastSimple: "pastSimple", pastParticipe: "pastParticipe", infinitif: "infinitif");
+
+
+
     return Center(
         child: Column(
           children: [

@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:localstorage/localstorage.dart';
-import '../_models/localstore.dart';
+import '../_models/LocalstoreModel.dart';
 
 import 'localLang.dart';
 

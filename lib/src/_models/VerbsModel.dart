@@ -1,20 +1,18 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 
-part 'verbs.freezed.dart';
-part 'verbs.g.dart';
+part 'VerbsModel.freezed.dart';
+part 'VerbsModel.g.dart';
 
 @freezed
-class Verbs with _$Verbs {
-  const factory Verbs({
+class VerbsModel with _$VerbsModel {
+  const factory VerbsModel({
     required int id,
     required String fr,
     required String pastSimple,
     required String pastParticipe,
     required String infinitif,
+  }) = _VerbsModel;
 
-  }) = _Verbs;
-
-  factory Verbs.fromJson(Map<String, Object?> json)
-  => _$VerbsFromJson(json);
+  factory VerbsModel.fromJson(Map<String, Object?> json) => _$VerbsModelFromJson(json);
 }
