@@ -39,14 +39,18 @@ dependencies:
     path: mypackages/flutter_easy_search_bar-main/
   localstorage: ^4.0.1+4
   go_router: ^11.1.4
+  freezed_annotation: ^2.4.1
+  json_annotation: ^4.8.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner:
+  build_runner: ^2.4.6
   custom_lint:
   riverpod_generator: ^3.0.0-dev.3
   riverpod_lint: ^2.3.0
+  freezed: ^2.4.5
+  json_serializable: ^6.7.1
 
 
 
