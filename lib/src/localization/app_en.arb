@@ -1,3 +1,6 @@
 {
-  "widgetsEasySearchBarLabelInputSearch": "EN traduction"
+    "widgetsEasySearchBarLabelInputSearch": "EN traduction",
+    "bottomNavigationBarLearn" : "Learn",
+    "bottomNavigationBarTest" : "Test",
+    "bottomNavigationBarSeeTheList" : "See the list"
 }

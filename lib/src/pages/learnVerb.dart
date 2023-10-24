@@ -5,16 +5,13 @@ import 'package:go_router/go_router.dart';
 import '../_class/localLang.dart';
 
 
-class Learn extends ConsumerWidget {
-  const Learn({super.key});
+class LearnVerb extends ConsumerWidget {
+  const LearnVerb({super.key});
 
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
-
-
-    final personalListId = GoRouterState.of(context).pathParameters["personalListId"];
+    final personalListId = GoRouterState.of(context).pathParameters["personalListId"].toString();
     String localLang = ref.watch(localLangProvider);
     return Center(
         child: Column(

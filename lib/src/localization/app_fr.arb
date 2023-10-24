@@ -1,4 +1,6 @@
 {
-  "widgetsEasySearchBarLabelInputSearch": "Rechercher un verbe à tester"
-
+    "widgetsEasySearchBarLabelInputSearch": "Rechercher un verbe à tester",
+    "bottomNavigationBarLearn" : "Apprendre",
+    "bottomNavigationBarTest" : "Tester",
+    "bottomNavigationBarSeeTheList" : "Voir la liste"
 }

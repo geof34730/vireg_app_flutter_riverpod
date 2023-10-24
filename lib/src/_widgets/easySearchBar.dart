@@ -20,9 +20,10 @@ class WidgetsEasySearchBar extends ConsumerWidget implements PreferredSizeWidget
   Widget build(BuildContext context, WidgetRef ref) {
     /*******BEGIN Manage lang*********/
     var getlocalstorelocal = localstorelocal(context: context, ref: ref);
-      getlocalstorelocal.initLang();
+
       int numItemLangSelect = getlocalstorelocal.getItemLangSelect();
       var listLangSupported = getlocalstorelocal.listLangSupported();
+
     /*******END Manage lang*********/
 
     return EasySearchBar(
