@@ -28,7 +28,7 @@ var customRoutes = GoRouter(
           builder: (BuildContext context, GoRouterState state) {
             return Scaffold(
                 appBar: WidgetsEasySearchBar(),
-                bottomNavigationBar: WidgetbottomNavigationBar(),
+                bottomNavigationBar: WidgetbottomNavigationBar(indexNav: 0),
                 body: LearnVerb());
           },
         ),
@@ -38,7 +38,7 @@ var customRoutes = GoRouter(
           builder: (BuildContext context, GoRouterState state) {
             return Scaffold(
                 appBar: WidgetsEasySearchBar(),
-                bottomNavigationBar: WidgetbottomNavigationBar(),
+                bottomNavigationBar: WidgetbottomNavigationBar(indexNav: 2),
                 body: ListVerb());
           },
         ),
@@ -48,7 +48,7 @@ var customRoutes = GoRouter(
           builder: (BuildContext context, GoRouterState state) {
             return Scaffold(
                 appBar: WidgetsEasySearchBar(),
-                bottomNavigationBar: WidgetbottomNavigationBar(),
+                bottomNavigationBar: WidgetbottomNavigationBar(indexNav: 1),
                 body: TestVerb());
           },
         ),

@@ -7,11 +7,12 @@ import 'package:go_router/go_router.dart';
 
 
 class WidgetbottomNavigationBar extends ConsumerWidget {
-  const WidgetbottomNavigationBar({super.key});
+  const WidgetbottomNavigationBar({super.key, required int this.indexNav});
+  final int indexNav;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    late viregBottomNavigationBar objViregBottomNavigationBar = viregBottomNavigationBar(ref: ref,context: context);
+    late viregBottomNavigationBar objViregBottomNavigationBar = viregBottomNavigationBar(ref: ref,context: context,indexNav:indexNav);
     int _selectedIndex = objViregBottomNavigationBar.getItemSelect();
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,

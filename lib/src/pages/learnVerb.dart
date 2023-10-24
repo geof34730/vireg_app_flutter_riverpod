@@ -16,7 +16,7 @@ class LearnVerb extends ConsumerWidget {
     return Center(
         child: Column(
           children: [
-            Text("LEARN $personalListId"),
+           Text("LEARN $personalListId"),
             ElevatedButton(
               onPressed: () => context.go('/ListPersoStep1'),
               child: const Text('Go to List perso 1'),

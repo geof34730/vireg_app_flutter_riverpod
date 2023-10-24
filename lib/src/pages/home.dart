@@ -39,15 +39,15 @@ class Home extends ConsumerWidget {
               child: const Text('Go to liste perso 1'),
             ),
             ElevatedButton(
-              onPressed: () => context.goNamed("learn",pathParameters: {"personalListId":"77777"}),
+              onPressed: () => context.go('/LearnVerb/5555'),
               child: const Text('LEARN'),
             ),
             ElevatedButton(
-              onPressed: () => context.goNamed("test",pathParameters: {"personalListId":"77777"}),
+              onPressed: () => context.go('/TestVerb/5555'),
               child: const Text('TEST'),
             ),
             ElevatedButton(
-              onPressed: () => context.goNamed("list",pathParameters: {"personalListId":"77777"}),
+              onPressed: () => context.go('/ListVerb/5555'),
               child: const Text('LIST'),
             ),
           ],
