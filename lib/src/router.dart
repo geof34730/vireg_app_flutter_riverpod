@@ -1,4 +1,5 @@
 
+import 'package:Vireg/src/_widgets/Layout.dart';
 import 'package:Vireg/src/pages/home.dart';
 import 'package:Vireg/src/pages/learnVerb.dart';
 import 'package:Vireg/src/pages/listPersoStep1.dart';
@@ -17,57 +18,42 @@ var customRoutes = GoRouter(
       name:"home",
       path: '/',
       builder: (BuildContext context, GoRouterState state) {
-        return Scaffold(
-            appBar: WidgetsEasySearchBar(),
-            body: Home());
+        return Layout(child:Home());
       },
       routes: <RouteBase>[
         GoRoute(
           name:"LearnVerb",
           path: 'learnVerb/:personalListId',
           builder: (BuildContext context, GoRouterState state) {
-            return Scaffold(
-                appBar: WidgetsEasySearchBar(),
-                bottomNavigationBar: WidgetbottomNavigationBar(indexNav: 0),
-                body: LearnVerb());
+             return Layout(child:LearnVerb(),bottomNavigationBar: true,indexbottomNavigationBar: 0);
           },
         ),
         GoRoute(
           name:"ListVerb",
           path: 'listVerb/:personalListId',
           builder: (BuildContext context, GoRouterState state) {
-            return Scaffold(
-                appBar: WidgetsEasySearchBar(),
-                bottomNavigationBar: WidgetbottomNavigationBar(indexNav: 2),
-                body: ListVerb());
+            return Layout(child:ListVerb(),bottomNavigationBar: true,indexbottomNavigationBar: 2);
           },
         ),
         GoRoute(
           name:"testVerb",
           path: 'testVerb/:personalListId',
           builder: (BuildContext context, GoRouterState state) {
-            return Scaffold(
-                appBar: WidgetsEasySearchBar(),
-                bottomNavigationBar: WidgetbottomNavigationBar(indexNav: 1),
-                body: TestVerb());
+            return Layout(child:TestVerb(),bottomNavigationBar: true,indexbottomNavigationBar: 1);
           },
         ),
         GoRoute(
           name: 'ListPersoStep1',
           path: 'ListPersoStep1',
           builder: (BuildContext context, GoRouterState state) {
-            return Scaffold(
-                appBar: WidgetsEasySearchBar(),
-                body: ListPersoStep1());
+            return Layout(child:ListPersoStep1());
           },
           routes: <RouteBase>[
             GoRoute(
                 name: 'ListPersoStep2',
                 path: 'ListPersoStep2',
                 builder: (BuildContext context, GoRouterState state) {
-                  return Scaffold(
-                      appBar: WidgetsEasySearchBar(),
-                      body: ListPersoStep2());
+                  return Layout(child:ListPersoStep2());
                 })
           ],
         ),
