@@ -41,6 +41,8 @@ dependencies:
   go_router: ^11.1.4
   freezed_annotation: ^2.4.1
   json_annotation: ^4.8.1
+  colored_json: ^1.1.2
+  google_fonts: ^6.1.0
 
 dev_dependencies:
   flutter_test:

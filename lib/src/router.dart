@@ -1,4 +1,3 @@
-
 import 'package:Vireg/src/_widgets/Layout.dart';
 import 'package:Vireg/src/pages/home.dart';
 import 'package:Vireg/src/pages/learnVerb.dart';
@@ -9,8 +8,6 @@ import 'package:Vireg/src/pages/testVerb.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '_widgets/EasySearchBar.dart';
-import '_widgets/bottomNavigationBar.dart';
 
 var customRoutes = GoRouter(
   routes: <RouteBase>[
@@ -18,42 +15,42 @@ var customRoutes = GoRouter(
       name:"home",
       path: '/',
       builder: (BuildContext context, GoRouterState state) {
-        return Layout(child:Home());
+        return Layout(child:Home(),context: context);
       },
       routes: <RouteBase>[
         GoRoute(
           name:"LearnVerb",
           path: 'learnVerb/:personalListId',
           builder: (BuildContext context, GoRouterState state) {
-             return Layout(child:LearnVerb(),bottomNavigationBar: true,indexbottomNavigationBar: 0);
+             return Layout(child:LearnVerb(),bottomNavigationBar: true,indexBottomNavigationBar: 0,context: context);
           },
         ),
         GoRoute(
           name:"ListVerb",
           path: 'listVerb/:personalListId',
           builder: (BuildContext context, GoRouterState state) {
-            return Layout(child:ListVerb(),bottomNavigationBar: true,indexbottomNavigationBar: 2);
+            return Layout(child:ListVerb(),bottomNavigationBar: true,indexBottomNavigationBar: 2,context: context);
           },
         ),
         GoRoute(
           name:"testVerb",
           path: 'testVerb/:personalListId',
           builder: (BuildContext context, GoRouterState state) {
-            return Layout(child:TestVerb(),bottomNavigationBar: true,indexbottomNavigationBar: 1);
+            return Layout(child:TestVerb(),bottomNavigationBar: true,indexBottomNavigationBar: 1,context: context);
           },
         ),
         GoRoute(
           name: 'ListPersoStep1',
           path: 'ListPersoStep1',
           builder: (BuildContext context, GoRouterState state) {
-            return Layout(child:ListPersoStep1());
+            return Layout(child:ListPersoStep1(),context: context);
           },
           routes: <RouteBase>[
             GoRoute(
                 name: 'ListPersoStep2',
                 path: 'ListPersoStep2',
                 builder: (BuildContext context, GoRouterState state) {
-                  return Layout(child:ListPersoStep2());
+                  return Layout(child:ListPersoStep2(),context: context);
                 })
           ],
         ),
