@@ -2,5 +2,16 @@
     "widgetsEasySearchBarLabelInputSearch": "Rechercher un verbe à tester",
     "bottomNavigationBarLearn" : "Apprendre",
     "bottomNavigationBarTest" : "Tester",
-    "bottomNavigationBarSeeTheList" : "Voir la liste"
+    "bottomNavigationBarSeeTheList" : "Voir la liste",
+    "widgetBoxCardLearn" : "Apprendre",
+    "widgetBoxCardTest" : "Tester",
+    "widgetBoxCardList" : "Voir la liste",
+    "homeBoxCardTop20" : "top 20",
+    "homeBoxCardTop50" : "top 50",
+    "homeBoxCardTop100" : "top 100",
+    "homeBoxCardTop200" : "top 200",
+    "homeTitleDefaultList" : "Nos Listes prédéfinies"
+
+
+
 }

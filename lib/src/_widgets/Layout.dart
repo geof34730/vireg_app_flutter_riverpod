@@ -10,7 +10,10 @@ Widget Layout({required BuildContext context,required child,bottomNavigationBar=
     appBar: WidgetsEasySearchBar(),
     bottomNavigationBar: (bottomNavigationBar ? WidgetbottomNavigationBar(indexNav: indexBottomNavigationBar) : null),
     body: SingleChildScrollView(
-        child:child
+        child:Padding(
+         padding: EdgeInsets.only(left: 15.0,right: 15.0),
+         child:child
+        )
     ),
     floatingActionButton: FloatingActionButton(
         elevation: 15,

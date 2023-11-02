@@ -2,5 +2,13 @@
     "widgetsEasySearchBarLabelInputSearch": "EN traduction",
     "bottomNavigationBarLearn" : "Learn",
     "bottomNavigationBarTest" : "Test",
-    "bottomNavigationBarSeeTheList" : "See the list"
+    "bottomNavigationBarSeeTheList" : "See the list",
+    "widgetBoxCardLearn" : "Learn",
+    "widgetBoxCardTest" : "Test",
+    "widgetBoxCardList" : "See the list",
+    "homeBoxCardTop20" : "top 20",
+    "homeBoxCardTop50" : "top 50",
+    "homeBoxCardTop100" : "top 100",
+    "homeBoxCardTop200" : "top 200",
+    "homeTitleDefaultList" : "Our predefined lists"
 }
