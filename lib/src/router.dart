@@ -25,6 +25,7 @@ var customRoutes = GoRouter(
              return Layout(child:LearnVerb(),bottomNavigationBar: true,indexBottomNavigationBar: 0,context: context);
           },
         ),
+
         GoRoute(
           name:"ListVerb",
           path: 'listVerb/:personalListId',
@@ -53,6 +54,14 @@ var customRoutes = GoRouter(
                   return Layout(child:ListPersoStep2(),context: context);
                 })
           ],
+        ),
+        GoRoute(
+          name:"Share",
+          path: 'share/:personalListId',
+          builder: (BuildContext context, GoRouterState state) {
+            print("***************** share deep link");
+            return Layout(child:Text('SHARE'),bottomNavigationBar: true,indexBottomNavigationBar: 0,context: context);
+          },
         ),
       ],
     ),

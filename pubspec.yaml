@@ -44,6 +44,8 @@ dependencies:
   colored_json: ^1.1.2
   google_fonts: ^6.1.0
   responsive_grid: ^2.4.4
+  firebase_dynamic_links: ^5.4.3
+  firebase_core: ^2.21.0
 
 dev_dependencies:
   flutter_test:

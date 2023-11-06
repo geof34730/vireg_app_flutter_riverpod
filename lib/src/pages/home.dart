@@ -1,5 +1,6 @@
 
 import 'package:Vireg/src/localization/app_localizations_context.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -18,21 +19,26 @@ import 'package:responsive_grid/responsive_grid.dart';
 bool initConfig=true;
 
 class Home extends ConsumerWidget {
-  const Home({super.key});
+  Home({super.key});
+  final FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    String localLang = ref.watch(localLangProvider);
-    if (initConfig){
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
+    void initApp(){
+      if (initConfig){
         localstorelocal(context: context, ref: ref).initLang();
         initConfig=false;
-      });
+      }
     }
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        initApp();
+      });
+
+
+
 
     return Center(
         child: Column(
           children: [
-
             Row(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
               Padding(
                 padding: EdgeInsets.only(
@@ -50,9 +56,6 @@ class Home extends ConsumerWidget {
                 ),
               )
             ]),
-
-
-
             ResponsiveGridRow(
                     children: [
                       ResponsiveGridCol(
