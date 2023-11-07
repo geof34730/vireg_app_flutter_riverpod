@@ -1,4 +1,4 @@
-package com.vireg.fr.vireg_app_flutter_riverpod
+package verbeirregulieranglais.com.example.verbe_irregulier_anglais
 
 import io.flutter.embedding.android.FlutterActivity
 

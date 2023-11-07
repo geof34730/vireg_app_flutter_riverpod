@@ -7,7 +7,7 @@ project(runner LANGUAGES CXX)
 set(BINARY_NAME "vireg_app_flutter_riverpod")
 # The unique GTK application identifier for this application. See:
 # https://wiki.gnome.org/HowDoI/ChooseApplicationID
-set(APPLICATION_ID "com.vireg.fr.vireg_app_flutter_riverpod")
+set(APPLICATION_ID "verbeirregulieranglais.com.example.verbe_irregulier_anglais")
 
 # Explicitly opt in to modern CMake behaviors to avoid warnings with recent
 # versions of CMake.

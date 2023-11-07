@@ -23,18 +23,12 @@ class Home extends ConsumerWidget {
   final FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    void initApp(){
-      if (initConfig){
-        localstorelocal(context: context, ref: ref).initLang();
-        initConfig=false;
-      }
-    }
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        initApp();
+        if (initConfig){
+          localstorelocal(context: context, ref: ref).initLang();
+          initConfig=false;
+        }
       });
-
-
-
 
     return Center(
         child: Column(
@@ -43,7 +37,8 @@ class Home extends ConsumerWidget {
               Padding(
                 padding: EdgeInsets.only(
                     top: ResponsiveContent(context: context).choseSize(mobileSize: 10.00, otherSize: 15.00),
-                    bottom: ResponsiveContent(context: context).choseSize(mobileSize: 5.00, otherSize: 5.00)),
+                    bottom: ResponsiveContent(context: context).choseSize(mobileSize: 5.00, otherSize: 5.00)
+                ),
                 child: Text(
                   context.loc.homeTitleDefaultList,
                   style: GoogleFonts.roboto(
