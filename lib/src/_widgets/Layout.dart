@@ -11,7 +11,7 @@ Widget Layout({required BuildContext context,required child,bottomNavigationBar=
     bottomNavigationBar: (bottomNavigationBar ? WidgetbottomNavigationBar(indexNav: indexBottomNavigationBar) : null),
     body: SingleChildScrollView(
         child:Padding(
-         padding: EdgeInsets.only(left: 15.0,right: 15.0),
+         padding: EdgeInsets.only(left: 0.0,right: 0.0),
          child:child
         )
     ),

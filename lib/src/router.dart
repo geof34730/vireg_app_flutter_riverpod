@@ -6,7 +6,9 @@ import 'package:Vireg/src/pages/listPersoStep2.dart';
 import 'package:Vireg/src/pages/listVerb.dart';
 import 'package:Vireg/src/pages/testVerb.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 
 var customRoutes = GoRouter(
@@ -66,4 +68,11 @@ var customRoutes = GoRouter(
       ],
     ),
   ],
-);
+    errorBuilder: (context, state) {
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      // context.go('/');
+    // });
+      print("**************REDIRECT 404************");
+      return Layout(child:Home(),context: context);
+    }
+    );

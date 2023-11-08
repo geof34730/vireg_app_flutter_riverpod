@@ -1,4 +1,4 @@
-import 'package:Vireg/src/app.dart';
+import 'package:Vireg/src/myApp.dart';
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
