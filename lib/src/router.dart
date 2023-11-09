@@ -4,6 +4,7 @@ import 'package:Vireg/src/pages/learnVerb.dart';
 import 'package:Vireg/src/pages/listPersoStep1.dart';
 import 'package:Vireg/src/pages/listPersoStep2.dart';
 import 'package:Vireg/src/pages/listVerb.dart';
+import 'package:Vireg/src/pages/share.dart';
 import 'package:Vireg/src/pages/testVerb.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -61,8 +62,7 @@ var customRoutes = GoRouter(
           path: 'share/:personalListId',
           builder: (BuildContext context, GoRouterState state) {
             print("***************** share deep link");
-            var personalListId = state.pathParameters['personalListId']!;
-            return Layout(child:Text('SHARE $personalListId'),bottomNavigationBar: false,indexBottomNavigationBar: 0,context: context);
+            return Layout(child:Share(),context: context,appBar: false);
           },
         ),
       ],

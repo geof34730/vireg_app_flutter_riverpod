@@ -10,5 +10,6 @@
     "homeBoxCardTop50" : "top 50",
     "homeBoxCardTop100" : "top 100",
     "homeBoxCardTop200" : "top 200",
-    "homeTitleDefaultList" : "Our predefined lists"
+    "homeTitleDefaultList" : "Our predefined lists",
+    "shareLoadingListPersonal" : "lorem ipsum"
 }

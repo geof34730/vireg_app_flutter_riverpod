@@ -5,13 +5,13 @@ import 'EasySearchBar.dart';
 import 'bottomNavigationBar.dart';
 import 'drawerDevTools.dart';
 
-Widget Layout({required BuildContext context,required child,bottomNavigationBar=false,indexBottomNavigationBar=0}){
+Widget Layout({required BuildContext context,required child,bottomNavigationBar=false,appBar=true,indexBottomNavigationBar=0}){
   return Scaffold(
-    appBar: WidgetsEasySearchBar(),
+    appBar:  (appBar ? WidgetsEasySearchBar() : null),
     bottomNavigationBar: (bottomNavigationBar ? WidgetbottomNavigationBar(indexNav: indexBottomNavigationBar) : null),
     body: SingleChildScrollView(
         child:Padding(
-         padding: EdgeInsets.only(left: 0.0,right: 0.0),
+         padding: EdgeInsets.only(left: 15.0,right: 15.0),
          child:child
         )
     ),

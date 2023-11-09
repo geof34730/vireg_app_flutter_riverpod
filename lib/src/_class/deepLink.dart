@@ -28,4 +28,14 @@ class deepLink {
     });
   }
 
+  Future<void> shareReceive({required String personalListId }) async {
+
+
+    print("shareReceive $personalListId");
+
+
+
+
+  }
+
 }

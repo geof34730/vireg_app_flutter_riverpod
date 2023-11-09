@@ -10,8 +10,6 @@
     "homeBoxCardTop50" : "top 50",
     "homeBoxCardTop100" : "top 100",
     "homeBoxCardTop200" : "top 200",
-    "homeTitleDefaultList" : "Nos Listes prédéfinies"
-
-
-
+    "homeTitleDefaultList" : "Nos Listes prédéfinies",
+    "shareLoadingListPersonal" : "Chargement en cours de votre liste personalisée partagée."
 }
