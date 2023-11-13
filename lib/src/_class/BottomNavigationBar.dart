@@ -5,8 +5,8 @@ import 'package:go_router/go_router.dart';
 import '../router.dart';
 
 
-class viregBottomNavigationBar {
-  viregBottomNavigationBar({required this.ref,required BuildContext this.context, required int this.indexNav});
+class ViregBottomNavigationBar {
+  ViregBottomNavigationBar({required this.ref,required BuildContext this.context, required int this.indexNav});
   final WidgetRef ref;
   final BuildContext context;
   final int indexNav;

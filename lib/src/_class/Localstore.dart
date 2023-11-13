@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:localstorage/localstorage.dart';
+import '../_models/PersonalListModel.dart';
 import 'localLang.dart';
 
 
 
 
+
 final LocalStorage storageConfig = new LocalStorage('config');
-class localstorelocal {
-  localstorelocal({required this.context, required this.ref});
+class Localstorelocal {
+  Localstorelocal({required this.context, required this.ref});
 
   final BuildContext context;
   final WidgetRef ref;
   final dynamic langSelect = null;
 
 
+  /////* BEGIN LANG*///////
   dynamic listLangSupported() => context.findAncestorWidgetOfExactType<MaterialApp>()?.supportedLocales;
 
   String getLangDevice() => View.of(this.context).platformDispatcher.locale.toString().substring(0, 2);
@@ -30,7 +33,7 @@ class localstorelocal {
 
   dynamic getLangLocalStore() => LocalStorage('config').getItem("lang");
 
-  void updateLocalstore({required String lang, bool withChange = true}) {
+  void updateLocalstoreLang({required String lang, bool withChange = true}) {
     storageConfig.setItem('lang', lang);
     ref.read(localLangProvider.notifier).change(lang: lang);
   }
@@ -38,7 +41,7 @@ class localstorelocal {
   void initLang() async  {
      await storageConfig.ready;
       print('init lang');
-      updateLocalstore(lang: getLangLoad(), withChange: true);
+      updateLocalstoreLang(lang: getLangLoad(), withChange: true);
   }
 
   int getItemLangSelect(){
@@ -53,5 +56,16 @@ class localstorelocal {
     }
     return numItemLangSelect;
   }
+  ///* END LANG */////
+
+
+
+
+  Future<dynamic> updateLocalstoreList({required PersonalListModel listVerbs }) async {
+    print(listVerbs);
+    return "ok";
+  }
+
+
 
 }

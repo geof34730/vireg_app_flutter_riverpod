@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../_class/localLang.dart';
+import '../router.dart';
+
 
 
 class ListVerb extends ConsumerWidget {
@@ -16,7 +18,7 @@ class ListVerb extends ConsumerWidget {
         children: [
           Text("LIST $personalListId"),
           ElevatedButton(
-            onPressed: () => context.go('/ListPersoStep1'),
+            onPressed: () => customRoutes.goNamed('ListPersoStep1'),
             child: const Text('Go to List perso 1'),
           ),
         ],

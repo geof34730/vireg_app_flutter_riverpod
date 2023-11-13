@@ -1,20 +1,13 @@
-
 import 'package:Vireg/src/localization/app_localizations_context.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
-import '../_class/localLang.dart';
-import '../_class/localstore.dart';
-
-import '../_models/VerbsModel.dart';
-import '../_utils/front.dart';
-import '../_utils/string.dart';
-import '../_widgets/boxCard.dart';
-import '../_widgets/button.dart';
-import 'package:Vireg/src/_models/PersonalListModel.dart';
 import 'package:responsive_grid/responsive_grid.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+import '../_class/localstore.dart';
+import '../_utils/front.dart';
+import '../_widgets/boxCard.dart';
 
 bool initConfig=true;
 
@@ -23,9 +16,11 @@ class Home extends ConsumerWidget {
   final FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
+    print("build Home");
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         if (initConfig){
-          localstorelocal(context: context, ref: ref).initLang();
+          Localstorelocal(context: context, ref: ref).initLang();
           initConfig=false;
         }
       });

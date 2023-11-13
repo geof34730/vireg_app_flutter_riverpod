@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../_class/localLang.dart';
-import '../_class/localstore.dart';
+import '../_class/Localstore.dart';
 
 class WidgetsEasySearchBar extends ConsumerWidget implements PreferredSizeWidget {
   const WidgetsEasySearchBar({super.key});
@@ -19,7 +19,7 @@ class WidgetsEasySearchBar extends ConsumerWidget implements PreferredSizeWidget
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     /*******BEGIN Manage lang*********/
-    var getlocalstorelocal = localstorelocal(context: context, ref: ref);
+    var getlocalstorelocal = Localstorelocal(context: context, ref: ref);
 
       int numItemLangSelect = getlocalstorelocal.getItemLangSelect();
       var listLangSupported = getlocalstorelocal.listLangSupported();
@@ -65,7 +65,7 @@ class WidgetsEasySearchBar extends ConsumerWidget implements PreferredSizeWidget
               dropdownColor: Colors.blue,
               alignment: Alignment.topRight,
               onChanged: (langSelect) {
-                localstorelocal(context: context, ref: ref).updateLocalstore(lang: langSelect.toString());
+                Localstorelocal(context: context, ref: ref).updateLocalstoreLang(lang: langSelect.toString());
                 },
               items: listLangSupported.map<DropdownMenuItem<Locale>>((value) {
                 return DropdownMenuItem<Locale>(

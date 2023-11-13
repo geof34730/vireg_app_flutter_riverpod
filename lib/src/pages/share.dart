@@ -6,22 +6,39 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:Vireg/src/localization/app_localizations_context.dart';
 
 
+import '../_class/DeepLink.dart';
+import '../myApp.dart';
 
 
-import '../_class/deepLink.dart';
-import '../_class/loader.dart';
-import '../_class/localLang.dart';
+
+bool sendServer = false;
 
 class Share extends ConsumerWidget {
   const Share({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    deepLink(context: context, ref: ref).shareReceive(personalListId: GoRouterState.of(context).pathParameters["personalListId"].toString()).then((value) => {
 
-          Future.delayed(Duration(seconds: 2), () {
-            customRoutes.go("/");
-          })
+
+
+if(!sendServer) {
+  sendServer=true;
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    objDeeplinksInit.shareReceive(personalListId: GoRouterState
+        .of(context)
+        .pathParameters["personalListId"].toString()).then((value) {
+      //Future.delayed(Duration(seconds: 2), () {
+      // customRoutes.go("/");
+      // context.go('/');
+      customRoutes.goNamed('Home');
+      Future.delayed(Duration(seconds: 1), () {
+      sendServer=false;
+
+       });
     });
+  });
+}
+    print("build share");
+
     return Container(
       width: double.infinity,
       height: MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top,

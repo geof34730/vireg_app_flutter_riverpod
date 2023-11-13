@@ -1,3 +1,4 @@
+import 'package:Vireg/src/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -110,7 +111,7 @@ class BoxCard extends ConsumerWidget {
                                 context: context,
                                 typeList: typeList,
                                 onClickButton: () => {
-                                  context.go('/testVerb/$idList')
+                                  customRoutes.go('/testVerb/$idList')
                                 }
                             ),
 
@@ -121,7 +122,7 @@ class BoxCard extends ConsumerWidget {
                                 context: context,
                                 typeList: typeList,
                                 onClickButton: () => {
-                                  context.go('/learnVerb/$idList')
+                                  customRoutes.go('/learnVerb/$idList')
                                 }
                             ),
 
@@ -132,7 +133,7 @@ class BoxCard extends ConsumerWidget {
                                 context: context,
                                 typeList: typeList,
                                 onClickButton: () => {
-                                  context.go('/listVerb/$idList')
+                                  customRoutes.go('/listVerb/$idList')
                                 }
                             ),
                           ],

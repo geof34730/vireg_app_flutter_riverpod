@@ -11,7 +11,7 @@ class WidgetbottomNavigationBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    late viregBottomNavigationBar objViregBottomNavigationBar = viregBottomNavigationBar(ref: ref,context: context,indexNav:indexNav);
+    late ViregBottomNavigationBar objViregBottomNavigationBar = ViregBottomNavigationBar(ref: ref,context: context,indexNav:indexNav);
     int _selectedIndex = objViregBottomNavigationBar.getItemSelect();
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
@@ -38,7 +38,7 @@ class WidgetbottomNavigationBar extends ConsumerWidget {
       onTap: (index){_onItemTapped(index: index, objViregBottomNavigationBar: objViregBottomNavigationBar);},
     );
   }
-  void _onItemTapped({required int index, required viregBottomNavigationBar objViregBottomNavigationBar}) {
+  void _onItemTapped({required int index, required ViregBottomNavigationBar objViregBottomNavigationBar}) {
     objViregBottomNavigationBar.goItemNav(index:index);
   }
 
