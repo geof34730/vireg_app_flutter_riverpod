@@ -15,9 +15,9 @@ class ViregBottomNavigationBar {
       return GoRouterState.of(context).pathParameters["personalListId"].toString();
     }
 
-    int getItemSelect(){
+   int getItemSelect(){
       return this.indexNav;
-    }
+   }
 
     void goItemNav({required int index}){
       switch (index) {

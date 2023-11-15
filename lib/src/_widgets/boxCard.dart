@@ -48,7 +48,9 @@ class BoxCard extends ConsumerWidget {
                     child: ListTile(
                         title: Column(
                           children: [
-                            Text(
+                            Padding(
+                            padding: const EdgeInsets.only( bottom: 5.0),
+                            child:Text(
                                 capitalize(titleList),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
@@ -60,15 +62,17 @@ class BoxCard extends ConsumerWidget {
                                       fontSize: 18,
                                       height: 1.3,
                                       fontWeight: FontWeight.bold,
-                                    ))),
+                                    )
+                                  )
+                                ),
+                            ),
                             Visibility(
                                 visible: isPersonnalList,
                                 child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 15.0, bottom: 5.0),
+                                          padding: const EdgeInsets.only(left: 15.0, bottom: 5.0),
                                           child: Text(
                                             '(${nbVerbsPerso} verbe${((nbVerbsPerso >
                                                 1) ? 's' : '')})',

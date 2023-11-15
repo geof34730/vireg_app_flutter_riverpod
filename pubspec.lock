@@ -532,14 +532,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0+4"
-  localstorage:
+  localstore:
     dependency: "direct main"
     description:
-      name: localstorage
-      sha256: fdff4f717114e992acfd4045dc4a9ab9b987ca57f020965d63e3eb34089c60d8
+      name: localstore
+      sha256: "42a0afb7696cfab1b4bd7d08355b4ee01f975fd364553b28d51496eccaf11cce"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.1+4"
+    version: "1.3.5"
   logging:
     dependency: transitive
     description:
