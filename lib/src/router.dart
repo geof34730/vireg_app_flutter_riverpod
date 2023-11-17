@@ -39,7 +39,7 @@ var customRoutes = GoRouter(
             name:"ListVerb",
             path: 'listVerb/:personalListId',
             builder: (BuildContext context, GoRouterState state) {
-              return Layout(child:ListVerb(key: UniqueKey()),bottomNavigationBar: true,indexBottomNavigationBar: 2,context: context);
+              return Layout(child:ListVerb(key: UniqueKey()),bottomNavigationBar: true,indexBottomNavigationBar: 2,context: context,paddinLeftRight: 0.0);
             },
           ),
           GoRoute(

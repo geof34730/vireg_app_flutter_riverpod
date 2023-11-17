@@ -13,7 +13,7 @@ import 'localLang.dart';
 final db = Localstore.instance;
 
 
-class Localstorelocal {
+class Localstorelocal  {
   Localstorelocal({required this.context, required this.ref});
 
   final BuildContext context;
@@ -22,11 +22,12 @@ class Localstorelocal {
 
   late String langDevice=View.of(context).platformDispatcher.locale.toString().substring(0, 2);
 
-  /////* BEGIN LANG*///////
+  ///////////////* BEGIN LANG*/////////////////
   dynamic listLangSupported() => context.findAncestorWidgetOfExactType<MaterialApp>()?.supportedLocales;
 
-  dynamic getLangLoad() {
-     if(getLangLocalStore() == null){
+  dynamic getLangLoad() async {
+
+    if(getLangLocalStore() == null){
         return langDevice;
       }
       else{
@@ -34,28 +35,25 @@ class Localstorelocal {
       }
     }
 
-    dynamic getLangLocalStore()  {
-      db.collection('store').doc("config").get().then((value) {
-        return value?["lang"].toString();
-      });
+    dynamic getLangLocalStore() async  {
+      return  db.collection('store').doc("config").get().then((value)  => value?["lang"].toString());
     }
 
     void updateLocalstoreLang({required String lang, bool withChange = true}) {
       db.collection('store').doc("config").set({'lang':lang});
-      db.collection('store').doc("PersonalList").set({'id':"dsfsdfsdf","title":"dddddd"});
-      db.collection('store').doc("PersonalList").set({'id':"dsfsdfsdf","title":"dddddd"});
-
+      db.collection('personalList').doc("8888").set({'id':"8888","title":"dddddd"});
+      db.collection('personalList').doc("85").set({'id':"85","title":"dddddd"});
+      db.collection('personalList').doc("64").set({'id':"64","title":"dddddd"});
 
       ref.read(localLangProvider.notifier).change(lang: lang);
     }
 
-    void initLang() {
-      print('Init lang ${getLangLoad()}');
-      updateLocalstoreLang(lang: getLangLoad(), withChange: true);
+    void initLang() async {
 
 
-      //getJsonAllLocalStore();
-
+      String langApp=await getLangLoad();
+      print('Init lang =>  $langApp');
+      updateLocalstoreLang(lang: await langApp, withChange: true);
     }
 
     int getItemLangSelect(){
@@ -72,18 +70,35 @@ class Localstorelocal {
     }
     ///* END LANG */////
 
-
-
-    /////BEGIN COMMON//////
+    /////BEGIN DEV TOOLS//////
     Future<dynamic> getJsonAllLocalStore() async {
-     return  db.collection('store').get().then((value) => json.encode(value));
+      return db.collection('store').get().then((valueStore)  {
+        return db.collection('personalList').get().then((valuePersonalList)  {
+          return "[${json.encode(valueStore)},${json.encode(valuePersonalList)}]";
+        });
+      });
     }
-    ////END COMMON////
+    ////END DEV TOOLS////
 
+    ////////BEGIN  PERSONALLIST////////////
     Future<dynamic> updateLocalstoreList({required PersonalListModel listVerbs }) async {
       print(listVerbs);
       return "ok";
     }
+
+    getContentPersonalList({required String idPersonalList}) async{
+      return db.collection('personalList').doc(idPersonalList).get().then((value) => value);
+    }
+
+    savePersonalList({required PersonalListModel listVerbs }){
+
+    }
+
+    deletePersonalList({required String idPersonalList}){
+
+    }
+     ////////END  PERSONALLIST////////////
+
 
 }
 

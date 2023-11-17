@@ -16,6 +16,10 @@ class ResponsiveContent{
     return ((MediaQuery.of(context).size.width)/2)-30;
   }
 
+  double sizeFlex({required int flexNumber}){
+    var unitSize=(MediaQuery.of(context).size.width/12);
+    return (unitSize*flexNumber);
+  }
 
   String typeScreenBreakpoint (){
     const kMobileBreakpoint = 576;

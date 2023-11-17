@@ -23,9 +23,6 @@ class Home extends ConsumerWidget {
           Localstorelocal(context: context, ref: ref).initLang();
           initConfig=false;
         }
-
-
-        Localstorelocal(context:context, ref: ref).getJsonAllLocalStore();
       });
 
     return Center(
@@ -55,29 +52,28 @@ class Home extends ConsumerWidget {
                         xs: 12,
                         sm:6,
                         md: 6,
-                        child: BoxCard(context: context,colorsList: Colors.green,titleList:context.loc.homeBoxCardTop20),
+                        child: BoxCard(context: context,colorsList: Colors.green,titleList:context.loc.homeBoxCardTop20,idListPerso:"top20",nbVerbsPerso: 20,),
                       ),
                       ResponsiveGridCol(
                         xs: 12,
                         sm:6,
                         md: 6,
-                        child: BoxCard(context: context,colorsList: Colors.blue,titleList:context.loc.homeBoxCardTop50),
+                        child: BoxCard(context: context,colorsList: Colors.blue,titleList:context.loc.homeBoxCardTop50,idListPerso:"top50",nbVerbsPerso: 50),
                       ),
                       ResponsiveGridCol(
                         xs: 12,
                         sm:6,
                         md: 6,
-                        child: BoxCard(context: context,colorsList: Colors.orange,titleList:context.loc.homeBoxCardTop100),
+                        child: BoxCard(context: context,colorsList: Colors.orange,titleList:context.loc.homeBoxCardTop100,idListPerso:"top100",nbVerbsPerso: 100),
                       ),
                       ResponsiveGridCol(
                         xs: 12,
                         sm:6,
                         md: 6,
-                        child: BoxCard(context: context,colorsList: Colors.red,titleList:context.loc.homeBoxCardTop200),
+                        child: BoxCard(context: context,colorsList: Colors.red,titleList:context.loc.homeBoxCardTop200,idListPerso:"top200",nbVerbsPerso: 200),
                       ),
                   ]
                 )
-
          ],
         ),
       );

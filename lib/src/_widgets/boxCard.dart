@@ -14,18 +14,20 @@ class BoxCard extends ConsumerWidget {
     required BuildContext this.context,
     required this.colorsList,
     this.isPersonnalList=false,
+    required this.nbVerbsPerso,
+    this.idListPerso = "",
     required String this.titleList
   });
     final BuildContext context;
     final Color colorsList;
     final bool isPersonnalList;
+
     final String titleList;
+    final String idListPerso;
+    final int nbVerbsPerso;
 
     @override
     Widget build(BuildContext context, WidgetRef ref) {
-      int nbVerbsPerso=20;
-      int idList=6666;
-      String typeList = "top20";
       return Card(
           shadowColor: Colors.grey,
           color: colorsList,
@@ -113,9 +115,9 @@ class BoxCard extends ConsumerWidget {
                                 iconContent: Icons.quiz,
                                 indexRubrique: 0,
                                 context: context,
-                                typeList: typeList,
+                                typeList: idListPerso,
                                 onClickButton: () => {
-                                  customRoutes.go('/testVerb/$idList')
+                                  customRoutes.go('/testVerb/$idListPerso')
                                 }
                             ),
 
@@ -124,9 +126,9 @@ class BoxCard extends ConsumerWidget {
                                 iconContent: Icons.school,
                                 indexRubrique: 1,
                                 context: context,
-                                typeList: typeList,
+                                typeList: idListPerso,
                                 onClickButton: () => {
-                                  customRoutes.go('/learnVerb/$idList')
+                                  customRoutes.go('/learnVerb/$idListPerso')
                                 }
                             ),
 
@@ -135,9 +137,9 @@ class BoxCard extends ConsumerWidget {
                                 iconContent: Icons.visibility,
                                 indexRubrique: 2,
                                 context: context,
-                                typeList: typeList,
+                                typeList: idListPerso,
                                 onClickButton: () => {
-                                  customRoutes.go('/listVerb/$idList')
+                                  customRoutes.go('/listVerb/$idListPerso')
                                 }
                             ),
                           ],

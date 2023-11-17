@@ -87,7 +87,7 @@ class drawerWidget extends ConsumerWidget {
                                   return Text(snapshot.data);
                                 } else {
                                   return ColoredJson(
-                                    data:'[${snapshot.data}]',
+                                    data:snapshot.data,
                                     indentLength: 3,
                                     keyColor: Colors.green,
                                     backgroundColor: Colors.black,
