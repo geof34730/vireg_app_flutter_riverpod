@@ -11,5 +11,6 @@
     "homeBoxCardTop100" : "top 100",
     "homeBoxCardTop200" : "top 200",
     "homeTitleDefaultList" : "Nos Listes prédéfinies",
-    "shareLoadingListPersonal" : "Chargement en cours de votre liste personalisée partagée."
+    "shareLoadingListPersonal" : "Chargement en cours de votre liste personalisée partagée.",
+    "listVersItemLang" : "Français"
 }

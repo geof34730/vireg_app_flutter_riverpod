@@ -1,3 +1,4 @@
+import 'package:Vireg/src/localization/app_localizations_context.dart';
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,12 +22,13 @@ class _ListVerbState extends ConsumerState<ListVerb> {
   List<dynamic> filteredData = [];
   List<dynamic> dataList=[];
   final keydataTable = GlobalKey<PaginatedDataTableState>();
+  String locallang="";
 
   @override
   void initState() {
     print('initstat ListVerb');
     getListVerbsJson(typeListe: "top20");
-    final  DataTableSource data = DataTableListeVerbes(filteredData: filteredData, context: context);
+    DataTableSource data = DataTableListeVerbes(filteredData: filteredData, context: context,localLang: locallang);
     super.initState();
   }
 
@@ -38,7 +40,8 @@ class _ListVerbState extends ConsumerState<ListVerb> {
 
   @override
   Widget build(BuildContext context) {
-    final  DataTableSource data = DataTableListeVerbes(filteredData: filteredData, context: context);
+    locallang=ref.watch(localLangProvider);
+    late DataTableSource data = DataTableListeVerbes(filteredData: filteredData, context: context,localLang: ref.watch(localLangProvider));
 
     return Column(mainAxisAlignment: MainAxisAlignment.start, mainAxisSize: MainAxisSize.max, children: [
       Padding(
@@ -84,7 +87,7 @@ class _ListVerbState extends ConsumerState<ListVerb> {
             DataColumn(
                 label: ConstrainedBox(
                   constraints: constraintsDataColumn(flexNumber: 4),
-                  child: const Text('Français', overflow: TextOverflow.ellipsis),
+                  child:  Text(context.loc.listVersItemLang, overflow: TextOverflow.ellipsis),
                 ),
             ),
             DataColumn(
@@ -114,6 +117,9 @@ class _ListVerbState extends ConsumerState<ListVerb> {
     ]);
   }
 
+
+
+
   dynamic constraintsDataColumn({required int flexNumber}){
       return BoxConstraints(
         minWidth: ResponsiveContent(context: context).choseSize(
@@ -136,7 +142,7 @@ class _ListVerbState extends ConsumerState<ListVerb> {
           removeDiacritics(item['infinitif']).toLowerCase().contains(removeDiacritics(text).toLowerCase()) ||
           removeDiacritics(item['pastSimple']).toLowerCase().contains(removeDiacritics(text).toLowerCase()) ||
           removeDiacritics(item['pastParticipe']).toLowerCase().contains(removeDiacritics(text).toLowerCase()) ||
-          removeDiacritics(item['francais']).toLowerCase().contains(removeDiacritics(text).toLowerCase()))
+          removeDiacritics(item[localLang]).toLowerCase().contains(removeDiacritics(text).toLowerCase()))
           .toList();
       keydataTable.currentState?.pageTo(0);
     });
@@ -144,10 +150,10 @@ class _ListVerbState extends ConsumerState<ListVerb> {
 
   List sortVerbsByFrancais(datas) {
     datas.sort((a, b) {
-      return removeDiacritics(a['francais'])
+      return removeDiacritics(a[ref.watch(localLangProvider)])
           .toString()
           .toLowerCase()
-          .compareTo(removeDiacritics(b['francais']).toString().toLowerCase());
+          .compareTo(removeDiacritics(b[ref.watch(localLangProvider)]).toString().toLowerCase());
     });
     return datas;
   }

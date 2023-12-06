@@ -7,9 +7,11 @@ import 'PlaySoond.dart';
 class DataTableListeVerbes extends DataTableSource {
   final List<dynamic> filteredData;
   final BuildContext context;
+  final String localLang;
   DataTableListeVerbes({
     required this.filteredData,
-    required this.context
+    required this.context,
+    required this.localLang
   });
 
   bool loopMapFilter = false;
@@ -39,7 +41,7 @@ class DataTableListeVerbes extends DataTableSource {
             )
             ), //SET max width
             child: Text(
-                        toTitleCase(filteredData[index]['francais'].toString()),
+                        toTitleCase(filteredData[index][localLang].toString()),
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                         softWrap: false,
@@ -96,18 +98,18 @@ class DataTableListeVerbes extends DataTableSource {
                                    ]
                               ),
                     )
-                          )),
-                          DataCell(
-                             Center(
-                                child:Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children:[
-                                    PlaySoond(dataVerbe:filteredData[index],typeAudio: "all",sizeIcon: 30,buttonColor: Colors.green).buttonPlay(),
-                                    ]
-                                )
-                             )
-                          ),
-                        ]);
+                  )),
+                  DataCell(
+                     Center(
+                        child:Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children:[
+                            PlaySoond(dataVerbe:filteredData[index],typeAudio: "all",sizeIcon: 30,buttonColor: Colors.green).buttonPlay(),
+                            ]
+                        )
+                     )
+                  ),
+                ]);
   }
 
 

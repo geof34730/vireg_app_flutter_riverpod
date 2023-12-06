@@ -1,0 +1,85 @@
+{
+  "project_info": {
+    "project_number": "126297073825",
+    "project_id": "vireg-8c22f",
+    "storage_bucket": "vireg-8c22f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:126297073825:android:1394df8bfe2c3dc85768e0",
+        "android_client_info": {
+          "package_name": "verbeirregulieranglais.com.example.verbe_irregulier_anglais"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "126297073825-va90btmv8r086fd3ac0cg7fm9e4t820e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcECli4yQrIw5Pw8L4jEOye4VauSOUti0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "126297073825-va90btmv8r086fd3ac0cg7fm9e4t820e.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "126297073825-ai8bhn5jsvqtf40t4090h3o2l5niar6b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "verbeirregulieranglais.com.example.verbeIrregulierAnglais",
+                "app_store_id": "6446082557"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:126297073825:android:1d48fd88ab5631c75768e0",
+        "android_client_info": {
+          "package_name": "verbeirregulieranglais.com.example.verbe_irregulier_anglais"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "126297073825-va90btmv8r086fd3ac0cg7fm9e4t820e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcECli4yQrIw5Pw8L4jEOye4VauSOUti0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "126297073825-va90btmv8r086fd3ac0cg7fm9e4t820e.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "126297073825-ai8bhn5jsvqtf40t4090h3o2l5niar6b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "verbeirregulieranglais.com.example.verbeIrregulierAnglais",
+                "app_store_id": "6446082557"
+              }
+            }
+          ]
+        }
+      },
+      "admob_app_id": "ca-app-pub-1439580806237607~4442194348"
+    }
+  ],
+  "configuration_version": "1"
+}

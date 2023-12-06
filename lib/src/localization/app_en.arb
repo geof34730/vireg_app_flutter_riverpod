@@ -11,5 +11,6 @@
     "homeBoxCardTop100" : "top 100",
     "homeBoxCardTop200" : "top 200",
     "homeTitleDefaultList" : "Our predefined lists",
-    "shareLoadingListPersonal" : "Loading your shared personalized list."
+    "shareLoadingListPersonal" : "Loading your shared personalized list.",
+    "listVersItemLang" : "English"
 }
