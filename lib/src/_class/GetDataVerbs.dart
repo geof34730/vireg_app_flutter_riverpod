@@ -6,16 +6,16 @@ import 'package:localstore/localstore.dart';
 class GetDataVerbs  {
   final _db = Localstore.instance;
 
-  Future<List<dynamic>> getDataJson({required String typeListe}) async {
+  Future<List<dynamic>> getDataJson({required String idList}) async {
       final String AllVerbsReponse = await rootBundle.loadString('assets/data/all.json');
       final List<dynamic> dataAllVerbs = await json.decode(AllVerbsReponse);
       List<dynamic> data = [];
-      if(typeListe.contains('personalList-')){
+      if(idList.contains('personalList-')){
         ///LISTE PERSO
           print("liste perso");
             for (var item in jsonDecode(AllVerbsReponse)) {
               //print(await isIdInList(idVerbs: item['id']));
-              if(await isIdInList(idVerbs: item['id'],UUIDList:typeListe.replaceAll('personalList-', ''))) {
+              if(await isIdInList(idVerbs: item['id'],UUIDList:idList.replaceAll('personalList-', ''))) {
                   data.add(item);
               }
             }
@@ -23,7 +23,7 @@ class GetDataVerbs  {
       else {
         ///LISTE PREDEFINIS
         print("liste predefinie");
-        final String response = await rootBundle.loadString('assets/data/$typeListe.json');
+        final String response = await rootBundle.loadString('assets/data/$idList.json');
         final List<dynamic> dataJsonFile = await json.decode(response);
         data = [];
         for (var element in dataAllVerbs) {
@@ -34,6 +34,7 @@ class GetDataVerbs  {
           }
         }
       }
+      print(data);
      return data;
   }
 

@@ -72,7 +72,7 @@ class WidgetsEasySearchBar extends ConsumerWidget implements PreferredSizeWidget
                   value: value,
                   alignment: AlignmentDirectional.center,
                   child: Text(
-                    capitalize(value.toString()),
+                    value.toString(),
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: (value != listLangSupported.elementAt(numItemLangSelect) ? FontWeight.normal : FontWeight.bold),

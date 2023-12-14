@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../_Utils/string.dart';
 import '../_class/DataTableListeVerbes.dart';
 import '../_class/GetDataVerbs.dart';
 import '../_class/localLang.dart';
@@ -12,22 +13,25 @@ import '../router.dart';
 
 
 class ListVerb extends ConsumerStatefulWidget {
-  const ListVerb({Key? key}) : super(key: key);
+  const ListVerb({Key? key, required this.idList}) : super(key: key);
+  final String? idList;
   @override
   _ListVerbState createState() => _ListVerbState();
 }
 
 class _ListVerbState extends ConsumerState<ListVerb> {
+
   final searchController = TextEditingController();
   List<dynamic> filteredData = [];
   List<dynamic> dataList=[];
   final keydataTable = GlobalKey<PaginatedDataTableState>();
   String locallang="";
 
+
   @override
   void initState() {
     print('initstat ListVerb');
-    getListVerbsJson(typeListe: "top20");
+    getListVerbsJson(idList: widget.idList.toString());
     DataTableSource data = DataTableListeVerbes(filteredData: filteredData, context: context,localLang: locallang);
     super.initState();
   }
@@ -42,7 +46,6 @@ class _ListVerbState extends ConsumerState<ListVerb> {
   Widget build(BuildContext context) {
     locallang=ref.watch(localLangProvider);
     late DataTableSource data = DataTableListeVerbes(filteredData: filteredData, context: context,localLang: ref.watch(localLangProvider));
-
     return Column(mainAxisAlignment: MainAxisAlignment.start, mainAxisSize: MainAxisSize.max, children: [
       Padding(
         padding: const EdgeInsets.all(8.0),
@@ -63,14 +66,14 @@ class _ListVerbState extends ConsumerState<ListVerb> {
                         onPressed: () {
                           setState(() {
                             searchController.clear();
-                            _onSearchTextChanged('');
+                            _onSearchTextChanged(text: "",LocalLangParam: locallang);
                             keydataTable.currentState?.pageTo(0);
                           });
                         },
                       ),
                     )
                   : null),
-          onChanged: _onSearchTextChanged,
+          onChanged: (text)=>{_onSearchTextChanged(text: text,LocalLangParam: locallang)},
         ),
       ),
       SizedBox(
@@ -87,13 +90,13 @@ class _ListVerbState extends ConsumerState<ListVerb> {
             DataColumn(
                 label: ConstrainedBox(
                   constraints: constraintsDataColumn(flexNumber: 4),
-                  child:  Text(context.loc.listVersItemLang, overflow: TextOverflow.ellipsis),
+                  child:  Text(capitalize(context.loc.listVersItemLang), overflow: TextOverflow.ellipsis),
                 ),
             ),
             DataColumn(
                 label: ConstrainedBox(
                   constraints: constraintsDataColumn(flexNumber: 4), //SET max width
-                  child: const Text('Infinitif (inf)\nPrétérit (ps)\nParticipe passé (pp)',
+                  child: const Text('(inf) Infinitive\n(ps)Past Simple\n(pp)Past Participle',
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         height: 1.5,
@@ -102,7 +105,7 @@ class _ListVerbState extends ConsumerState<ListVerb> {
             DataColumn(
                 label: ConstrainedBox(
                     constraints: constraintsDataColumn(flexNumber: 2), //SET max width
-                    child: const Center(child:Text('Audios',
+                    child:  Center(child:Text(context.loc.listVersAudios,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -117,9 +120,6 @@ class _ListVerbState extends ConsumerState<ListVerb> {
     ]);
   }
 
-
-
-
   dynamic constraintsDataColumn({required int flexNumber}){
       return BoxConstraints(
         minWidth: ResponsiveContent(context: context).choseSize(
@@ -133,7 +133,7 @@ class _ListVerbState extends ConsumerState<ListVerb> {
     );
   }
 
-  void _onSearchTextChanged(String text) {
+  void _onSearchTextChanged({required String text,required String LocalLangParam}) {
     setState(() {
       filteredData = text.isEmpty
           ? dataList
@@ -142,7 +142,7 @@ class _ListVerbState extends ConsumerState<ListVerb> {
           removeDiacritics(item['infinitif']).toLowerCase().contains(removeDiacritics(text).toLowerCase()) ||
           removeDiacritics(item['pastSimple']).toLowerCase().contains(removeDiacritics(text).toLowerCase()) ||
           removeDiacritics(item['pastParticipe']).toLowerCase().contains(removeDiacritics(text).toLowerCase()) ||
-          removeDiacritics(item[localLang]).toLowerCase().contains(removeDiacritics(text).toLowerCase()))
+          removeDiacritics(item[LocalLangParam]).toLowerCase().contains(removeDiacritics(text).toLowerCase()))
           .toList();
       keydataTable.currentState?.pageTo(0);
     });
@@ -158,8 +158,8 @@ class _ListVerbState extends ConsumerState<ListVerb> {
     return datas;
   }
 
-  Future<void> getListVerbsJson({required String typeListe}) async {
-    List<dynamic> dataListResp=await GetDataVerbs().getDataJson(typeListe: typeListe);
+  Future<void> getListVerbsJson({required String idList}) async {
+    List<dynamic> dataListResp=await GetDataVerbs().getDataJson(idList: idList);
     dataList=dataListResp.toList();
     setState(() {
       dataList=dataListResp.toList();
@@ -167,10 +167,6 @@ class _ListVerbState extends ConsumerState<ListVerb> {
     });
   }
 
-  Future<List<dynamic>> getdataList({required String typeListe}) async {
-    List<dynamic> dataListResp=await GetDataVerbs().getDataJson(typeListe: typeListe);
-    dataList=dataListResp.toList();
-    return dataList;
-  }
+
 
 }

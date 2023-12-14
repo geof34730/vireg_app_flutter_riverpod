@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:localstore/localstore.dart';
 import '../_models/PersonalListModel.dart';
+import '../router.dart';
+import 'FormatData.dart';
 import 'localLang.dart';
 
 
@@ -22,7 +24,7 @@ class Localstorelocal  {
 
   late String langDevice=View.of(context).platformDispatcher.locale.toString().substring(0, 2);
 
-  ///////////////* BEGIN LANG*/////////////////
+  /////////////// BEGIN LANG /////////////////
   dynamic listLangSupported() => context.findAncestorWidgetOfExactType<MaterialApp>()?.supportedLocales;
 
   dynamic getLangLoad() async {
@@ -35,71 +37,81 @@ class Localstorelocal  {
       }
     }
 
-    dynamic getLangLocalStore() async  {
-      return  db.collection('store').doc("config").get().then((value)  => value?["lang"].toString());
-    }
+  dynamic getLangLocalStore() async  {
+    return  db.collection('store').doc("config").get().then((value)  => value?["lang"].toString());
+  }
 
-    void updateLocalstoreLang({required String lang, bool withChange = true}) {
-      db.collection('store').doc("config").set({'lang':lang});
-      db.collection('personalList').doc("8888").set({'id':"8888","title":"dddddd"});
-      db.collection('personalList').doc("85").set({'id':"85","title":"dddddd"});
-      db.collection('personalList').doc("64").set({'id':"64","title":"dddddd"});
+  void updateLocalstoreLang({required String lang, bool withChange = true}) {
+    db.collection('store').doc("config").set({'lang':lang});
+    ref.read(localLangProvider.notifier).change(lang: lang);
+  }
 
-      ref.read(localLangProvider.notifier).change(lang: lang);
-    }
+  void initLang() async {
+    String langApp=await getLangLoad();
+    print('Init lang =>  $langApp');
+    updateLocalstoreLang(lang: await langApp, withChange: true);
+  }
 
-    void initLang() async {
-
-
-      String langApp=await getLangLoad();
-      print('Init lang =>  $langApp');
-      updateLocalstoreLang(lang: await langApp, withChange: true);
-    }
-
-    int getItemLangSelect(){
-      int numItemLang = 0;
-      int numItemLangSelect = 0;
-      for (var langs in this.listLangSupported()) {
-        if (langs.toString() == ref.watch(localLangProvider).toString()) {
-          numItemLangSelect = numItemLang;
-          break;
-        }
-        numItemLang++;
+  int getItemLangSelect(){
+    int numItemLang = 0;
+    int numItemLangSelect = 0;
+    for (var langs in this.listLangSupported()) {
+      if (langs.toString() == ref.watch(localLangProvider).toString()) {
+        numItemLangSelect = numItemLang;
+        break;
       }
-      return numItemLangSelect;
+      numItemLang++;
     }
-    ///* END LANG */////
+    return numItemLangSelect;
+  }
+  ////////// END LANG ////////////
 
-    /////BEGIN DEV TOOLS//////
-    Future<dynamic> getJsonAllLocalStore() async {
-      return db.collection('store').get().then((valueStore)  {
-        return db.collection('personalList').get().then((valuePersonalList)  {
-          return "[${json.encode(valueStore)},${json.encode(valuePersonalList)}]";
-        });
+  Future<dynamic> getJsonAllLocalStore() async {
+    return db.collection('store').get().then((valueStore)  {
+      return db.collection('personalList').get().then((valuePersonalList)  {
+        return "[${json.encode(valueStore)},${json.encode(valuePersonalList)}]";
       });
-    }
-    ////END DEV TOOLS////
+    });
+  }
+  ////////////END DEV TOOLS ///////////
 
-    ////////BEGIN  PERSONALLIST////////////
-    Future<dynamic> updateLocalstoreList({required PersonalListModel listVerbs }) async {
-      print(listVerbs);
-      return "ok";
-    }
+  ////////BEGIN  PERSONALLIST/////////////
+  Future<dynamic> updateLocalstoreList({required PersonalListModel listVerbs }) async {
+    savePersonalList(listVerbs: listVerbs);
+    return "ok";
+  }
 
-    getContentPersonalList({required String idPersonalList}) async{
-      return db.collection('personalList').doc(idPersonalList).get().then((value) => value);
-    }
+  Future<dynamic> getJsonPersonalistLocalStore({required String idList }) async {
+      return db.collection('personalList').doc(idList).get().then((valuePersonalList) async {
+        return valuePersonalList;
+      });
+  }
 
-    savePersonalList({required PersonalListModel listVerbs }){
+  Future<dynamic> getJsonAllPersonalistLocalStore() async {
+    late List ListPerso = [];
+    return db.collection('store').get().then((valueStore) {
+      return db.collection('personalList').get().then((valuePersonalList) {
+        valuePersonalList?.entries.forEach((element) {
+          ListPerso.add(
+              element.value["id"]
+          );
+        });
+        return ListPerso;
+      });
+    });
+  }
 
-    }
+  savePersonalList({required PersonalListModel listVerbs }){
+    db.collection('personalList').doc(listVerbs.id).set(listVerbs.toJson());
+  }
 
-    deletePersonalList({required String idPersonalList}){
+  deletePersonalList({required String idPersonalList}){
+    db.collection('personalList').doc(idPersonalList).delete();
 
-    }
-     ////////END  PERSONALLIST////////////
+    customRoutes.goNamed('Home');
 
-
+  }
+   ////////END  PERSONALLIST////////////
 }
 
 

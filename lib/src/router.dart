@@ -22,7 +22,7 @@ var customRoutes = GoRouter(
         routes: <RouteBase>[
           GoRoute(
             name:"Share",
-            path: 'share/:personalListId',
+            path: 'share/:idList',
             builder: (BuildContext context, GoRouterState state) {
               print("***************** share deep link");
               return Layout(child:Share(key: UniqueKey()),context: context,appBar: true);
@@ -30,23 +30,24 @@ var customRoutes = GoRouter(
           ),
           GoRoute(
             name:"LearnVerb",
-            path: 'learnVerb/:personalListId',
+            path: 'learnVerb/:idList',
             builder: (BuildContext context, GoRouterState state) {
-              return Layout(child:LearnVerb(key: UniqueKey()),bottomNavigationBar: true,indexBottomNavigationBar: 0,context: context);
+              return Layout(child:LearnVerb(key: UniqueKey(),idList:state.pathParameters["idList"]),bottomNavigationBar: true,indexBottomNavigationBar: 0,context: context);
+              return Layout(child:LearnVerb(key: UniqueKey(),idList:"top20"),bottomNavigationBar: true,indexBottomNavigationBar: 0,context: context);
             },
           ),
           GoRoute(
             name:"ListVerb",
-            path: 'listVerb/:personalListId',
+            path: 'listVerb/:idList',
             builder: (BuildContext context, GoRouterState state) {
-              return Layout(child:ListVerb(key: UniqueKey()),bottomNavigationBar: true,indexBottomNavigationBar: 2,context: context,paddinLeftRight: 0.0);
+              return Layout(child:ListVerb(key: UniqueKey(),idList:state.pathParameters["idList"]),bottomNavigationBar: true,indexBottomNavigationBar: 2,context: context,paddinLeftRight: 0.0);
             },
           ),
           GoRoute(
             name:"testVerb",
-            path: 'testVerb/:personalListId',
+            path: 'testVerb/:idList',
             builder: (BuildContext context, GoRouterState state) {
-              return Layout(child:TestVerb(key: UniqueKey()),bottomNavigationBar: true,indexBottomNavigationBar: 1,context: context);
+              return Layout(child:TestVerb(key: UniqueKey(),idList:state.pathParameters["idList"]),bottomNavigationBar: true,indexBottomNavigationBar: 1,context: context);
             },
           ),
           GoRoute(

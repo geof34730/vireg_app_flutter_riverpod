@@ -13,18 +13,14 @@ class BoxCard extends ConsumerWidget {
   const BoxCard({
     required BuildContext this.context,
     required this.colorsList,
-    this.isPersonnalList=false,
-    required this.nbVerbsPerso,
     this.idListPerso = "",
     required String this.titleList
   });
     final BuildContext context;
     final Color colorsList;
-    final bool isPersonnalList;
-
     final String titleList;
     final String idListPerso;
-    final int nbVerbsPerso;
+
 
     @override
     Widget build(BuildContext context, WidgetRef ref) {
@@ -42,11 +38,11 @@ class BoxCard extends ConsumerWidget {
                   padding: EdgeInsets.only(
                       left: 0.0,
                       right: 0.0,
-                      top: (isPersonnalList ? 0.00 : 5.00),
-                      bottom: (nbVerbsPerso == 0 ? 0.0 : 5.0)
+                      top:  5.00,
+                      bottom: 5.0
                   ),
                   child: Transform.translate(
-                    offset: Offset(0, (isPersonnalList ? 5 : 0)),
+                    offset: Offset(0,  0),
                     child: ListTile(
                         title: Column(
                           children: [
@@ -68,40 +64,9 @@ class BoxCard extends ConsumerWidget {
                                   )
                                 ),
                             ),
-                            Visibility(
-                                visible: isPersonnalList,
-                                child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                          padding: const EdgeInsets.only(left: 15.0, bottom: 5.0),
-                                          child: Text(
-                                            '(${nbVerbsPerso} verbe${((nbVerbsPerso >
-                                                1) ? 's' : '')})',
-                                            style: const TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 12.0
-                                            ),
-                                          )
-                                      )
-                                    ]
-                                )
-                            )
                           ],),
                         subtitle:
-                        (nbVerbsPerso == 0
-                            ?
-                        const Padding(
-                            padding: EdgeInsets.only(top: 11.0, bottom: 12.0),
-                            child: Text(
-                              'Vous n\'avez pas de verbes dans cette liste\nAjoutez en, en modifiant la liste.',
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                              textAlign: TextAlign.center,
-                            )
-                        )
-                            :
+
                         Wrap(
                           alignment: WrapAlignment.center,
                           verticalDirection: VerticalDirection.down,
@@ -110,25 +75,23 @@ class BoxCard extends ConsumerWidget {
                           runSpacing: 10.0,
                           // gap between lines
                           children: [
-                            ElevatedButtonCardHome(
-                                label: context.loc.widgetBoxCardTest,
-                                iconContent: Icons.quiz,
-                                indexRubrique: 0,
-                                context: context,
-                                typeList: idListPerso,
-                                onClickButton: () => {
-                                  customRoutes.go('/testVerb/$idListPerso')
-                                }
-                            ),
 
                             ElevatedButtonCardHome(
                                 label: context.loc.widgetBoxCardLearn,
                                 iconContent: Icons.school,
                                 indexRubrique: 1,
                                 context: context,
-                                typeList: idListPerso,
                                 onClickButton: () => {
                                   customRoutes.go('/learnVerb/$idListPerso')
+                                }
+                            ),
+                            ElevatedButtonCardHome(
+                                label: context.loc.widgetBoxCardTest,
+                                iconContent: Icons.quiz,
+                                indexRubrique: 0,
+                                context: context,
+                                onClickButton: () => {
+                                  customRoutes.go('/testVerb/$idListPerso')
                                 }
                             ),
 
@@ -137,36 +100,15 @@ class BoxCard extends ConsumerWidget {
                                 iconContent: Icons.visibility,
                                 indexRubrique: 2,
                                 context: context,
-                                typeList: idListPerso,
                                 onClickButton: () => {
                                   customRoutes.go('/listVerb/$idListPerso')
                                 }
                             ),
                           ],
                         )
-                        )
                     ),
                   )),
-              (isPersonnalList
-                  ?
-              /*Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  ElevatedButtonDeleteEdite(visibilityButton:(widget.nbVerbsPerso==0 ? false : true),colorIcon: Colors.blue, iconContent: Icons.share, context: context,
-                      onClickButton: () => {widget.onClickShare.call(idPersonalList: idPersonalList, ListePerso: widget.ListePerso)}
-                  ),
-                  ElevatedButtonDeleteEdite(visibilityButton: widget.isListShare ? false : true,colorIcon: Colors.green, iconContent: Icons.edit, context: context,
-                      onClickButton: () => {widget.onClickEdit.call(idPersonalList: idPersonalList,ownListShare:widget.ownListShare)}
-                  ),
-                  ElevatedButtonDeleteEdite(colorIcon: Colors.red, iconContent: Icons.delete, context: context,
-                      onClickButton: () => {widget.onClickDelete.call(idPersonalList: idPersonalList,ownListShare:widget.ownListShare)}
-                  ),
-                ],
-              )*/
-              Text('ddd')
-                  :
-              const SizedBox()
-              ),
+
             ],
           )
       );
