@@ -54,6 +54,8 @@ dependencies:
   audioplayers: ^5.2.1
   diacritic: ^0.1.4
   flip_card: ^0.7.0
+  flutter_material_color_picker: ^1.2.0
+  uuid: ^4.2.2
 
 dev_dependencies:
   flutter_test:

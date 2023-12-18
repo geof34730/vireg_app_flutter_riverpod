@@ -10,13 +10,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:loader_overlay/loader_overlay.dart';
-var customRoutes = GoRouter(
+final customRoutesVireg = GoRouter(
     routes: <RouteBase>[
       GoRoute(
         name:"Home",
         path: '/',
         builder: (BuildContext context, GoRouterState state) {
           print("build route home");
+
           return Layout(child:Home(key: UniqueKey()),context: context);
         },
         routes: <RouteBase>[
@@ -25,7 +26,7 @@ var customRoutes = GoRouter(
             path: 'share/:idList',
             builder: (BuildContext context, GoRouterState state) {
               print("***************** share deep link");
-              return Layout(child:Share(key: UniqueKey()),context: context,appBar: true);
+              return Layout(child:Share(key: UniqueKey(),idList:state.pathParameters["idList"]),context: context,appBar: true);
             },
           ),
           GoRoute(
@@ -33,7 +34,6 @@ var customRoutes = GoRouter(
             path: 'learnVerb/:idList',
             builder: (BuildContext context, GoRouterState state) {
               return Layout(child:LearnVerb(key: UniqueKey(),idList:state.pathParameters["idList"]),bottomNavigationBar: true,indexBottomNavigationBar: 0,context: context);
-              return Layout(child:LearnVerb(key: UniqueKey(),idList:"top20"),bottomNavigationBar: true,indexBottomNavigationBar: 0,context: context);
             },
           ),
           GoRoute(
@@ -51,22 +51,43 @@ var customRoutes = GoRouter(
             },
           ),
           GoRoute(
-            name: 'ListPersoStep1',
-            path: 'ListPersoStep1',
+            name: 'addListPersoStep1',
+            path: 'add/ListPersoStep1',
             builder: (BuildContext context, GoRouterState state) {
-              print("build route ListPersoStep1");
+              print("build route Add ListPersoStep1");
               return Layout(child:ListPersoStep1(key: UniqueKey()),context: context);
             },
             routes: <RouteBase>[
               GoRoute(
-                  name: 'ListPersoStep2',
-                  path: 'ListPersoStep2',
+                  name: 'addListPersoStep2',
+                  path: 'addListPersoStep2/:idList',
                   builder: (BuildContext context, GoRouterState state) {
-                    print("build route ListPersoStep2");
-                    return Layout(child:ListPersoStep2(key: UniqueKey()),context: context);
+                    print("build route Edit ListPersoStep2");
+                    return Layout(child:ListPersoStep2(key: UniqueKey(),idList:state.pathParameters["idList"]),context: context);
                   })
             ],
           ),
+          GoRoute(
+            name: 'editListPersoStep1',
+            path: 'edit/ListPersoStep1/:idList',
+            builder: (BuildContext context, GoRouterState state) {
+              print("build route Edit ListPersoStep1");
+              return Layout(child:ListPersoStep1(key: UniqueKey(),idList:state.pathParameters["idList"]),context: context);
+            },
+            routes: <RouteBase>[
+              GoRoute(
+                  name: 'editListPersoStep2',
+                  path: 'editListPersoStep2',
+                  builder: (BuildContext context, GoRouterState state) {
+                    print("build route Edit ListPersoStep2");
+                    return Layout(child:ListPersoStep2(key: UniqueKey(),idList:state.pathParameters["idList"]),context: context);
+                  })
+            ],
+          ),
+
+
+
+
         ],
       ),
     ],

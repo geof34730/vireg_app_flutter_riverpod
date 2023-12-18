@@ -75,14 +75,13 @@ class BoxCard extends ConsumerWidget {
                           runSpacing: 10.0,
                           // gap between lines
                           children: [
-
                             ElevatedButtonCardHome(
                                 label: context.loc.widgetBoxCardLearn,
                                 iconContent: Icons.school,
                                 indexRubrique: 1,
                                 context: context,
                                 onClickButton: () => {
-                                  customRoutes.go('/learnVerb/$idListPerso')
+                                  context.go('/learnVerb/$idListPerso')
                                 }
                             ),
                             ElevatedButtonCardHome(
@@ -91,17 +90,16 @@ class BoxCard extends ConsumerWidget {
                                 indexRubrique: 0,
                                 context: context,
                                 onClickButton: () => {
-                                  customRoutes.go('/testVerb/$idListPerso')
+                                  context.go('/testVerb/$idListPerso')
                                 }
                             ),
-
                             ElevatedButtonCardHome(
                                 label: context.loc.widgetBoxCardList,
                                 iconContent: Icons.visibility,
                                 indexRubrique: 2,
                                 context: context,
                                 onClickButton: () => {
-                                  customRoutes.go('/listVerb/$idListPerso')
+                                  context.go('/listVerb/$idListPerso')
                                 }
                             ),
                           ],

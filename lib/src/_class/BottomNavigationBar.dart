@@ -22,16 +22,16 @@ class ViregBottomNavigationBar {
     void goItemNav({required int index}){
       switch (index) {
         case 0:
-          customRoutes.go('/learnVerb/${this.getParamList()}');
+          context.go('/learnVerb/${this.getParamList()}');
           break;
         case 1:
-          customRoutes.go('/testVerb/${this.getParamList()}');
+          context.go('/testVerb/${this.getParamList()}');
           break;
         case 2:
-          customRoutes.go('/listVerb/${this.getParamList()}');
+          context.go('/listVerb/${this.getParamList()}');
           break;
         default:
-          customRoutes.go('/');
+          context.go('/');
       }
     }
 

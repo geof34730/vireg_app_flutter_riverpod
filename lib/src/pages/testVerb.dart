@@ -54,6 +54,8 @@ class _TestVerbState extends ConsumerState<TestVerb> {
   @override
   Widget build(BuildContext context) {
     locallang=ref.watch(localLangProvider);
+
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [

@@ -16,5 +16,12 @@
   "listVersItemLang" : "Français",
   "boxCardListePersoAllerteNoVerbs" : "Vous n'avez pas de verbes dans cette liste Ajoutez en, en modifiant la liste.",
   "boxCardVerbeSingulier" : "verbe",
-  "boxCardVerbePluriel" : "verbes"
+  "boxCardVerbePluriel" : "verbes",
+  "homeDesciptionListePerso":"Créez vos propres listes de verbes personnalisées pour apprendre et réviser les verbes de votre choix.",
+  "listePersoCreateTitle":"Création liste personnalisée",
+  "listePersoLabelTitleField":"Titre de votre liste",
+  "listePersoChoiseColor":"Choisissez la couleur de votre liste",
+  "listePersoButtonSuivant" : "Suivant"
+
+
 }

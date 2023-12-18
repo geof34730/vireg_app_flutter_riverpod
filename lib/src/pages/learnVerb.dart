@@ -50,7 +50,7 @@ class _LearnVerbState extends ConsumerState<LearnVerb> {
               if (snapshot.hasError) {
                 return const Text('Error');
               } else if (snapshot.hasData) {
-                return const SizedBox();
+                return SizedBox();
               } else {
                 return const Text('Empty data');
               }
@@ -69,171 +69,198 @@ class _LearnVerbState extends ConsumerState<LearnVerb> {
 
       });
     }
+
     double sizeCard = getWidthAndHeightCard();
-    return Column(mainAxisAlignment: MainAxisAlignment.center, mainAxisSize: MainAxisSize.max, children: [
-       Column(mainAxisSize: MainAxisSize.max, children: [
-        Padding(
-          padding: EdgeInsets.only(top: 15.0, bottom: 10.0),
-          child: Text(context.loc.learnClickCarte),
-        )
-      ]),
-      GestureDetector(
-        onHorizontalDragEnd: (DragEndDetails details) {
-          if (details.primaryVelocity! > 0) {
-            learnBack();
-          } else if (details.primaryVelocity! < 0) {
-            learnNext();
-          }
-        },
-        child: SizedBox(
-          width: sizeCard,
-          height: sizeCard,
-          child: InkWell(
-              onTap: () {
-                cardKeys[learnNumCard].currentState?.toggleCard();
-                setState(() {
-                  if (positionCard == 'back') {
-                    positionCard = 'front';
-                  }
-                  else {
-                    positionCard = 'back';
-                  }
-                });
+    return Column(mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Column(mainAxisSize: MainAxisSize.max, children: [
+              Padding(
+                padding: EdgeInsets.only(top: 15.0, bottom: 10.0),
+                child: Text(context.loc.learnClickCarte),
+              )
+            ]),
+            GestureDetector(
+              onHorizontalDragEnd: (DragEndDetails details) {
+                if (details.primaryVelocity! > 0) {
+                  learnBack();
+                } else if (details.primaryVelocity! < 0) {
+                  learnNext();
+                }
               },
-              child: Stack(
-                  children: [
-                    AnimatedPositioned(
-                        width: sizeCard,
-                        height: sizeCard,
-                        curve: Curves.easeInOut,
-                        left: getPositionCardWraperCard(learnNumCard: learnNumCard),
-                        duration: const Duration(milliseconds: 500),
-                        child: Wrap(
-                            direction: Axis.vertical,
-                            spacing: 30.0, // gap between adjacent chips
-                            runSpacing: getWidthAndHeightCard() / 15, // gap between lines
-                            children: [
-                              SizedBox(
-                                key: cardKeys[0],
-                                width: sizeCard,
-                                height: sizeCard,
-                              ),
-                              for (int i = 0; i < dataList.length; i++) ...[
-                                FlipCard(
-                                  onFlip: () {
-                                    visibleButtonPlay = false;
-                                    setState(() {});
-                                  },
-                                  onFlipDone: (isFront) {
-                                    if (isFront) {
-                                      //widget.returnManageInsterstitial.call();
-                                    }
-                                    visibleButtonPlay = isFront;
-                                    setState(() {});
-                                  },
-                                  key: cardKeys[i + 1],
-                                  fill: Fill.fillBack,
-                                  flipOnTouch: true,
-                                  direction: FlipDirection.HORIZONTAL,
-                                  front: Container(
-                                      padding: const EdgeInsets.only(left: 5.0, right: 5.0),
+              child: SizedBox(
+                width: sizeCard,
+                height: sizeCard,
+                child: InkWell(
+                    onTap: () {
+                      cardKeys[learnNumCard].currentState?.toggleCard();
+                      setState(() {
+                        if (positionCard == 'back') {
+                          positionCard = 'front';
+                        }
+                        else {
+                          positionCard = 'back';
+                        }
+                      });
+                    },
+                    child: Stack(
+                        children: [
+                          AnimatedPositioned(
+                              width: sizeCard,
+                              height: sizeCard,
+                              curve: Curves.easeInOut,
+                              left: getPositionCardWraperCard(
+                                  learnNumCard: learnNumCard),
+                              duration: const Duration(milliseconds: 500),
+                              child: Wrap(
+                                  direction: Axis.vertical,
+                                  spacing: 30.0,
+                                  // gap between adjacent chips
+                                  runSpacing: getWidthAndHeightCard() / 15,
+                                  // gap between lines
+                                  children: [
+                                    SizedBox(
+                                      key: cardKeys[0],
                                       width: sizeCard,
                                       height: sizeCard,
-                                      color: Colors.blue,
-                                      child: Center(
-                                          child: Text(
-                                            toTitleCase(dataList[i][locallang]),
-                                            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 30.00),
-                                            textAlign: TextAlign.center,
-                                          ))),
-                                  back: Container(
-                                      padding: const EdgeInsets.only(left: 5.0, right: 5.0),
-                                      width: sizeCard,
-                                      height: sizeCard,
-                                      color: Colors.blue,
-                                      child: Center(
-                                          child: Text(
-                                            "(inf) ${toTitleCase(dataList[i]['infinitif'].toString())}\n(ps) ${toTitleCase(dataList[i]['pastSimple'].toString())}\n(pp) ${toTitleCase(
-                                                dataList[i]["pastParticipe"].toString())}",
-                                            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 30.00),
-                                            textAlign: TextAlign.center,
-                                          ))),
-                                ),
-                              ],
-                            ])
+                                    ),
+                                    for (int i = 0; i <
+                                        dataList.length; i++) ...[
+                                      FlipCard(
+                                        onFlip: () {
+                                          visibleButtonPlay = false;
+                                          setState(() {});
+                                        },
+                                        onFlipDone: (isFront) {
+                                          if (isFront) {
+                                            //widget.returnManageInsterstitial.call();
+                                          }
+                                          visibleButtonPlay = isFront;
+                                          setState(() {});
+                                        },
+                                        key: cardKeys[i + 1],
+                                        fill: Fill.fillBack,
+                                        flipOnTouch: true,
+                                        direction: FlipDirection.HORIZONTAL,
+                                        front: Container(
+                                            padding: const EdgeInsets.only(
+                                                left: 5.0, right: 5.0),
+                                            width: sizeCard,
+                                            height: sizeCard,
+                                            color: Colors.blue,
+                                            child: Center(
+                                                child: Text(
+                                                  toTitleCase(
+                                                      dataList[i][locallang]),
+                                                  style: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight: FontWeight
+                                                          .bold,
+                                                      fontSize: 30.00),
+                                                  textAlign: TextAlign.center,
+                                                ))),
+                                        back: Container(
+                                            padding: const EdgeInsets.only(
+                                                left: 5.0, right: 5.0),
+                                            width: sizeCard,
+                                            height: sizeCard,
+                                            color: Colors.blue,
+                                            child: Center(
+                                                child: Text(
+                                                  "(inf) ${toTitleCase(
+                                                      dataList[i]['infinitif']
+                                                          .toString())}\n(ps) ${toTitleCase(
+                                                      dataList[i]['pastSimple']
+                                                          .toString())}\n(pp) ${toTitleCase(
+                                                      dataList[i]["pastParticipe"]
+                                                          .toString())}",
+                                                  style: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight: FontWeight
+                                                          .bold,
+                                                      fontSize: 30.00),
+                                                  textAlign: TextAlign.center,
+                                                ))),
+                                      ),
+                                    ],
+                                  ])
 
-                    ),
-                    Visibility(
-                        visible: visibleButtonPlay,
-                        child: Positioned(
-                          top: 20,
-                          right: 20,
-                          child: SizedBox(
-                              height: 54,
-                              width: 54,
-                              child: PlaySoond(dataVerbe: dataList[learnNumCard - 1],
-                                  typeAudio: "all",
-                                  iconColor: Colors.black,
-                                  buttonColor: Colors.white,
-                                  sizeIcon: 30).buttonPlay()
                           ),
-                        )
-                    )
-                  ])
-          ),
-        ),
-      ),
-
-
-      Column(
-          mainAxisSize: MainAxisSize.max, children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Padding(
-                padding: const EdgeInsets.only(top: 10.0),
-                child: Visibility(
-                  visible: learnNumCard != 1 && learnNumCard != 0,
-                  child: FloatingActionButton(
-                    onPressed: () async {
-                      learnBack();
-                    },
-                    backgroundColor: Colors.blue,
-                    child: const Icon(
-                      Icons.navigate_before,
-                      color: Colors.white,
-                    ),
-                  ),
-                )
-            ),
-            Padding(
-                padding: EdgeInsets.only(top: 25.0, left: (learnNumCard == 1 ? 55 : 0), right: (learnNumCard == dataList.length ? 55 : 0)),
-                child: Text('$learnNumCard/${dataList.length}')
+                          Visibility(
+                              visible: visibleButtonPlay,
+                              child: Positioned(
+                                top: 20,
+                                right: 20,
+                                child: SizedBox(
+                                    height: 54,
+                                    width: 54,
+                                    child: PlaySoond(
+                                        dataVerbe: dataList[learnNumCard - 1],
+                                        typeAudio: "all",
+                                        iconColor: Colors.black,
+                                        buttonColor: Colors.white,
+                                        sizeIcon: 30).buttonPlay()
+                                ),
+                              )
+                          )
+                        ])
+                ),
+              ),
             ),
 
 
-            Padding(
-                padding: const EdgeInsets.only(top: 10.0),
-                child: Visibility(
-                  visible: learnNumCard <= dataList.length - 1,
-                  child: FloatingActionButton(
-                    onPressed: () {
-                      learnNext();
-                    },
-                    backgroundColor: Colors.blue,
-                    child: const Icon(
-                      Icons.navigate_next,
-                      color: Colors.white,
-                    ),
+            Column(
+                mainAxisSize: MainAxisSize.max, children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: Visibility(
+                        visible: learnNumCard != 1 && learnNumCard != 0,
+                        child: FloatingActionButton(
+                          onPressed: () async {
+                            learnBack();
+                          },
+                          backgroundColor: Colors.blue,
+                          child: const Icon(
+                            Icons.navigate_before,
+                            color: Colors.white,
+                          ),
+                        ),
+                      )
                   ),
-                )
-            )
-          ],
-        ),
-      ])
-    ]);
+                  Padding(
+                      padding: EdgeInsets.only(top: 25.0,
+                          left: (learnNumCard == 1 ? 55 : 0),
+                          right: (learnNumCard == dataList.length ? 55 : 0)),
+                      child: Text('$learnNumCard/${dataList.length}')
+                  ),
+
+
+                  Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: Visibility(
+                        visible: learnNumCard <= dataList.length - 1,
+                        child: FloatingActionButton(
+                          onPressed: () {
+                            learnNext();
+                          },
+                          backgroundColor: Colors.blue,
+                          child: const Icon(
+                            Icons.navigate_next,
+                            color: Colors.white,
+                          ),
+                        ),
+                      )
+                  )
+                ],
+              ),
+            ])
+          ]);
   }
+
 
   Future<List<dynamic>> getdataList({required String idList}) async {
     print('getdataList : $idList');
@@ -241,6 +268,7 @@ class _LearnVerbState extends ConsumerState<LearnVerb> {
     dataList=dataListResp.toList();
     return dataList;
   }
+
   Future<void> getListVerbsJson({required String idList}) async {
     List<dynamic> dataListResp=await GetDataVerbs().getDataJson(idList: idList);
     dataList=dataListResp.toList();

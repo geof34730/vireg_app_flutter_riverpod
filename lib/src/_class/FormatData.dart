@@ -3,7 +3,7 @@ import '../_models/PersonalListModel.dart';
 
 class FormatData {
 
-  PersonalListModel responseFormatForPersonalListModel({required String dataReponse}){
+  PersonalListModel responseFormatForPersonalListModel({required dynamic dataReponse}){
     var dataReturn = jsonDecode(jsonDecode(dataReponse)["data"]);
     List<dynamic> formatListVerbForModels=[];
     for (var dataFormat in dataReturn["ListIdVerbs"]) {

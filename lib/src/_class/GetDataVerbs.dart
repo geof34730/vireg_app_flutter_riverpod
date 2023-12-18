@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:localstore/localstore.dart';
 
 class GetDataVerbs  {
-  final _db = Localstore.instance;
+  final db = Localstore.instance;
 
   Future<List<dynamic>> getDataJson({required String idList}) async {
       final String AllVerbsReponse = await rootBundle.loadString('assets/data/all.json');
@@ -14,10 +14,10 @@ class GetDataVerbs  {
         ///LISTE PERSO
           print("liste perso");
             for (var item in jsonDecode(AllVerbsReponse)) {
-              //print(await isIdInList(idVerbs: item['id']));
-              if(await isIdInList(idVerbs: item['id'],UUIDList:idList.replaceAll('personalList-', ''))) {
+                if (await isIdInList(idVerbs: item['id'],idList: idList.replaceAll('personalList-', ''))) {
+                  print(item);
                   data.add(item);
-              }
+                }
             }
       }
       else {
@@ -34,22 +34,18 @@ class GetDataVerbs  {
           }
         }
       }
-      print(data);
      return data;
   }
 
-  Future<bool> isIdInList({required int idVerbs,required UUIDList}) async {
+  Future<bool> isIdInList({required int idVerbs,required String idList}) async {
       bool valueReturn = false;
-      await _db.collection('personalLists').doc(UUIDList).get().then((value) {
-        for (var item in value?['ListIdVerbs']) {
-          if (item['id'].toString() == idVerbs.toString()) {
-            print("$idVerbs isIdInList list existe et id existe pas dans la liste perso");
+      await db.collection('personalList').doc(idList).get().then((value)  {
+        for (var itemVerb in value?['listIdVerbs']) {
+          if (itemVerb['id'].toString() == idVerbs.toString()) {
             valueReturn = true;
           }
         }
       });
-    return valueReturn;
+      return valueReturn;
   }
-
-
 }

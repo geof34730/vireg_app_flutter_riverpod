@@ -33,7 +33,7 @@ class MyApp extends ConsumerWidget {
 
     return MaterialApp.router(
       theme: getThemeData(),
-      routerConfig: customRoutes,
+      routerConfig: customRoutesVireg,
       locale: Locale(ref.watch(localLangProvider)),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,

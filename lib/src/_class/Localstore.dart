@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:localstore/localstore.dart';
 import '../_models/PersonalListModel.dart';
 import '../router.dart';
@@ -105,11 +106,32 @@ class Localstorelocal  {
     db.collection('personalList').doc(listVerbs.id).set(listVerbs.toJson());
   }
 
+  createPersonalList({required String UUIDList,required String titleList, required int colorList}){
+    final personalListCreate=PersonalListModel(
+        id: UUIDList,
+        color: colorList,
+        title: titleList,
+        listIdVerbs: [],
+        ownListShare: true
+    );
+    db.collection('personalList').doc(UUIDList).set(personalListCreate.toJson());
+  }
+
+  updatePersonalList({required String UUIDList,required String titleList, required int colorList, required dynamic listIdVerbs, required bool isListShare, required bool ownListShare }){
+    final personalListCreate=PersonalListModel(
+        id: UUIDList,
+        color: colorList,
+        title: titleList,
+        listIdVerbs: [],
+        ownListShare:ownListShare,
+        isListShare:isListShare
+    );
+    db.collection('personalList').doc(UUIDList).set(personalListCreate.toJson());
+  }
+
   deletePersonalList({required String idPersonalList}){
     db.collection('personalList').doc(idPersonalList).delete();
-
-    customRoutes.goNamed('Home');
-
+    context.go('/');
   }
    ////////END  PERSONALLIST////////////
 }
