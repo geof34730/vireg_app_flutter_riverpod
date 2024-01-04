@@ -14,6 +14,7 @@ import 'package:uuid/uuid.dart';
 
 import '../_class/FormatData.dart';
 import '../_class/Localstore.dart';
+import '../_models/ListVerbsModel.dart';
 import '../_utils/front.dart';
 
 var uuid = const Uuid();
@@ -30,11 +31,11 @@ class _ListPersoStep1State extends ConsumerState<ListPersoStep1> {
   bool formValide = false;
   int etapeForm = 1;
   var localstoreLocalObj=null;
-  var UUIDList = uuid.v4();
+  String  UUIDList = uuid.v4();
   bool editMode=false;
   dynamic jsonEditPersonalList=null;
   bool loadDataEdit=false;
-  dynamic listIdVerbs=[];
+  List<ListVerbsModel> listIdVerbs=[];
   bool isListShare = false;
   bool ownListShare = false;
 
@@ -47,13 +48,17 @@ class _ListPersoStep1State extends ConsumerState<ListPersoStep1> {
         editMode = true;
         UUIDList = widget.idList!;
         Localstorelocal(ref: ref, context: context).getJsonPersonalistLocalStore(idList: UUIDList).then((value) {
+          List<ListVerbsModel> AlllistIdVerbs=[];
           titleList.text = value["title"];
           colorList = value["color"].toString();
-          listIdVerbs = value["listIdVerbs"];
+          listIdVerbs = AlllistIdVerbs;
           isListShare = value["isListShare"];
           ownListShare = value["ownListShare"];
           loadDataEdit=true;
           formValide = true;
+          value["listIdVerbs"].forEach((value) {
+            AlllistIdVerbs.add(ListVerbsModel(id: value.id));
+          });
             setState(() {
 
             });
@@ -71,7 +76,6 @@ class _ListPersoStep1State extends ConsumerState<ListPersoStep1> {
   @override
   Widget build(BuildContext context) {
     localstoreLocalObj=Localstorelocal(ref: ref,context: context);
-
     return Column(
       mainAxisSize: MainAxisSize.max,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -151,7 +155,7 @@ class _ListPersoStep1State extends ConsumerState<ListPersoStep1> {
                   ? () {
                        (editMode
                           ?
-                          updatePersonalListStep1()
+                          updatePersonalListStep1(next:true)
                           :
                            createList()
                         );
@@ -192,7 +196,7 @@ class _ListPersoStep1State extends ConsumerState<ListPersoStep1> {
     setState(() {});
   }
 
-  Future<void> updatePersonalListStep1() async {
+  Future<void> updatePersonalListStep1({bool next =false}) async {
     print("update Personal List");
       await localstoreLocalObj.updatePersonalList(
           UUIDList:UUIDList,
@@ -202,7 +206,10 @@ class _ListPersoStep1State extends ConsumerState<ListPersoStep1> {
           isListShare : isListShare,
           ownListShare : ownListShare,
       );
-    nextPersonalList();
+      if(next){
+        nextPersonalList();
+      }
+
   }
 
   void nextPersonalList(){

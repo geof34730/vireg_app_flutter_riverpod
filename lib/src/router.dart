@@ -17,7 +17,6 @@ final customRoutesVireg = GoRouter(
         path: '/',
         builder: (BuildContext context, GoRouterState state) {
           print("build route home");
-
           return Layout(child:Home(key: UniqueKey()),context: context);
         },
         routes: <RouteBase>[
@@ -63,7 +62,7 @@ final customRoutesVireg = GoRouter(
                   path: 'addListPersoStep2/:idList',
                   builder: (BuildContext context, GoRouterState state) {
                     print("build route Edit ListPersoStep2");
-                    return Layout(child:ListPersoStep2(key: UniqueKey(),idList:state.pathParameters["idList"]),context: context);
+                    return Layout(child:ListPersoStep2(key: UniqueKey(),idList:state.pathParameters["idList"]),context: context,paddinLeftRight: 0.0);
                   })
             ],
           ),
@@ -80,7 +79,7 @@ final customRoutesVireg = GoRouter(
                   path: 'editListPersoStep2',
                   builder: (BuildContext context, GoRouterState state) {
                     print("build route Edit ListPersoStep2");
-                    return Layout(child:ListPersoStep2(key: UniqueKey(),idList:state.pathParameters["idList"]),context: context);
+                    return Layout(child:ListPersoStep2(key: UniqueKey(),idList:state.pathParameters["idList"]),context: context,paddinLeftRight: 0.0);
                   })
             ],
           ),

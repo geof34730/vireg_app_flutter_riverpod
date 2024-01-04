@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:Vireg/src/_models/ListVerbsModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -39,6 +40,7 @@ class Localstorelocal  {
     }
 
   dynamic getLangLocalStore() async  {
+    return  db.collection('store').doc("config").get().then((value)  => value?["lang"].toString());
     return  db.collection('store').doc("config").get().then((value)  => value?["lang"].toString());
   }
 
@@ -117,12 +119,12 @@ class Localstorelocal  {
     db.collection('personalList').doc(UUIDList).set(personalListCreate.toJson());
   }
 
-  updatePersonalList({required String UUIDList,required String titleList, required int colorList, required dynamic listIdVerbs, required bool isListShare, required bool ownListShare }){
+  updatePersonalList({required String UUIDList,required String titleList, required int colorList, required List<ListVerbsModel> listIdVerbs, required bool isListShare, required bool ownListShare }){
     final personalListCreate=PersonalListModel(
         id: UUIDList,
         color: colorList,
         title: titleList,
-        listIdVerbs: [],
+        listIdVerbs: listIdVerbs,
         ownListShare:ownListShare,
         isListShare:isListShare
     );

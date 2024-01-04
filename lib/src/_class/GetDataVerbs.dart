@@ -6,16 +6,15 @@ import 'package:localstore/localstore.dart';
 class GetDataVerbs  {
   final db = Localstore.instance;
 
-  Future<List<dynamic>> getDataJson({required String idList}) async {
+  Future<List<dynamic>> getDataJson({required String idList, bool personalList = false}) async {
       final String AllVerbsReponse = await rootBundle.loadString('assets/data/all.json');
       final List<dynamic> dataAllVerbs = await json.decode(AllVerbsReponse);
       List<dynamic> data = [];
-      if(idList.contains('personalList-')){
+      if(personalList){
         ///LISTE PERSO
           print("liste perso");
             for (var item in jsonDecode(AllVerbsReponse)) {
-                if (await isIdInList(idVerbs: item['id'],idList: idList.replaceAll('personalList-', ''))) {
-                  print(item);
+                if (await isIdInList(idVerbs: item['id'],idList: idList)) {
                   data.add(item);
                 }
             }
@@ -41,7 +40,7 @@ class GetDataVerbs  {
       bool valueReturn = false;
       await db.collection('personalList').doc(idList).get().then((value)  {
         for (var itemVerb in value?['listIdVerbs']) {
-          if (itemVerb['id'].toString() == idVerbs.toString()) {
+          if (itemVerb.id.toString() == idVerbs.toString()) {
             valueReturn = true;
           }
         }

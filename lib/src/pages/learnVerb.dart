@@ -39,6 +39,7 @@ class _LearnVerbState extends ConsumerState<LearnVerb> {
   Widget build(BuildContext context) {
     locallang=ref.watch(localLangProvider);
     print("dataList.isEmpty: ${dataList.isEmpty}");
+
     if(dataList.isEmpty) {
       return FutureBuilder<List<dynamic>>(
           future: getdataList(idList: widget.idList.toString()),

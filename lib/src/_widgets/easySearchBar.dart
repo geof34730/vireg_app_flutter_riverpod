@@ -1,5 +1,6 @@
 import 'package:Vireg/src/_utils/string.dart';
 import 'package:Vireg/src/localization/app_localizations_context.dart';
+import 'package:Vireg/src/router.dart';
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -27,8 +28,19 @@ class WidgetsEasySearchBar extends ConsumerWidget implements PreferredSizeWidget
     /*******END Manage lang*********/
 
     return EasySearchBar(
-        callBackBackNav: () => {
-          Navigator.pop(context)
+        callBackBackNav: () async {
+          String urlCurrentPage = GoRouter.of(context).routeInformationProvider.value.uri.toString();
+          int positionTypeUrl = urlCurrentPage.indexOf('addListPersoStep2/');
+          if(positionTypeUrl>0){
+          //  String idList = urlCurrentPage.substring(positionTypeUrl+18, urlCurrentPage.length);
+         //   final urlBack =  await customRoutesVireg.pushNamed("home");
+          //  print(urlBack);
+            Navigator.pop(context);
+
+          }
+          else{
+            Navigator.pop(context);
+          }
         },
         animationDuration: const Duration(milliseconds: 100),
         systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Colors.blue),
@@ -48,12 +60,6 @@ class WidgetsEasySearchBar extends ConsumerWidget implements PreferredSizeWidget
             )
           ],
         ),
-        leading:Builder(
-            builder: (BuildContext context) {
-              return SizedBox();
-              },
-          ),
-
         actions: [
           DropdownButtonHideUnderline(
             child: DropdownButton<Locale>(
