@@ -56,12 +56,10 @@ class _ListPersoStep1State extends ConsumerState<ListPersoStep1> {
           ownListShare = value["ownListShare"];
           loadDataEdit=true;
           formValide = true;
-          value["listIdVerbs"].forEach((value) {
-            AlllistIdVerbs.add(ListVerbsModel(id: value.id));
+          value["listIdVerbs"].forEach((valueListVerbs) {
+            AlllistIdVerbs.add(ListVerbsModel(id: valueListVerbs.id));
           });
-            setState(() {
-
-            });
+          setState(() {});
         });
       }
     }

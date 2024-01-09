@@ -30,23 +30,23 @@ final customRoutesVireg = GoRouter(
           ),
           GoRoute(
             name:"LearnVerb",
-            path: 'learnVerb/:idList',
+            path: 'learnVerb/:idList/:perso',
             builder: (BuildContext context, GoRouterState state) {
-              return Layout(child:LearnVerb(key: UniqueKey(),idList:state.pathParameters["idList"]),bottomNavigationBar: true,indexBottomNavigationBar: 0,context: context);
+              return Layout(child:LearnVerb(key: UniqueKey(),idList:state.pathParameters["idList"],personalList:state.pathParameters["perso"]),bottomNavigationBar: true,indexBottomNavigationBar: 0,context: context);
             },
           ),
           GoRoute(
             name:"ListVerb",
-            path: 'listVerb/:idList',
+            path: 'listVerb/:idList/:perso',
             builder: (BuildContext context, GoRouterState state) {
-              return Layout(child:ListVerb(key: UniqueKey(),idList:state.pathParameters["idList"]),bottomNavigationBar: true,indexBottomNavigationBar: 2,context: context,paddinLeftRight: 0.0);
+              return Layout(child:ListVerb(key: UniqueKey(),idList:state.pathParameters["idList"],personalList:state.pathParameters["perso"]),bottomNavigationBar: true,indexBottomNavigationBar: 2,context: context,paddinLeftRight: 0.0);
             },
           ),
           GoRoute(
             name:"testVerb",
-            path: 'testVerb/:idList',
+            path: 'testVerb/:idList/:perso',
             builder: (BuildContext context, GoRouterState state) {
-              return Layout(child:TestVerb(key: UniqueKey(),idList:state.pathParameters["idList"]),bottomNavigationBar: true,indexBottomNavigationBar: 1,context: context);
+              return Layout(child:TestVerb(key: UniqueKey(),idList:state.pathParameters["idList"],personalList:state.pathParameters["perso"]),bottomNavigationBar: true,indexBottomNavigationBar: 1,context: context);
             },
           ),
           GoRoute(
@@ -83,10 +83,6 @@ final customRoutesVireg = GoRouter(
                   })
             ],
           ),
-
-
-
-
         ],
       ),
     ],

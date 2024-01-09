@@ -1,5 +1,6 @@
 import 'dart:core';
 
+import 'package:Vireg/src/_models/PersonalListModel.dart';
 import 'package:Vireg/src/localization/app_localizations_context.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,7 @@ class Home extends ConsumerStatefulWidget {
 
 class _HomeState extends ConsumerState<Home> {
   final FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
-
+  bool isoffline=true;
   @override
   void initState() {
     super.initState();
@@ -35,22 +36,23 @@ class _HomeState extends ConsumerState<Home> {
   void dispose() {
     super.dispose();
   }
+  Future<void> shareListPerso({required String idList}) async {
+    print(idList);
+  }
 
   @override
   Widget build(BuildContext context) {
     final localstoreLocalObj=Localstorelocal(ref: ref,context: context);
     print("build Home");
-      //WidgetsBinding.instance.addPostFrameCallback((_) async {
         if (!initConfig){
           localstoreLocalObj.initLang();
           initConfig=true;
         }
-     // });
     Future<List<dynamic>> _futureOfListPerso() => localstoreLocalObj.getJsonAllPersonalistLocalStore().then((value) =>value);
     return Center(
         child: Column(
           children: [
-           /* Row(
+            /*Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -143,7 +145,16 @@ class _HomeState extends ConsumerState<Home> {
                                         xs: 12,
                                         sm:getFlexListePerso(lenghtVerbs:snapshot.data!.length,numVerb:i),
                                         md: getFlexListePerso(lenghtVerbs:snapshot.data!.length,numVerb:i),
-                                        child: BoxCardListPerso(context:context,idListPerso:snapshot.data?[i])
+                                        child: BoxCardListPerso(
+                                            context:context,
+                                            idListPerso:snapshot.data?[i],
+                                            onClickShare: ({required String idList}) async => {
+
+                                              if (isoffline) {alertOffline()} else {shareListPerso(idList: idList)}
+                                             }
+
+
+                                        )
                                     ),
                                   ],
                                 ]
@@ -262,5 +273,38 @@ class _HomeState extends ConsumerState<Home> {
   }
 
   int getFlexListePerso({required int lenghtVerbs,required int numVerb}) =>((lenghtVerbs==1) ? 12 : ((lenghtVerbs==numVerb+1) ? ((numVerb.isEven) ? 12 : 6 ) : 6));
+
+
+  Future<String?> alertOffline() {
+    return showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => Dialog(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const SizedBox(
+                    width:280.0,
+                    child:Text(
+                      'Vous devez etre connecté à internet pour pouvoir utiliser cette fonctionnalitée',
+                      style: TextStyle(color: Colors.red, fontSize: 16.0),
+                      textAlign: TextAlign.center,
+                    )
+                ),
+                const SizedBox(height: 15, width: 150),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('FERMER'),
+                ),
+              ],
+            ),
+          ),
+        ));
+  }
+
 
 }

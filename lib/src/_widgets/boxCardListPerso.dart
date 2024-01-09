@@ -15,11 +15,13 @@ class BoxCardListPerso extends ConsumerWidget {
 
   const BoxCardListPerso( {
     required BuildContext this.context,
-    required String this.idListPerso
+    required String this.idListPerso,
+    required this.onClickShare
 
   });
     final BuildContext context;
     final String idListPerso;
+    final dynamic Function({required String idList}) onClickShare;
 
     @override
     Widget build(BuildContext context, WidgetRef ref) {
@@ -121,7 +123,7 @@ class BoxCardListPerso extends ConsumerWidget {
                                                 indexRubrique: 1,
                                                 context: context,
                                                 onClickButton: () => {
-                                                  context.go('/learnVerb/personalList-${snapshot.data["id"]}')
+                                                  context.go('/learnVerb/${snapshot.data["id"]}/true')
                                                 }
                                             ),
                                             ElevatedButtonCardHome(
@@ -130,7 +132,7 @@ class BoxCardListPerso extends ConsumerWidget {
                                                 indexRubrique: 0,
                                                 context: context,
                                                 onClickButton: () => {
-                                                  context.go('/testVerb/personalList-${snapshot.data["id"]}')
+                                                  context.go('/testVerb/${snapshot.data["id"]}/true')
                                                 }
                                             ),
                                             ElevatedButtonCardHome(
@@ -139,7 +141,7 @@ class BoxCardListPerso extends ConsumerWidget {
                                                 indexRubrique: 2,
                                                 context: context,
                                                 onClickButton: () => {
-                                                  context.go('/listVerb/personalList-${snapshot.data["id"]}')
+                                                  context.go('/listVerb/${snapshot.data["id"]}/true')
                                                 }
                                             ),
                                           ],
@@ -151,9 +153,7 @@ class BoxCardListPerso extends ConsumerWidget {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   ElevatedButtonCardHomeEditDeleteShare(visibilityButton:(nbVerbsPerso==0 ? false : true),colorIcon: Colors.blue, iconContent: Icons.share, context: context,
-                                      onClickButton: () => {
-                                        print("share: ${snapshot.data["id"]}")
-                                      }
+                                      onClickButton: () =>  {onClickShare.call(idList: snapshot.data["id"])}
                                   ),
                                   ElevatedButtonCardHomeEditDeleteShare(visibilityButton: snapshot.data["isListShare"] ? false : true,colorIcon: Colors.green, iconContent: Icons.edit, context: context,
                                       onClickButton: () => {

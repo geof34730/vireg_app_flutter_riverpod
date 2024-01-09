@@ -114,7 +114,6 @@ class Localstorelocal  {
         color: colorList,
         title: titleList,
         listIdVerbs: [],
-        ownListShare: true
     );
     db.collection('personalList').doc(UUIDList).set(personalListCreate.toJson());
   }

@@ -1,3 +1,4 @@
+import 'package:Vireg/src/_models/PersonalListModel.dart';
 import 'package:Vireg/src/localization/app_localizations_context.dart';
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import '../_class/GetDataVerbs.dart';
 import '../_class/Localstore.dart';
 import '../_class/localLang.dart';
 import '../_models/ListVerbsModel.dart';
+import '../_services/SharePersonalList.dart';
 import '../_utils/front.dart';
 import '../router.dart';
 
@@ -33,7 +35,7 @@ class _ListPersoStep2State extends ConsumerState<ListPersoStep2> {
   String titleList="";
   int colorList=0;
   bool isListShare=false;
-  bool ownListShare=true;
+  bool ownListShare=false;
 
 
   @override
@@ -200,7 +202,6 @@ class _ListPersoStep2State extends ConsumerState<ListPersoStep2> {
           }
       }
     }
-
     filteredData = sortVerbsByFrancais(dataList);
     setState(() {
 
@@ -212,23 +213,26 @@ class _ListPersoStep2State extends ConsumerState<ListPersoStep2> {
     print("update data share Function $UUIDList");
     dynamic newListVerb = [];
     await db.collection('personalList').doc(UUIDList).get().then((value) async {
+
+      print(value?['ownListShare']);
+
       if(value?['ownListShare']) {
         print("go update server");
         late List<ListVerbsModel> ListVerb = value?['listIdVerbs'];
         for (var item in ListVerb) {
           newListVerb.add(item);
         }
-       /* ServiceShareListPerso(context:context).Share(
+        SharePersonalList(context:context).Share(
             idListPerso: UUIDList,
-            ListePerso:PersonalList(
+            ListePerso:PersonalListModel(
                 isListShare: value?['isListShare'],
                 ownListShare: value?['ownListShare'],
                 id: UUIDList,
-                title: titleList.text,
+                title: titleList,
                 color: int.parse(colorList as String),
-                ListIdVerbs: newListVerb
+                listIdVerbs: newListVerb
             )
-        );*/
+        );
       }
       else{
         print("NO go update server");

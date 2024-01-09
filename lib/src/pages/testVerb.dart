@@ -13,8 +13,9 @@ import 'package:flip_card/flip_card.dart';
 import '../_widgets/textFormVireg.dart';
 
 class TestVerb extends ConsumerStatefulWidget {
-  const TestVerb({Key? key,required this.idList }) : super(key: key);
+  const TestVerb({Key? key,required this.idList, required this.personalList }) : super(key: key);
   final String? idList;
+  final String? personalList;
 
   @override
   _TestVerbState createState() => _TestVerbState();
@@ -37,12 +38,13 @@ class _TestVerbState extends ConsumerState<TestVerb> {
   late TextEditingController controllerPastParticipe=TextEditingController();
 
 
-  late  bool viewButtonNextTest;
+  late  bool viewButtonNextTest=false;
+  late bool personalList;
 
   @override
   void initState() {
-
-    readJson(idList: widget.idList.toString());
+    personalList = (widget.personalList=='true' ? true : false);
+    readJson(idList: widget.idList.toString(),personalList:personalList);
     super.initState();
   }
 
@@ -106,7 +108,7 @@ class _TestVerbState extends ConsumerState<TestVerb> {
                       padding: const EdgeInsets.only(left: 20.0),
                       child: ElevatedButton.icon(
                         style:(goNextVerb() ? ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.green), foregroundColor: MaterialStatePropertyAll(Colors.white)) : null),
-                        onPressed:(goNextVerb() ? (){readJson(idList: widget.idList.toString());} : null),
+                        onPressed:(goNextVerb() ? (){readJson(idList: widget.idList.toString(),personalList: personalList);} : null),
                         icon: const Icon(
                           Icons.check,
                           size: 19.0,
@@ -130,8 +132,8 @@ class _TestVerbState extends ConsumerState<TestVerb> {
     }
   }
 
-  Future<void> readJson({required String idList, String? valueSearch}) async {
-    List<dynamic> data = await GetDataVerbs().getDataJson(idList: idList);
+  Future<void> readJson({required String idList, String? valueSearch,required bool personalList}) async {
+    List<dynamic> data = await GetDataVerbs().getDataJson(idList: idList,personalList:personalList);
     print("************************ $data");
     bool resultSearch=false;
     int numberVerbData = 0;

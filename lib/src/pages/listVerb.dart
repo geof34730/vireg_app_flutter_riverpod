@@ -13,8 +13,9 @@ import '../router.dart';
 
 
 class ListVerb extends ConsumerStatefulWidget {
-  const ListVerb({Key? key, required this.idList}) : super(key: key);
+  const ListVerb({Key? key, required this.idList, required this.personalList }) : super(key: key);
   final String? idList;
+  final String? personalList;
   @override
   _ListVerbState createState() => _ListVerbState();
 }
@@ -26,12 +27,13 @@ class _ListVerbState extends ConsumerState<ListVerb> {
   List<dynamic> dataList=[];
   final keydataTable = GlobalKey<PaginatedDataTableState>();
   String locallang="";
-
+  late bool personalList;
 
   @override
   void initState() {
     print('initstat ListVerb');
-    getListVerbsJson(idList: widget.idList.toString());
+    personalList = (widget.personalList=='true' ? true : false);
+    getListVerbsJson(idList: widget.idList.toString(),personalList:personalList);
     DataTableSource data = DataTableListeVerbes(filteredData: filteredData, context: context,localLang: locallang);
     super.initState();
   }
@@ -158,8 +160,8 @@ class _ListVerbState extends ConsumerState<ListVerb> {
     return datas;
   }
 
-  Future<void> getListVerbsJson({required String idList}) async {
-    List<dynamic> dataListResp=await GetDataVerbs().getDataJson(idList: idList);
+  Future<void> getListVerbsJson({required String idList, required bool personalList}) async {
+    List<dynamic> dataListResp=await GetDataVerbs().getDataJson(idList: idList,personalList: personalList);
     dataList=dataListResp.toList();
     setState(() {
       dataList=dataListResp.toList();

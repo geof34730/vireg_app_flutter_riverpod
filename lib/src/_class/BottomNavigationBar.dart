@@ -12,7 +12,7 @@ class ViregBottomNavigationBar {
   final int indexNav;
 
    String getParamList(){
-      return GoRouterState.of(context).pathParameters["idList"].toString();
+      return "${GoRouterState.of(context).pathParameters["idList"].toString()}/${GoRouterState.of(context).pathParameters["perso"]}";
     }
 
    int getItemSelect(){

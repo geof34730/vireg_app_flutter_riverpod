@@ -81,7 +81,7 @@ class BoxCard extends ConsumerWidget {
                                 indexRubrique: 1,
                                 context: context,
                                 onClickButton: () => {
-                                  context.go('/learnVerb/$idListPerso')
+                                  context.go('/learnVerb/$idListPerso/false')
                                 }
                             ),
                             ElevatedButtonCardHome(
@@ -90,7 +90,7 @@ class BoxCard extends ConsumerWidget {
                                 indexRubrique: 0,
                                 context: context,
                                 onClickButton: () => {
-                                  context.go('/testVerb/$idListPerso')
+                                  context.go('/testVerb/$idListPerso/false')
                                 }
                             ),
                             ElevatedButtonCardHome(
@@ -99,7 +99,7 @@ class BoxCard extends ConsumerWidget {
                                 indexRubrique: 2,
                                 context: context,
                                 onClickButton: () => {
-                                  context.go('/listVerb/$idListPerso')
+                                  context.go('/listVerb/$idListPerso/false')
                                 }
                             ),
                           ],

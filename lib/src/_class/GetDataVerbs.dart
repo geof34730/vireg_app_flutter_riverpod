@@ -15,6 +15,7 @@ class GetDataVerbs  {
           print("liste perso");
             for (var item in jsonDecode(AllVerbsReponse)) {
                 if (await isIdInList(idVerbs: item['id'],idList: idList)) {
+                  print(item['id']);
                   data.add(item);
                 }
             }
@@ -40,9 +41,21 @@ class GetDataVerbs  {
       bool valueReturn = false;
       await db.collection('personalList').doc(idList).get().then((value)  {
         for (var itemVerb in value?['listIdVerbs']) {
-          if (itemVerb.id.toString() == idVerbs.toString()) {
-            valueReturn = true;
+          try {
+            if (itemVerb.id.toString() == idVerbs.toString()) {
+              valueReturn = true;
+            }
+          } catch(e) {
+            if (itemVerb["id"].toString() == idVerbs.toString()) {
+              valueReturn = true;
+            }
           }
+
+
+
+
+
+
         }
       });
       return valueReturn;

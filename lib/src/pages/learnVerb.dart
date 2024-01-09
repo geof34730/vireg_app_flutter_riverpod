@@ -8,8 +8,10 @@ import '../_class/GetDataVerbs.dart';
 import 'package:flip_card/flip_card.dart';
 
 class LearnVerb extends ConsumerStatefulWidget {
-  const LearnVerb({Key? key,required this.idList }) : super(key: key);
+  const LearnVerb({Key? key,required this.idList, required this.personalList }) : super(key: key);
   final String? idList;
+  final String? personalList;
+
   @override
   _LearnVerbState createState() => _LearnVerbState();
 }
@@ -21,12 +23,14 @@ class _LearnVerbState extends ConsumerState<LearnVerb> {
   String positionCard="front";
   bool visibleButtonPlay=false;
   String locallang="";
-
+  late bool personalList;
   @override
   void initState() {
+    personalList = (widget.personalList=='true' ? true : false);
     getListVerbsJson(idList: widget.idList.toString());
     learnNumCard = 1;
     visibleButtonPlay=false;
+
     super.initState();
   }
 
@@ -42,7 +46,7 @@ class _LearnVerbState extends ConsumerState<LearnVerb> {
 
     if(dataList.isEmpty) {
       return FutureBuilder<List<dynamic>>(
-          future: getdataList(idList: widget.idList.toString()),
+          future: getdataList(idList: widget.idList.toString(),personalList: personalList),
           initialData: dataList,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
@@ -263,15 +267,17 @@ class _LearnVerbState extends ConsumerState<LearnVerb> {
   }
 
 
-  Future<List<dynamic>> getdataList({required String idList}) async {
+  Future<List<dynamic>> getdataList({required String idList, required bool personalList}) async {
+print('********************');
+    print("personalList $personalList");
     print('getdataList : $idList');
-    List<dynamic> dataListResp=await GetDataVerbs().getDataJson(idList: idList);
+    List<dynamic> dataListResp=await GetDataVerbs().getDataJson(idList: idList,personalList: personalList);
     dataList=dataListResp.toList();
     return dataList;
   }
 
   Future<void> getListVerbsJson({required String idList}) async {
-    List<dynamic> dataListResp=await GetDataVerbs().getDataJson(idList: idList);
+    List<dynamic> dataListResp=await GetDataVerbs().getDataJson(idList: idList,personalList: personalList);
     dataList=dataListResp.toList();
     setState(() {
       dataList=dataListResp.toList();
