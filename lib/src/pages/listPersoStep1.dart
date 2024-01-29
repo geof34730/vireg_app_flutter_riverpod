@@ -10,11 +10,12 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:Vireg/src/localization/app_localizations_context.dart';
 import 'package:uuid/uuid.dart';
+import '../_models/PersonalListModel.dart';
 
 
-import '../_class/FormatData.dart';
+
 import '../_class/Localstore.dart';
-import '../_models/ListVerbsModel.dart';
+
 import '../_utils/front.dart';
 
 var uuid = const Uuid();
@@ -35,10 +36,7 @@ class _ListPersoStep1State extends ConsumerState<ListPersoStep1> {
   bool editMode=false;
   dynamic jsonEditPersonalList=null;
   bool loadDataEdit=false;
-  List<ListVerbsModel> listIdVerbs=[];
-  bool isListShare = false;
-  bool ownListShare = false;
-
+  late PersonalListModel PersonalListUpdate;
 
   @override
   void initState() {
@@ -47,20 +45,14 @@ class _ListPersoStep1State extends ConsumerState<ListPersoStep1> {
       if (widget.idList != null) {
         editMode = true;
         UUIDList = widget.idList!;
-        Localstorelocal(ref: ref, context: context).getJsonPersonalistLocalStore(idList: UUIDList).then((value) {
-          List<ListVerbsModel> AlllistIdVerbs=[];
-          titleList.text = value["title"];
-          colorList = value["color"].toString();
-          listIdVerbs = AlllistIdVerbs;
-          isListShare = value["isListShare"];
-          ownListShare = value["ownListShare"];
-          loadDataEdit=true;
+
+        Localstorelocal(context: context,ref: ref).getJsonPersonalistLocalStore(idList: UUIDList).then((value){
+          PersonalListUpdate=value;
           formValide = true;
-          value["listIdVerbs"].forEach((valueListVerbs) {
-            AlllistIdVerbs.add(ListVerbsModel(id: valueListVerbs.id));
-          });
           setState(() {});
         });
+
+
       }
     }
     super.initState();
@@ -158,6 +150,7 @@ class _ListPersoStep1State extends ConsumerState<ListPersoStep1> {
                            createList()
                         );
 
+
                       }
                   :
                   null
@@ -173,11 +166,14 @@ class _ListPersoStep1State extends ConsumerState<ListPersoStep1> {
   }
 
   Future<void> createList() async {
-    await localstoreLocalObj.createPersonalList(
-        UUIDList:UUIDList,
-        titleList:titleList.text,
-        colorList:int.parse(colorList  as String)
+    print("createLise");
+    PersonalListUpdate =PersonalListModel(
+        id: UUIDList.toString(),
+        title: titleList.text,
+        color: int.parse(colorList as String)
     );
+    print(PersonalListUpdate);
+    await Localstorelocal(ref: ref,context: context).createPersonalList(PersonalList:PersonalListUpdate);
     nextPersonalList();
     //setState(() {});
   }
@@ -185,10 +181,13 @@ class _ListPersoStep1State extends ConsumerState<ListPersoStep1> {
     if(value != "") {
       formValide = true;
       if(editMode) {
+        PersonalListUpdate=PersonalListUpdate.copyWith(title: value);
+        print(PersonalListUpdate);
         updatePersonalListStep1();
       }
     }
     else{
+
       formValide = false;
     }
     setState(() {});
@@ -196,14 +195,7 @@ class _ListPersoStep1State extends ConsumerState<ListPersoStep1> {
 
   Future<void> updatePersonalListStep1({bool next =false}) async {
     print("update Personal List");
-      await localstoreLocalObj.updatePersonalList(
-          UUIDList:UUIDList,
-          titleList:titleList.text,
-          colorList:int.parse(colorList  as String),
-          listIdVerbs:listIdVerbs,
-          isListShare : isListShare,
-          ownListShare : ownListShare,
-      );
+      await localstoreLocalObj.updatePersonalList(PersonalListUpdate);
       if(next){
         nextPersonalList();
       }

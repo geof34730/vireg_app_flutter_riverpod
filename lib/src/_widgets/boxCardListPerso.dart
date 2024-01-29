@@ -26,9 +26,9 @@ class BoxCardListPerso extends ConsumerWidget {
     @override
     Widget build(BuildContext context, WidgetRef ref) {
       final localstoreLocalObj=Localstorelocal(ref: ref,context: context);
-      print(context);
-      Future _futureDataListPerso() =>  localstoreLocalObj.getJsonPersonalistLocalStore(idList: idListPerso);
-      return FutureBuilder<dynamic>(
+      print("*********************************$idListPerso");
+      Future<PersonalListModel> _futureDataListPerso() =>  localstoreLocalObj.getJsonPersonalistLocalStore(idList: idListPerso);
+      return FutureBuilder<PersonalListModel>(
         future: _futureDataListPerso(),
         builder: (BuildContext context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -37,10 +37,14 @@ class BoxCardListPerso extends ConsumerWidget {
                 if (snapshot.hasError) {
                   return const Text('Error');
                 } else if (snapshot.hasData) {
-                      int nbVerbsPerso=snapshot.data["listIdVerbs"].length;
+
+                    print("*************dddddddd");
+                    print(snapshot.data);
+
+                    int nbVerbsPerso=snapshot.data!.ListIdVerbs.length;
                     return Card(
                         shadowColor: Colors.grey,
-                        color: Color(snapshot.data["color"]),
+                        color: Color(snapshot.data!.color),
                         elevation: 5,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(5),
@@ -63,7 +67,7 @@ class BoxCardListPerso extends ConsumerWidget {
                                             Padding(
                                               padding: const EdgeInsets.only( bottom: 5.0),
                                               child:Text(
-                                                  capitalize(snapshot.data["title"]),
+                                                  capitalize(snapshot.data!.title),
                                                   maxLines: 1,
                                                   overflow: TextOverflow.ellipsis,
                                                   softWrap: false,
@@ -123,7 +127,7 @@ class BoxCardListPerso extends ConsumerWidget {
                                                 indexRubrique: 1,
                                                 context: context,
                                                 onClickButton: () => {
-                                                  context.go('/learnVerb/${snapshot.data["id"]}/true')
+                                                  context.go('/learnVerb/${snapshot.data!.id}/true')
                                                 }
                                             ),
                                             ElevatedButtonCardHome(
@@ -132,7 +136,7 @@ class BoxCardListPerso extends ConsumerWidget {
                                                 indexRubrique: 0,
                                                 context: context,
                                                 onClickButton: () => {
-                                                  context.go('/testVerb/${snapshot.data["id"]}/true')
+                                                  context.go('/testVerb/${snapshot.data!.id}/true')
                                                 }
                                             ),
                                             ElevatedButtonCardHome(
@@ -141,7 +145,7 @@ class BoxCardListPerso extends ConsumerWidget {
                                                 indexRubrique: 2,
                                                 context: context,
                                                 onClickButton: () => {
-                                                  context.go('/listVerb/${snapshot.data["id"]}/true')
+                                                  context.go('/listVerb/${snapshot.data!.id}/true')
                                                 }
                                             ),
                                           ],
@@ -153,17 +157,17 @@ class BoxCardListPerso extends ConsumerWidget {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   ElevatedButtonCardHomeEditDeleteShare(visibilityButton:(nbVerbsPerso==0 ? false : true),colorIcon: Colors.blue, iconContent: Icons.share, context: context,
-                                      onClickButton: () =>  {onClickShare.call(idList: snapshot.data["id"])}
+                                      onClickButton: () =>  {onClickShare.call(idList: snapshot.data!.id)}
                                   ),
-                                  ElevatedButtonCardHomeEditDeleteShare(visibilityButton: snapshot.data["isListShare"] ? false : true,colorIcon: Colors.green, iconContent: Icons.edit, context: context,
+                                  ElevatedButtonCardHomeEditDeleteShare(visibilityButton: snapshot.data!.isListShare ? false : true,colorIcon: Colors.green, iconContent: Icons.edit, context: context,
                                       onClickButton: () => {
-                                        context.go("/edit/ListPersoStep1/${snapshot.data["id"]}")
+                                        context.go("/edit/ListPersoStep1/${snapshot.data!.id}")
                                         }
                                   ),
                                   ElevatedButtonCardHomeEditDeleteShare(colorIcon: Colors.red, iconContent: Icons.delete, context: context,
                                       onClickButton: () => {
                                         localstoreLocalObj.deletePersonalList(
-                                          idPersonalList: snapshot.data["id"]
+                                          idPersonalList: snapshot.data!.id
                                         )
                                       }
                                   ),

@@ -12,9 +12,10 @@ _$PersonalListModelImpl _$$PersonalListModelImplFromJson(
       id: json['id'] as String,
       title: json['title'] as String,
       color: json['color'] as int,
-      listIdVerbs: (json['listIdVerbs'] as List<dynamic>)
-          .map((e) => ListVerbsModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      ListIdVerbs: (json['ListIdVerbs'] as List<dynamic>?)
+              ?.map((e) => ListIdVerb.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
       isListShare: json['isListShare'] as bool? ?? false,
       ownListShare: json['ownListShare'] as bool? ?? false,
     );
@@ -25,7 +26,17 @@ Map<String, dynamic> _$$PersonalListModelImplToJson(
       'id': instance.id,
       'title': instance.title,
       'color': instance.color,
-      'listIdVerbs': instance.listIdVerbs,
+      'ListIdVerbs': instance.ListIdVerbs,
       'isListShare': instance.isListShare,
       'ownListShare': instance.ownListShare,
+    };
+
+_$ListIdVerbImpl _$$ListIdVerbImplFromJson(Map<String, dynamic> json) =>
+    _$ListIdVerbImpl(
+      id: json['id'] as int,
+    );
+
+Map<String, dynamic> _$$ListIdVerbImplToJson(_$ListIdVerbImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
     };

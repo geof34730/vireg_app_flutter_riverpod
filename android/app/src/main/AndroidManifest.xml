@@ -2,6 +2,7 @@
     package="verbeirregulieranglais.com.example.verbe_irregulier_anglais">
    <application
         android:label="verbes irréguliers anglais"
+        android:enableOnBackInvokedCallback="true"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

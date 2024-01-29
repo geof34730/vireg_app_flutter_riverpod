@@ -78,7 +78,7 @@ class _ListVerbState extends ConsumerState<ListVerb> {
           onChanged: (text)=>{_onSearchTextChanged(text: text,LocalLangParam: locallang)},
         ),
       ),
-      SizedBox(
+   SizedBox(
         width: ResponsiveContent(context: context).sizeFlex(flexNumber: 12),
         child:PaginatedDataTable(
           key: keydataTable,
@@ -118,8 +118,11 @@ class _ListVerbState extends ConsumerState<ListVerb> {
           ],
           source: data,
         ),
-      ),
-    ]);
+      )
+    ,
+    ]
+
+    );
   }
 
   dynamic constraintsDataColumn({required int flexNumber}){

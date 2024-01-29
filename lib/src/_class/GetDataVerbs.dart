@@ -40,7 +40,7 @@ class GetDataVerbs  {
   Future<bool> isIdInList({required int idVerbs,required String idList}) async {
       bool valueReturn = false;
       await db.collection('personalList').doc(idList).get().then((value)  {
-        for (var itemVerb in value?['listIdVerbs']) {
+        for (var itemVerb in value?['ListIdVerbs']) {
           try {
             if (itemVerb.id.toString() == idVerbs.toString()) {
               valueReturn = true;
@@ -50,12 +50,6 @@ class GetDataVerbs  {
               valueReturn = true;
             }
           }
-
-
-
-
-
-
         }
       });
       return valueReturn;

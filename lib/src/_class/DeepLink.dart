@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:Vireg/src/_class/FormatData.dart';
 import 'package:Vireg/src/_services/SharePersonalList.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +43,7 @@ class DeepLink {
       PersonalListModel valueUpdate = value.copyWith(
         isListShare: true,
         );
-      await  Localstorelocal(context:context,ref:ref).updateLocalstoreList(listVerbs: valueUpdate);
+      await  Localstorelocal(context:context,ref:ref).updateLocalstoreList(PersonalList: valueUpdate);
     });
   }
 

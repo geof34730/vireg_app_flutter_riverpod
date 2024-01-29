@@ -1,13 +1,10 @@
 import 'dart:convert';
 
-import 'package:Vireg/src/_models/ListVerbsModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:localstore/localstore.dart';
 import '../_models/PersonalListModel.dart';
-import '../router.dart';
-import 'FormatData.dart';
 import 'localLang.dart';
 
 
@@ -22,7 +19,7 @@ class Localstorelocal  {
 
   final BuildContext context;
   final WidgetRef ref;
-  final dynamic langSelect = null;
+  final String? langSelect = null;
 
   late String langDevice=View.of(context).platformDispatcher.locale.toString().substring(0, 2);
 
@@ -30,7 +27,6 @@ class Localstorelocal  {
   dynamic listLangSupported() => context.findAncestorWidgetOfExactType<MaterialApp>()?.supportedLocales;
 
   dynamic getLangLoad() async {
-
     if(getLangLocalStore() == null){
         return langDevice;
       }
@@ -41,7 +37,7 @@ class Localstorelocal  {
 
   dynamic getLangLocalStore() async  {
     return  db.collection('store').doc("config").get().then((value)  => value?["lang"].toString());
-    return  db.collection('store').doc("config").get().then((value)  => value?["lang"].toString());
+
   }
 
   void updateLocalstoreLang({required String lang, bool withChange = true}) {
@@ -79,15 +75,13 @@ class Localstorelocal  {
   ////////////END DEV TOOLS ///////////
 
   ////////BEGIN  PERSONALLIST/////////////
-  Future<dynamic> updateLocalstoreList({required PersonalListModel listVerbs }) async {
-    savePersonalList(listVerbs: listVerbs);
+  Future<dynamic> updateLocalstoreList({required PersonalListModel PersonalList }) async {
+    savePersonalList(PersonalList: PersonalList);
     return "ok";
   }
 
-  Future<dynamic> getJsonPersonalistLocalStore({required String idList }) async {
-      return db.collection('personalList').doc(idList).get().then((valuePersonalList) async {
-        return valuePersonalList;
-      });
+  Future<PersonalListModel> getJsonPersonalistLocalStore({required String idList }) async {
+      return db.collection('personalList').doc(idList).get().then((value) async => PersonalListModel.fromJson(value!));
   }
 
   Future<dynamic> getJsonAllPersonalistLocalStore() async {
@@ -104,30 +98,16 @@ class Localstorelocal  {
     });
   }
 
-  savePersonalList({required PersonalListModel listVerbs }){
-    db.collection('personalList').doc(listVerbs.id).set(listVerbs.toJson());
+  savePersonalList({required PersonalListModel PersonalList }){
+    db.collection('personalList').doc(PersonalList.id).set(PersonalList.toJson());
   }
 
-  createPersonalList({required String UUIDList,required String titleList, required int colorList}){
-    final personalListCreate=PersonalListModel(
-        id: UUIDList,
-        color: colorList,
-        title: titleList,
-        listIdVerbs: [],
-    );
-    db.collection('personalList').doc(UUIDList).set(personalListCreate.toJson());
+  createPersonalList({required PersonalListModel PersonalList}){
+    db.collection('personalList').doc(PersonalList.id).set(PersonalList.toJson());
   }
 
-  updatePersonalList({required String UUIDList,required String titleList, required int colorList, required List<ListVerbsModel> listIdVerbs, required bool isListShare, required bool ownListShare }){
-    final personalListCreate=PersonalListModel(
-        id: UUIDList,
-        color: colorList,
-        title: titleList,
-        listIdVerbs: listIdVerbs,
-        ownListShare:ownListShare,
-        isListShare:isListShare
-    );
-    db.collection('personalList').doc(UUIDList).set(personalListCreate.toJson());
+  updatePersonalList({required PersonalListModel PersonalList }){
+    db.collection('personalList').doc(PersonalList.id).set(PersonalList.toJson());
   }
 
   deletePersonalList({required String idPersonalList}){

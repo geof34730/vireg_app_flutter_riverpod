@@ -23,7 +23,7 @@ mixin _$PersonalListModel {
   String get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   int get color => throw _privateConstructorUsedError;
-  List<ListVerbsModel> get listIdVerbs => throw _privateConstructorUsedError;
+  List<ListIdVerb> get ListIdVerbs => throw _privateConstructorUsedError;
   bool get isListShare => throw _privateConstructorUsedError;
   bool get ownListShare => throw _privateConstructorUsedError;
 
@@ -43,7 +43,7 @@ abstract class $PersonalListModelCopyWith<$Res> {
       {String id,
       String title,
       int color,
-      List<ListVerbsModel> listIdVerbs,
+      List<ListIdVerb> ListIdVerbs,
       bool isListShare,
       bool ownListShare});
 }
@@ -64,7 +64,7 @@ class _$PersonalListModelCopyWithImpl<$Res, $Val extends PersonalListModel>
     Object? id = null,
     Object? title = null,
     Object? color = null,
-    Object? listIdVerbs = null,
+    Object? ListIdVerbs = null,
     Object? isListShare = null,
     Object? ownListShare = null,
   }) {
@@ -81,10 +81,10 @@ class _$PersonalListModelCopyWithImpl<$Res, $Val extends PersonalListModel>
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
               as int,
-      listIdVerbs: null == listIdVerbs
-          ? _value.listIdVerbs
-          : listIdVerbs // ignore: cast_nullable_to_non_nullable
-              as List<ListVerbsModel>,
+      ListIdVerbs: null == ListIdVerbs
+          ? _value.ListIdVerbs
+          : ListIdVerbs // ignore: cast_nullable_to_non_nullable
+              as List<ListIdVerb>,
       isListShare: null == isListShare
           ? _value.isListShare
           : isListShare // ignore: cast_nullable_to_non_nullable
@@ -109,7 +109,7 @@ abstract class _$$PersonalListModelImplCopyWith<$Res>
       {String id,
       String title,
       int color,
-      List<ListVerbsModel> listIdVerbs,
+      List<ListIdVerb> ListIdVerbs,
       bool isListShare,
       bool ownListShare});
 }
@@ -128,7 +128,7 @@ class __$$PersonalListModelImplCopyWithImpl<$Res>
     Object? id = null,
     Object? title = null,
     Object? color = null,
-    Object? listIdVerbs = null,
+    Object? ListIdVerbs = null,
     Object? isListShare = null,
     Object? ownListShare = null,
   }) {
@@ -145,10 +145,10 @@ class __$$PersonalListModelImplCopyWithImpl<$Res>
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
               as int,
-      listIdVerbs: null == listIdVerbs
-          ? _value._listIdVerbs
-          : listIdVerbs // ignore: cast_nullable_to_non_nullable
-              as List<ListVerbsModel>,
+      ListIdVerbs: null == ListIdVerbs
+          ? _value._ListIdVerbs
+          : ListIdVerbs // ignore: cast_nullable_to_non_nullable
+              as List<ListIdVerb>,
       isListShare: null == isListShare
           ? _value.isListShare
           : isListShare // ignore: cast_nullable_to_non_nullable
@@ -163,17 +163,15 @@ class __$$PersonalListModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$PersonalListModelImpl
-    with DiagnosticableTreeMixin
-    implements _PersonalListModel {
+class _$PersonalListModelImpl implements _PersonalListModel {
   const _$PersonalListModelImpl(
       {required this.id,
       required this.title,
       required this.color,
-      required final List<ListVerbsModel> listIdVerbs,
+      final List<ListIdVerb> ListIdVerbs = const [],
       this.isListShare = false,
       this.ownListShare = false})
-      : _listIdVerbs = listIdVerbs;
+      : _ListIdVerbs = ListIdVerbs;
 
   factory _$PersonalListModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$PersonalListModelImplFromJson(json);
@@ -184,12 +182,13 @@ class _$PersonalListModelImpl
   final String title;
   @override
   final int color;
-  final List<ListVerbsModel> _listIdVerbs;
+  final List<ListIdVerb> _ListIdVerbs;
   @override
-  List<ListVerbsModel> get listIdVerbs {
-    if (_listIdVerbs is EqualUnmodifiableListView) return _listIdVerbs;
+  @JsonKey()
+  List<ListIdVerb> get ListIdVerbs {
+    if (_ListIdVerbs is EqualUnmodifiableListView) return _ListIdVerbs;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_listIdVerbs);
+    return EqualUnmodifiableListView(_ListIdVerbs);
   }
 
   @override
@@ -200,21 +199,8 @@ class _$PersonalListModelImpl
   final bool ownListShare;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PersonalListModel(id: $id, title: $title, color: $color, listIdVerbs: $listIdVerbs, isListShare: $isListShare, ownListShare: $ownListShare)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'PersonalListModel'))
-      ..add(DiagnosticsProperty('id', id))
-      ..add(DiagnosticsProperty('title', title))
-      ..add(DiagnosticsProperty('color', color))
-      ..add(DiagnosticsProperty('listIdVerbs', listIdVerbs))
-      ..add(DiagnosticsProperty('isListShare', isListShare))
-      ..add(DiagnosticsProperty('ownListShare', ownListShare));
+  String toString() {
+    return 'PersonalListModel(id: $id, title: $title, color: $color, ListIdVerbs: $ListIdVerbs, isListShare: $isListShare, ownListShare: $ownListShare)';
   }
 
   @override
@@ -226,7 +212,7 @@ class _$PersonalListModelImpl
             (identical(other.title, title) || other.title == title) &&
             (identical(other.color, color) || other.color == color) &&
             const DeepCollectionEquality()
-                .equals(other._listIdVerbs, _listIdVerbs) &&
+                .equals(other._ListIdVerbs, _ListIdVerbs) &&
             (identical(other.isListShare, isListShare) ||
                 other.isListShare == isListShare) &&
             (identical(other.ownListShare, ownListShare) ||
@@ -240,7 +226,7 @@ class _$PersonalListModelImpl
       id,
       title,
       color,
-      const DeepCollectionEquality().hash(_listIdVerbs),
+      const DeepCollectionEquality().hash(_ListIdVerbs),
       isListShare,
       ownListShare);
 
@@ -264,7 +250,7 @@ abstract class _PersonalListModel implements PersonalListModel {
       {required final String id,
       required final String title,
       required final int color,
-      required final List<ListVerbsModel> listIdVerbs,
+      final List<ListIdVerb> ListIdVerbs,
       final bool isListShare,
       final bool ownListShare}) = _$PersonalListModelImpl;
 
@@ -278,7 +264,7 @@ abstract class _PersonalListModel implements PersonalListModel {
   @override
   int get color;
   @override
-  List<ListVerbsModel> get listIdVerbs;
+  List<ListIdVerb> get ListIdVerbs;
   @override
   bool get isListShare;
   @override
@@ -286,5 +272,141 @@ abstract class _PersonalListModel implements PersonalListModel {
   @override
   @JsonKey(ignore: true)
   _$$PersonalListModelImplCopyWith<_$PersonalListModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+ListIdVerb _$ListIdVerbFromJson(Map<String, dynamic> json) {
+  return _ListIdVerb.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ListIdVerb {
+  int get id => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ListIdVerbCopyWith<ListIdVerb> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ListIdVerbCopyWith<$Res> {
+  factory $ListIdVerbCopyWith(
+          ListIdVerb value, $Res Function(ListIdVerb) then) =
+      _$ListIdVerbCopyWithImpl<$Res, ListIdVerb>;
+  @useResult
+  $Res call({int id});
+}
+
+/// @nodoc
+class _$ListIdVerbCopyWithImpl<$Res, $Val extends ListIdVerb>
+    implements $ListIdVerbCopyWith<$Res> {
+  _$ListIdVerbCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$ListIdVerbImplCopyWith<$Res>
+    implements $ListIdVerbCopyWith<$Res> {
+  factory _$$ListIdVerbImplCopyWith(
+          _$ListIdVerbImpl value, $Res Function(_$ListIdVerbImpl) then) =
+      __$$ListIdVerbImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({int id});
+}
+
+/// @nodoc
+class __$$ListIdVerbImplCopyWithImpl<$Res>
+    extends _$ListIdVerbCopyWithImpl<$Res, _$ListIdVerbImpl>
+    implements _$$ListIdVerbImplCopyWith<$Res> {
+  __$$ListIdVerbImplCopyWithImpl(
+      _$ListIdVerbImpl _value, $Res Function(_$ListIdVerbImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+  }) {
+    return _then(_$ListIdVerbImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$ListIdVerbImpl implements _ListIdVerb {
+  const _$ListIdVerbImpl({required this.id});
+
+  factory _$ListIdVerbImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ListIdVerbImplFromJson(json);
+
+  @override
+  final int id;
+
+  @override
+  String toString() {
+    return 'ListIdVerb(id: $id)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ListIdVerbImpl &&
+            (identical(other.id, id) || other.id == id));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(runtimeType, id);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ListIdVerbImplCopyWith<_$ListIdVerbImpl> get copyWith =>
+      __$$ListIdVerbImplCopyWithImpl<_$ListIdVerbImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ListIdVerbImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ListIdVerb implements ListIdVerb {
+  const factory _ListIdVerb({required final int id}) = _$ListIdVerbImpl;
+
+  factory _ListIdVerb.fromJson(Map<String, dynamic> json) =
+      _$ListIdVerbImpl.fromJson;
+
+  @override
+  int get id;
+  @override
+  @JsonKey(ignore: true)
+  _$$ListIdVerbImplCopyWith<_$ListIdVerbImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

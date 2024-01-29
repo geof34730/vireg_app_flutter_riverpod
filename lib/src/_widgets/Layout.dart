@@ -17,7 +17,7 @@ Widget Layout({required BuildContext context,required child,bottomNavigationBar=
          padding: EdgeInsets.only(left: paddinLeftRight,right: paddinLeftRight),
          child:Center(
              child:Container(
-                constraints: const BoxConstraints(maxWidth: 700),
+                constraints: const BoxConstraints(maxWidth: 1280),
                 child:child
              )
           )

@@ -17,7 +17,17 @@ class ResponsiveContent{
   }
 
   double sizeFlex({required int flexNumber}){
-    var unitSize=(MediaQuery.of(context).size.width/12);
+    final unitSize;
+    if(MediaQuery.of(context).size.width>1280){
+      unitSize=(1280/12);
+
+    }
+    else{
+      unitSize=(MediaQuery.of(context).size.width/12);
+
+    }
+
+
     return (unitSize*flexNumber);
   }
 

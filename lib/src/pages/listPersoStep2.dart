@@ -9,9 +9,10 @@ import '../_Utils/string.dart';
 import '../_class/DataTableListeVerbes.dart';
 import '../_class/DataTableListeVerbesPersoAction.dart';
 import '../_class/GetDataVerbs.dart';
+import '../_class/Loader.dart';
 import '../_class/Localstore.dart';
 import '../_class/localLang.dart';
-import '../_models/ListVerbsModel.dart';
+import '../_models/PersonalListModel.dart';
 import '../_services/SharePersonalList.dart';
 import '../_utils/front.dart';
 import '../router.dart';
@@ -32,22 +33,14 @@ class _ListPersoStep2State extends ConsumerState<ListPersoStep2> {
   String locallang="";
   bool form2Valide=false;
   String UUIDList="";
-  String titleList="";
-  int colorList=0;
-  bool isListShare=false;
-  bool ownListShare=false;
-
+  late PersonalListModel PersonalListUpdate;
 
   @override
   void initState() {
     UUIDList=widget.idList.toString();
     print('initstat ListVerb');
-    Localstorelocal(context: context,ref: ref).getJsonPersonalistLocalStore(idList: widget.idList.toString()).then((value){
-      UUIDList= widget.idList.toString();
-      titleList=value["title"];
-      colorList= value["color"];
-      isListShare= value["isListShare"];;
-      ownListShare= value["ownListShare"];;
+    Localstorelocal(context: context,ref: ref).getJsonPersonalistLocalStore(idList: UUIDList).then((value){
+      PersonalListUpdate=value;
     });
     getListVerbsJson(idList: widget.idList.toString());
     super.initState();
@@ -211,122 +204,63 @@ class _ListPersoStep2State extends ConsumerState<ListPersoStep2> {
 
   Future<void> updataDataShare() async {
     print("update data share Function $UUIDList");
-    dynamic newListVerb = [];
-    await db.collection('personalList').doc(UUIDList).get().then((value) async {
-
-      print(value?['ownListShare']);
-
-      if(value?['ownListShare']) {
+      if(PersonalListUpdate.ownListShare) {
         print("go update server");
-        late List<ListVerbsModel> ListVerb = value?['listIdVerbs'];
-        for (var item in ListVerb) {
-          newListVerb.add(item);
-        }
         SharePersonalList(context:context).Share(
-            idListPerso: UUIDList,
-            ListePerso:PersonalListModel(
-                isListShare: value?['isListShare'],
-                ownListShare: value?['ownListShare'],
-                id: UUIDList,
-                title: titleList,
-                color: int.parse(colorList as String),
-                listIdVerbs: newListVerb
-            )
+            idListPerso: PersonalListUpdate.id,
+            ListePerso:PersonalListUpdate
         );
       }
       else{
         print("NO go update server");
       }
-
-
-    });
   }
 
   Future<bool> isIdInList({required int idVerbs}) async {
-    bool valueReturn = false;
-    await db.collection('personalList').doc(UUIDList).get().then((value) {
-      late List<ListVerbsModel> ListVerb = value?['listIdVerbs'];
-      for (var item in ListVerb) {
-        if (item.id.toString() == idVerbs.toString()) {
-          valueReturn = true;
-        }
-      }
-    });
-    return valueReturn;
+      final data= PersonalListUpdate.ListIdVerbs.where((Verb) => (Verb.id==idVerbs));
+      return  data.length>0;
   }
 
   Future<void> addInList({required idVerbs}) async {
-    print('addInList');
-   // Loader(context: context,snackBar: false).showLoader();
-    print("add in liste: $idVerbs");
-    List<ListVerbsModel> newListVerb = [];
-    await db.collection('personalList').doc(UUIDList).get().then((value) {
-        late List<ListVerbsModel> ListVerb = value?['listIdVerbs'];
-          for (var item in ListVerb) {
-            newListVerb.add(ListVerbsModel(id: item.id));
-          }
-        newListVerb.add(ListVerbsModel(id: idVerbs));
-        print(newListVerb);
-        Localstorelocal(context: context,ref: ref).updatePersonalList(UUIDList: UUIDList, titleList: titleList, colorList: colorList, listIdVerbs: newListVerb, isListShare: isListShare, ownListShare: ownListShare);
-    });
-   // await SnakBar(context: context, messageSnackBar: "Votre verbe est ajouté à votre liste", themeSnackBar: 'success').showSnakBar();
+    print("addInList: $idVerbs");
+    PersonalListUpdate = PersonalListUpdate.copyWith(ListIdVerbs: [
+        ...PersonalListUpdate.ListIdVerbs,
+        ListIdVerb(id: idVerbs),
+      ]);
+    Localstorelocal(context: context,ref: ref).updatePersonalList(PersonalList: PersonalListUpdate);
     form2Valide=true;
-
-    //update data share
-    print("update data share: addInList");
     await updataDataShare();
-
-
-    Future.delayed(const Duration(milliseconds: 500),(){
-    //  Loader(context: context, snackBar: false).hideLoader();
-    });
   }
 
   Future<void> deleteInList({required idVerbs}) async {
-   // Loader(context: context,snackBar: false).showLoader();
-    print("delete in liste: $idVerbs");
+    print("deleteInList: $idVerbs");
     String StringVerbFrancais="";
-    List<ListVerbsModel> newListVerb = [];
-    await db.collection('personalList').doc(UUIDList).get().then((value) {
-      form2Valide=false;
-      late List<ListVerbsModel> ListVerb = value?['listIdVerbs'];
-      for (var item in ListVerb) {
-        if (item.id.toString() != idVerbs.toString()) {
-          newListVerb.add(item);
-          form2Valide=true;
-        }
-        else{
-          StringVerbFrancais ="";
-        }
-      }
-      Localstorelocal(context: context,ref: ref).updatePersonalList(UUIDList: UUIDList, titleList: titleList, colorList: colorList, listIdVerbs: newListVerb, isListShare: isListShare, ownListShare: ownListShare);
-    });
-   // await SnakBar(context: context, messageSnackBar: 'Votre verbe à été retiré de votre liste', themeSnackBar: 'success').showSnakBar();
-    //update data share
-    print("update data share: deleteInList");
+    form2Valide=false;
+    PersonalListUpdate = PersonalListUpdate.copyWith(ListIdVerbs: [
+        ...PersonalListUpdate.ListIdVerbs.where((element) => (element.id!=idVerbs))
+      ]);
+      StringVerbFrancais ="";
+      Localstorelocal(context: context,ref: ref).updatePersonalList(PersonalList: PersonalListUpdate);
     await updataDataShare();
-
-    Future.delayed(const Duration(milliseconds: 500),(){
-     // Loader(context: context, snackBar: false).hideLoader();
-    });
   }
 
   Future<void> addOrDeleteInList({required idVerbs}) async {
+      print("addOrDeleteInList: $idVerbs");
+      //Loader(context: context,snackBar: false).showLoader();
       bool isInList = await isIdInList(idVerbs: idVerbs);
       if (isInList) {
-        //delete
-        print("**************deleteList");
         await deleteInList(idVerbs: idVerbs);
+        //await SnakBar(context: context, messageSnackBar: 'Votre verbe à été retiré de votre liste', themeSnackBar: 'success').showSnakBar();
       } else {
-        //add
-        print("**************add");
         await addInList(idVerbs: idVerbs);
+        //await SnakBar(context: context, messageSnackBar: "Votre verbe est ajouté à votre liste", themeSnackBar: 'success').showSnakBar();
       };
-
+      Future.delayed(const Duration(milliseconds: 500),(){
+      //  Loader(context: context, snackBar: false).hideLoader();
+      });
       setState(() {
 
       });
-
   }
 
 

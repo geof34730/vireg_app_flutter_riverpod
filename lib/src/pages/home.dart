@@ -52,7 +52,7 @@ class _HomeState extends ConsumerState<Home> {
     return Center(
         child: Column(
           children: [
-            /*Row(
+            Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -84,7 +84,7 @@ class _HomeState extends ConsumerState<Home> {
                         ),
                     ]
                   ),
-                ]),*/
+                ]),
 
             Column(
                 mainAxisSize: MainAxisSize.max,

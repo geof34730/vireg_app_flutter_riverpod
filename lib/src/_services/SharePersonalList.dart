@@ -1,27 +1,31 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
 import '../_Utils/string.dart';
-import '../_class/FormatData.dart';
-import '../_models/ListVerbsModel.dart';
 import '../_models/PersonalListModel.dart';
+import 'dart:convert';
+
 
 class SharePersonalList {
   late BuildContext context;
   SharePersonalList({
     required this.context,
   });
-
+  final dio = Dio();
   Future<PersonalListModel> GetList({required String idListPerso}) async {
-    String urlEnv= "${dotenv.get("URL_API")}/personalList/$idListPerso";
-    print(urlEnv);
-    final url = Uri.parse(urlEnv);
-    final headers = {
-      "Content-type": "application/json;charset=utf-8",
-    };
-    final response = await get(url, headers: headers);
-    return FormatData().responseFormatForPersonalListModel(dataReponse: response.body);
+    final response = await dio.get(
+        "${dotenv.get("URL_API")}/personalList/$idListPerso",
+        data: {'id': 12, 'name': 'dio'},
+        options: Options(
+          headers: {
+            "Content-type": "application/json;charset=utf-8",
+          },
+        ),
+    );
+    final Map<String, dynamic> parsed = jsonDecode(response.data["data"].toString());
+    return PersonalListModel.fromJson(parsed);
   }
 
   Future<dynamic> Share({required String idListPerso, required PersonalListModel? ListePerso }) async {
@@ -50,8 +54,6 @@ class SharePersonalList {
         '"listIdListShare":"$listIdListShare"'
         '}';
     final response = await post(url, headers: headers, body: jsonEncode(listIdListShare));
-    print(response);
-    print(response.body);
     return jsonDecode(response.body);
   }
 
@@ -81,7 +83,6 @@ class SharePersonalList {
         '}';
     print(json);
     final response = await post(url, headers: headers, body: json);
-    print(jsonDecode(response.body));
     return jsonDecode(response.body);
   }
 
