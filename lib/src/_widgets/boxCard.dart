@@ -9,7 +9,6 @@ import '../_utils/string.dart';
 import 'elevatedButtonCardHome.dart';
 
 class BoxCard extends ConsumerWidget {
-
   const BoxCard({
     required BuildContext this.context,
     required this.colorsList,
@@ -20,7 +19,6 @@ class BoxCard extends ConsumerWidget {
     final Color colorsList;
     final String titleList;
     final String idListPerso;
-
 
     @override
     Widget build(BuildContext context, WidgetRef ref) {
@@ -65,9 +63,7 @@ class BoxCard extends ConsumerWidget {
                                 ),
                             ),
                           ],),
-                        subtitle:
-
-                        Wrap(
+                        subtitle: Wrap(
                           alignment: WrapAlignment.center,
                           verticalDirection: VerticalDirection.down,
                           spacing: 10.0,
@@ -106,7 +102,6 @@ class BoxCard extends ConsumerWidget {
                         )
                     ),
                   )),
-
             ],
           )
       );

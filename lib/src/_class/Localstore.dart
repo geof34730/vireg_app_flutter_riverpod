@@ -7,38 +7,21 @@ import 'package:localstore/localstore.dart';
 import '../_models/PersonalListModel.dart';
 import 'localLang.dart';
 
-
-
-
-
 final db = Localstore.instance;
-
 
 class Localstorelocal  {
   Localstorelocal({required this.context, required this.ref});
-
   final BuildContext context;
   final WidgetRef ref;
-  final String? langSelect = null;
-
+  final String langSelect = "";
   late String langDevice=View.of(context).platformDispatcher.locale.toString().substring(0, 2);
 
   /////////////// BEGIN LANG /////////////////
   dynamic listLangSupported() => context.findAncestorWidgetOfExactType<MaterialApp>()?.supportedLocales;
 
-  dynamic getLangLoad() async {
-    if(getLangLocalStore() == null){
-        return langDevice;
-      }
-      else{
-        return getLangLocalStore();
-      }
-    }
+  dynamic getLangLoad() async =>(await getLangLocalStore() == "" ? langDevice : getLangLocalStore());
 
-  dynamic getLangLocalStore() async  {
-    return  db.collection('store').doc("config").get().then((value)  => value?["lang"].toString());
-
-  }
+  Future<String> getLangLocalStore() async => await db.collection('store').doc("config").get().then((value) => ((value!=null && value["lang"]!=null) ? value["lang"].toString() : ""));
 
   void updateLocalstoreLang({required String lang, bool withChange = true}) {
     db.collection('store').doc("config").set({'lang':lang});
@@ -65,33 +48,21 @@ class Localstorelocal  {
   }
   ////////// END LANG ////////////
 
-  Future<dynamic> getJsonAllLocalStore() async {
-    return db.collection('store').get().then((valueStore)  {
-      return db.collection('personalList').get().then((valuePersonalList)  {
-        return "[${json.encode(valueStore)},${json.encode(valuePersonalList)}]";
-      });
-    });
-  }
+  ////////////BEGIN DEV TOOLS ///////////
+  Future<dynamic> getJsonAllLocalStore() async => await db.collection('store').get().then((valueStore) async => await db.collection('personalList').get().then((valuePersonalList) async => "[${json.encode(valueStore)},${json.encode(valuePersonalList)}]"));
   ////////////END DEV TOOLS ///////////
 
   ////////BEGIN  PERSONALLIST/////////////
-  Future<dynamic> updateLocalstoreList({required PersonalListModel PersonalList }) async {
-    savePersonalList(PersonalList: PersonalList);
-    return "ok";
-  }
+  Future<dynamic> updateLocalstoreList({required PersonalListModel PersonalList }) async =>(savePersonalList(PersonalList: PersonalList),"ok");
 
-  Future<PersonalListModel> getJsonPersonalistLocalStore({required String idList }) async {
-      return db.collection('personalList').doc(idList).get().then((value) async => PersonalListModel.fromJson(value!));
-  }
+  Future<dynamic> getJsonPersonalistLocalStore({required String idList }) async => await db.collection('personalList').doc(idList).get().then((value) async => await PersonalListModel.fromJson(value!));
 
-  Future<dynamic> getJsonAllPersonalistLocalStore() async {
-    late List ListPerso = [];
-    return db.collection('store').get().then((valueStore) {
-      return db.collection('personalList').get().then((valuePersonalList) {
-        valuePersonalList?.entries.forEach((element) {
-          ListPerso.add(
-              element.value["id"]
-          );
+  Future<List<dynamic>> getJsonAllPersonalistLocalStore() async {
+    late List<dynamic> ListPerso = [];
+    return await db.collection('store').get().then((valueStore) async {
+      return await db.collection('personalList').get().then((valuePersonalList) async {
+         valuePersonalList?.entries.forEach((element)  {
+          ListPerso.add(element.value);
         });
         return ListPerso;
       });

@@ -54,6 +54,7 @@ class _ListPersoStep2State extends ConsumerState<ListPersoStep2> {
 
   @override
   Widget build(BuildContext context) {
+
     UUIDList=widget.idList.toString();
     locallang=ref.watch(localLangProvider);
     return Column(mainAxisAlignment: MainAxisAlignment.start, mainAxisSize: MainAxisSize.max, children: [
@@ -214,6 +215,9 @@ class _ListPersoStep2State extends ConsumerState<ListPersoStep2> {
       else{
         print("NO go update server");
       }
+    setState(() {
+      print("setstate ok");
+    });
   }
 
   Future<bool> isIdInList({required int idVerbs}) async {
@@ -223,11 +227,11 @@ class _ListPersoStep2State extends ConsumerState<ListPersoStep2> {
 
   Future<void> addInList({required idVerbs}) async {
     print("addInList: $idVerbs");
-    PersonalListUpdate = PersonalListUpdate.copyWith(ListIdVerbs: [
+    PersonalListUpdate = await PersonalListUpdate.copyWith(ListIdVerbs: [
         ...PersonalListUpdate.ListIdVerbs,
         ListIdVerb(id: idVerbs),
       ]);
-    Localstorelocal(context: context,ref: ref).updatePersonalList(PersonalList: PersonalListUpdate);
+    await Localstorelocal(context: context,ref: ref).updatePersonalList(PersonalList: PersonalListUpdate);
     form2Valide=true;
     await updataDataShare();
   }
@@ -236,11 +240,11 @@ class _ListPersoStep2State extends ConsumerState<ListPersoStep2> {
     print("deleteInList: $idVerbs");
     String StringVerbFrancais="";
     form2Valide=false;
-    PersonalListUpdate = PersonalListUpdate.copyWith(ListIdVerbs: [
+    PersonalListUpdate = await PersonalListUpdate.copyWith(ListIdVerbs: [
         ...PersonalListUpdate.ListIdVerbs.where((element) => (element.id!=idVerbs))
       ]);
       StringVerbFrancais ="";
-      Localstorelocal(context: context,ref: ref).updatePersonalList(PersonalList: PersonalListUpdate);
+      await Localstorelocal(context: context,ref: ref).updatePersonalList(PersonalList: PersonalListUpdate);
     await updataDataShare();
   }
 
@@ -255,9 +259,9 @@ class _ListPersoStep2State extends ConsumerState<ListPersoStep2> {
         await addInList(idVerbs: idVerbs);
         //await SnakBar(context: context, messageSnackBar: "Votre verbe est ajouté à votre liste", themeSnackBar: 'success').showSnakBar();
       };
-      Future.delayed(const Duration(milliseconds: 500),(){
+     // Future.delayed(const Duration(milliseconds: 500),(){
       //  Loader(context: context, snackBar: false).hideLoader();
-      });
+      //});
       setState(() {
 
       });
