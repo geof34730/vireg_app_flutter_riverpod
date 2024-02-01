@@ -57,6 +57,9 @@ dependencies:
   flutter_material_color_picker: ^1.2.0
   uuid: ^4.2.2
   dio: ^5.4.0
+  connectivity_plus: ^5.0.2
+  ribbon_widget: ^1.0.5
+  qr_flutter: ^4.1.0
 
 dev_dependencies:
   flutter_test:

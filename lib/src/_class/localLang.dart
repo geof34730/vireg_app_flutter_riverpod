@@ -9,6 +9,5 @@ class localLang extends _$localLang {
 
   void change({required String lang}) {
     state = lang;
-
   }
 }

@@ -18,6 +18,7 @@ _$PersonalListModelImpl _$$PersonalListModelImplFromJson(
           const [],
       isListShare: json['isListShare'] as bool? ?? false,
       ownListShare: json['ownListShare'] as bool? ?? false,
+      urlShare: json['urlShare'] as String? ?? null,
     );
 
 Map<String, dynamic> _$$PersonalListModelImplToJson(
@@ -29,6 +30,7 @@ Map<String, dynamic> _$$PersonalListModelImplToJson(
       'ListIdVerbs': instance.ListIdVerbs,
       'isListShare': instance.isListShare,
       'ownListShare': instance.ownListShare,
+      'urlShare': instance.urlShare,
     };
 
 _$ListIdVerbImpl _$$ListIdVerbImplFromJson(Map<String, dynamic> json) =>

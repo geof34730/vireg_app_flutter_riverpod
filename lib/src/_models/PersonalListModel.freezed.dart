@@ -26,6 +26,7 @@ mixin _$PersonalListModel {
   List<ListIdVerb> get ListIdVerbs => throw _privateConstructorUsedError;
   bool get isListShare => throw _privateConstructorUsedError;
   bool get ownListShare => throw _privateConstructorUsedError;
+  String? get urlShare => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -45,7 +46,8 @@ abstract class $PersonalListModelCopyWith<$Res> {
       int color,
       List<ListIdVerb> ListIdVerbs,
       bool isListShare,
-      bool ownListShare});
+      bool ownListShare,
+      String? urlShare});
 }
 
 /// @nodoc
@@ -67,6 +69,7 @@ class _$PersonalListModelCopyWithImpl<$Res, $Val extends PersonalListModel>
     Object? ListIdVerbs = null,
     Object? isListShare = null,
     Object? ownListShare = null,
+    Object? urlShare = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -93,6 +96,10 @@ class _$PersonalListModelCopyWithImpl<$Res, $Val extends PersonalListModel>
           ? _value.ownListShare
           : ownListShare // ignore: cast_nullable_to_non_nullable
               as bool,
+      urlShare: freezed == urlShare
+          ? _value.urlShare
+          : urlShare // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -111,7 +118,8 @@ abstract class _$$PersonalListModelImplCopyWith<$Res>
       int color,
       List<ListIdVerb> ListIdVerbs,
       bool isListShare,
-      bool ownListShare});
+      bool ownListShare,
+      String? urlShare});
 }
 
 /// @nodoc
@@ -131,6 +139,7 @@ class __$$PersonalListModelImplCopyWithImpl<$Res>
     Object? ListIdVerbs = null,
     Object? isListShare = null,
     Object? ownListShare = null,
+    Object? urlShare = freezed,
   }) {
     return _then(_$PersonalListModelImpl(
       id: null == id
@@ -157,6 +166,10 @@ class __$$PersonalListModelImplCopyWithImpl<$Res>
           ? _value.ownListShare
           : ownListShare // ignore: cast_nullable_to_non_nullable
               as bool,
+      urlShare: freezed == urlShare
+          ? _value.urlShare
+          : urlShare // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -170,7 +183,8 @@ class _$PersonalListModelImpl implements _PersonalListModel {
       required this.color,
       final List<ListIdVerb> ListIdVerbs = const [],
       this.isListShare = false,
-      this.ownListShare = false})
+      this.ownListShare = false,
+      this.urlShare = null})
       : _ListIdVerbs = ListIdVerbs;
 
   factory _$PersonalListModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -197,10 +211,13 @@ class _$PersonalListModelImpl implements _PersonalListModel {
   @override
   @JsonKey()
   final bool ownListShare;
+  @override
+  @JsonKey()
+  final String? urlShare;
 
   @override
   String toString() {
-    return 'PersonalListModel(id: $id, title: $title, color: $color, ListIdVerbs: $ListIdVerbs, isListShare: $isListShare, ownListShare: $ownListShare)';
+    return 'PersonalListModel(id: $id, title: $title, color: $color, ListIdVerbs: $ListIdVerbs, isListShare: $isListShare, ownListShare: $ownListShare, urlShare: $urlShare)';
   }
 
   @override
@@ -216,7 +233,9 @@ class _$PersonalListModelImpl implements _PersonalListModel {
             (identical(other.isListShare, isListShare) ||
                 other.isListShare == isListShare) &&
             (identical(other.ownListShare, ownListShare) ||
-                other.ownListShare == ownListShare));
+                other.ownListShare == ownListShare) &&
+            (identical(other.urlShare, urlShare) ||
+                other.urlShare == urlShare));
   }
 
   @JsonKey(ignore: true)
@@ -228,7 +247,8 @@ class _$PersonalListModelImpl implements _PersonalListModel {
       color,
       const DeepCollectionEquality().hash(_ListIdVerbs),
       isListShare,
-      ownListShare);
+      ownListShare,
+      urlShare);
 
   @JsonKey(ignore: true)
   @override
@@ -252,7 +272,8 @@ abstract class _PersonalListModel implements PersonalListModel {
       required final int color,
       final List<ListIdVerb> ListIdVerbs,
       final bool isListShare,
-      final bool ownListShare}) = _$PersonalListModelImpl;
+      final bool ownListShare,
+      final String? urlShare}) = _$PersonalListModelImpl;
 
   factory _PersonalListModel.fromJson(Map<String, dynamic> json) =
       _$PersonalListModelImpl.fromJson;
@@ -269,6 +290,8 @@ abstract class _PersonalListModel implements PersonalListModel {
   bool get isListShare;
   @override
   bool get ownListShare;
+  @override
+  String? get urlShare;
   @override
   @JsonKey(ignore: true)
   _$$PersonalListModelImplCopyWith<_$PersonalListModelImpl> get copyWith =>

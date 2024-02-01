@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../_utils/front.dart';
 
-Widget ElevatedButtonCardHomeEditDeleteShare({visibilityButton = true, disabledButton = false,required Color colorIcon, required dynamic onClickButton, required IconData iconContent, required BuildContext context}) {
+Widget ElevatedButtonCardHomeEditDeleteShare({visibilityButton = true, bool disabledButton = true ,required Color colorIcon, required dynamic onClickButton, required IconData iconContent, required BuildContext context}) {
   return Visibility(
       visible:visibilityButton,
       child:Container(
@@ -24,11 +24,11 @@ Widget ElevatedButtonCardHomeEditDeleteShare({visibilityButton = true, disabledB
             onPressed: (
                 disabledButton
                     ?
-                null
-                    :
                     () {
-                  onClickButton();
-                }
+                      onClickButton();
+                    }
+                    :
+                    null
             ),
           )
       ));

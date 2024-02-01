@@ -1,26 +1,33 @@
 import 'dart:convert';
 import 'dart:core';
-
+import 'dart:async';
+import 'dart:developer' as developer;
+import 'package:flutter/services.dart';
 import 'package:Vireg/src/_models/PersonalListModel.dart';
 import 'package:Vireg/src/localization/app_localizations_context.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:connectivity_plus/connectivity_plus.dart';
+import '../_class/Loader.dart';
+import '../_class/localLang.dart';
 import '../_class/localstore.dart';
+import '../_services/SharePersonalList.dart';
 import '../_utils/front.dart';
 import '../_widgets/boxCard.dart';
 import '../_widgets/boxCardListPerso.dart';
 import '../router.dart';
+import '../_class/localOnlineDevice.dart';
+
 
 bool initConfig=false;
 
 class Home extends ConsumerStatefulWidget {
   const Home({Key? key }) : super(key: key);
-
   @override
   _HomeState createState() => _HomeState();
 }
@@ -28,20 +35,24 @@ class Home extends ConsumerStatefulWidget {
 class _HomeState extends ConsumerState<Home> {
   final FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
   bool isoffline=true;
+  //ConnectivityResult _connectionStatus = ConnectivityResult.none;
+  final Connectivity _connectivity = Connectivity();
+  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+
   @override
   void initState() {
     print("init state home");
-
     super.initState();
+    initConnectivity();
+    _connectivitySubscription = _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
   }
 
   @override
   void dispose() {
+    _connectivitySubscription.cancel();
     super.dispose();
   }
-  Future<void> shareListPerso({required String idList}) async {
-    print(idList);
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +60,7 @@ class _HomeState extends ConsumerState<Home> {
     print("build Home");
     if (!initConfig){
       localstoreLocalObj.initLang();
-     // initConfig=true;
+      initConfig=true;
     }
     Future<List<dynamic>> _futureOfListPerso() async => await Localstorelocal(ref: ref,context: context).getJsonAllPersonalistLocalStore();
     return Center(
@@ -83,7 +94,7 @@ class _HomeState extends ConsumerState<Home> {
                           onPressed: (){
                             context.go('/share/767b87d2-8b84-418b-a6aa-f7c4de480ed4');
                           },
-                          child: Text('share test 767b87d2')
+                          child: Text(ref.watch(localOnlineDeviceProvider).toString())
                       ),
                     ]
                 ),
@@ -114,7 +125,7 @@ class _HomeState extends ConsumerState<Home> {
           FutureBuilder<List<dynamic>>(
               future: _futureOfListPerso(),
               builder: (context, snapshot) {
-   if (snapshot.connectionState == ConnectionState.waiting) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator();
                 } else if (snapshot.connectionState == ConnectionState.done) {
                   if (snapshot.hasError) {
@@ -153,9 +164,7 @@ class _HomeState extends ConsumerState<Home> {
                                       child: BoxCardListPerso(
                                           context:context,
                                           personalList:personalListModelFromJson(jsonEncode(snapshot.data![i]).toString()),
-                                          onClickShare: ({required String idList}) async => {
-                                          (isoffline ? alertOffline() : shareListPerso(idList: idList))
-                                          }
+                                          onClickShare: ({required String idList}) async =>(ref.watch(localOnlineDeviceProvider) ? shareListPerso(personalList: personalListModelFromJson(jsonEncode(snapshot.data![i]).toString())) : alertOffline())
                                       )
                                   ),
                                 ],
@@ -172,10 +181,14 @@ class _HomeState extends ConsumerState<Home> {
                                       padding: EdgeInsets.only(bottom: 10.00,right: 5.0, top: ResponsiveContent(context: context).choseSize(mobileSize: 5.00, otherSize: 10.00)),
                                       child: FloatingActionButton(
                                         elevation: 10,
-                                        backgroundColor: Colors.blue,
+                                        backgroundColor: (ref.watch(localOnlineDeviceProvider) ? Colors.blue : Colors.grey) ,
                                         onPressed: () {
-                                          context.go("/");
-                                          print('refreshAll');
+                                          (ref.watch(localOnlineDeviceProvider)
+                                              ?
+                                              context.go("/")
+                                              :
+                                              alertOffline()
+                                          );
                                         },
                                         child: const Icon(
                                             Icons.refresh,
@@ -277,6 +290,130 @@ class _HomeState extends ConsumerState<Home> {
 
   int getFlexListePerso({required int lenghtVerbs,required int numVerb}) =>((lenghtVerbs==1) ? 12 : ((lenghtVerbs==numVerb+1) ? ((numVerb.isEven) ? 12 : 6 ) : 6));
 
+  Future<void> shareListPerso({required PersonalListModel personalList}) async {
+    SharePersonalList(context: context).Share(personalList: personalList).then((value){
+
+     print("return1");
+      print(value);
+     print("return2");
+     _dialogBuilderShare(context: context, urlLinkShareFirebase: value["urlLinkShareFirebase"], listName: "tesst");
+     Loader(context: context, snackBar: false).hideLoader();
+
+    });
+  }
+  void sendQrCode({required String urlLinkShareFirebase, required BuildContext context, required String listName}) {
+    Navigator.of(context).pop();
+    _dialogBuilderShare(urlLinkShareFirebase: urlLinkShareFirebase, context: context, listName: listName);
+  }
+
+  Future<void> _dialogBuilderShare({required BuildContext context, required String urlLinkShareFirebase, required String listName}) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return SingleChildScrollView(
+          //  scrollDirection: Axis.vertical,
+            child: AlertDialog(
+              insetPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              contentPadding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              icon: Column(mainAxisSize: MainAxisSize.min, mainAxisAlignment: MainAxisAlignment.end, crossAxisAlignment: CrossAxisAlignment.end, children: [
+                InkWell(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Icon(
+                      Icons.close,
+                    ))
+              ]),
+              title: const Text(
+                'Partager votre liste personnalisée',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 18.00),
+              ),
+              content: Column(mainAxisSize: MainAxisSize.min, mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                const SizedBox(
+                    width: 360,
+                    height: 40,
+                    child: Text(
+                      'En faisant scanner le QR code ci-dessous à la personne avec qui vous souhaitez partager cette liste',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 14.00),
+                    )),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.00, bottom: 10.0),
+                  child: Container(
+                      width: 280,
+                      height: 280,
+                      color: Colors.blue,
+                      child: QrImageView(
+                        data: urlLinkShareFirebase,
+                        version: 10,
+                        size: 280,
+                        gapless: true,
+                        backgroundColor: Colors.white,
+                      )),
+                ),
+                const Padding(
+                    padding: EdgeInsets.only(bottom: 10.0),
+                    child: Text(
+                      'OU',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 18.00, fontWeight: FontWeight.bold),
+                    )),
+                const Text(
+                  'En envoyant le QR code de votre liste par email',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 14.00),
+                ),
+                Row(crossAxisAlignment: CrossAxisAlignment.center, mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Padding(
+                      padding: const EdgeInsets.only(top: 10.0),
+                      child: ElevatedButton.icon(
+                          onPressed: () async {
+                            sendQrCode(urlLinkShareFirebase: urlLinkShareFirebase, context: context, listName: listName);
+                          },
+                          icon: const Icon(
+                            Icons.email,
+                          ),
+                          label: const Text(
+                            "Partager par email",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )))
+                ])
+              ]),
+            ));
+      },
+    );
+  }
+
+
+
+
+  Future<void> initConnectivity() async {
+    late ConnectivityResult result;
+    try {
+      result = await _connectivity.checkConnectivity();
+    } on PlatformException catch (e) {
+      developer.log('******************Couldn\'t check connectivity status: ', error: e);
+      return;
+    }
+    if (!mounted) {
+      return Future.value(null);
+    }
+    return _updateConnectionStatus(result);
+  }
+
+  Future<void> _updateConnectionStatus(ConnectivityResult connectivityResult) async {
+    if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi || connectivityResult == ConnectivityResult.ethernet || connectivityResult == ConnectivityResult.vpn) {
+      ref.read(localOnlineDeviceProvider.notifier).change(onlineDevice: true);
+    } else {
+      ref.read(localOnlineDeviceProvider.notifier).change(onlineDevice: false);
+      print("plus de connection");
+    }
+    //setState(() {
+    //_connectionStatus = result;
+    // });
+  }
 
   Future<String?> alertOffline() {
     return showDialog<String>(
@@ -288,10 +425,10 @@ class _HomeState extends ConsumerState<Home> {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                const SizedBox(
+                 SizedBox(
                     width:280.0,
                     child:Text(
-                      'Vous devez etre connecté à internet pour pouvoir utiliser cette fonctionnalitée',
+                      context.loc.alertOffLine,
                       style: TextStyle(color: Colors.red, fontSize: 16.0),
                       textAlign: TextAlign.center,
                     )
@@ -301,7 +438,7 @@ class _HomeState extends ConsumerState<Home> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: const Text('FERMER'),
+                  child: Text(context.loc.fermer),
                 ),
               ],
             ),

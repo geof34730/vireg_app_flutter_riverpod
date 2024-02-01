@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 
 import '../_class/Localstore.dart';
@@ -8,20 +10,28 @@ import 'drawerDevTools.dart';
 
 Widget Layout({required BuildContext context,required child,bottomNavigationBar=false,double paddinLeftRight=15.0,appBar=true,indexBottomNavigationBar=0}) {
   return Scaffold(
-
-
     appBar:  (appBar ? WidgetsEasySearchBar() : null),
     bottomNavigationBar: (bottomNavigationBar ? WidgetbottomNavigationBar(indexNav: indexBottomNavigationBar) : null),
-    body: SingleChildScrollView(
-        child:Padding(
-         padding: EdgeInsets.only(left: paddinLeftRight,right: paddinLeftRight),
-         child:Center(
-             child:Container(
-                constraints: const BoxConstraints(maxWidth: 1280),
-                child:child
-             )
-          )
-        )
+    body: LoaderOverlay(
+          overlayColor: Colors.black.withOpacity(0.6),
+          useDefaultLoading: false,
+          overlayWidget: const Center(
+            child: SpinKitFadingCircle(
+              color: Colors.blue,
+              size: 150.0,
+            ),
+          ),
+          child: SingleChildScrollView(
+                child:Padding(
+                 padding: EdgeInsets.only(left: paddinLeftRight,right: paddinLeftRight),
+                 child:Center(
+                     child:Container(
+                        constraints: const BoxConstraints(maxWidth: 1280),
+                        child:child
+                     )
+                  )
+                )
+            )
     ),
 
     floatingActionButton: FloatingActionButton(

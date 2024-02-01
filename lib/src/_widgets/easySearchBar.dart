@@ -21,22 +21,16 @@ class WidgetsEasySearchBar extends ConsumerWidget implements PreferredSizeWidget
   Widget build(BuildContext context, WidgetRef ref) {
     /*******BEGIN Manage lang*********/
     var getlocalstorelocal = Localstorelocal(context: context, ref: ref);
-
       int numItemLangSelect = getlocalstorelocal.getItemLangSelect();
       var listLangSupported = getlocalstorelocal.listLangSupported();
-
     /*******END Manage lang*********/
 
     return EasySearchBar(
         callBackBackNav: () async {
           String urlCurrentPage = GoRouter.of(context).routeInformationProvider.value.uri.toString();
-          int positionTypeUrl = urlCurrentPage.indexOf('addListPersoStep2/');
+          int positionTypeUrl = urlCurrentPage.indexOf('add/ListPersoStep1');
           if(positionTypeUrl>0){
-          //  String idList = urlCurrentPage.substring(positionTypeUrl+18, urlCurrentPage.length);
-         //   final urlBack =  await customRoutesVireg.pushNamed("home");
-          //  print(urlBack);
-            Navigator.pop(context);
-
+            customRoutesVireg.goNamed("Home");
           }
           else{
             Navigator.pop(context);

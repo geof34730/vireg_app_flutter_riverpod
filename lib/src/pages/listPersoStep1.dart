@@ -1,6 +1,4 @@
-
 import 'dart:convert';
-
 import 'package:Vireg/src/_models/PersonalListModel.dart';
 import 'package:Vireg/src/router.dart';
 import 'package:flutter/material.dart';
@@ -10,13 +8,8 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:Vireg/src/localization/app_localizations_context.dart';
 import 'package:uuid/uuid.dart';
-import '../_models/PersonalListModel.dart';
-
-
-
-import '../_class/Localstore.dart';
-
-import '../_utils/front.dart';
+import 'package:Vireg/src/_class/Localstore.dart';
+import 'package:Vireg/src//_utils/front.dart';
 
 var uuid = const Uuid();
 class ListPersoStep1 extends ConsumerStatefulWidget {
@@ -30,29 +23,31 @@ class _ListPersoStep1State extends ConsumerState<ListPersoStep1> {
   final titleList = TextEditingController();
   String? colorList = Colors.purple.value.toString();
   bool formValide = false;
-  int etapeForm = 1;
   var localstoreLocalObj=null;
   String  UUIDList = uuid.v4();
   bool editMode=false;
-  dynamic jsonEditPersonalList=null;
   bool loadDataEdit=false;
-  late PersonalListModel PersonalListUpdate;
+  late PersonalListModel  PersonalListUpdate= new PersonalListModel(id: UUIDList.toString(), title: "",ListIdVerbs: [], color: int.parse(colorList as String));
 
   @override
   void initState() {
-    print("initState ListePersoStep1");
     if (!loadDataEdit){
       if (widget.idList != null) {
         editMode = true;
-        UUIDList = widget.idList!;
-
-        Localstorelocal(context: context,ref: ref).getJsonPersonalistLocalStore(idList: UUIDList).then((value){
+        UUIDList = widget.idList.toString();
+        Localstorelocal(context: context,ref: ref).getJsonPersonalistLocalStore(idList: UUIDList.toString()).then((value){
           PersonalListUpdate=value;
           formValide = true;
-          setState(() {});
+          loadDataEdit=true;
+          setState(() {
+            titleList.text=PersonalListUpdate.title;
+          });
         });
-
-
+      }
+      else{
+        setState(() {
+          titleList.text=PersonalListUpdate.title;
+        });
       }
     }
     super.initState();
@@ -126,11 +121,12 @@ class _ListPersoStep1State extends ConsumerState<ListPersoStep1> {
                 top:10.00,
                 bottom:10.0
             ),
-            child: MaterialColorPicker(
+            child:MaterialColorPicker(
               allowShades: true,
               onlyShadeSelection: false,
               onColorChange: (Color color) {
                 colorList = color.value.toString();
+                PersonalListUpdate=PersonalListUpdate.copyWith(color: int.parse(color.value.toString()));
                 if(editMode) {
                   updatePersonalListStep1();
                 }
@@ -149,8 +145,6 @@ class _ListPersoStep1State extends ConsumerState<ListPersoStep1> {
                           :
                            createList()
                         );
-
-
                       }
                   :
                   null
@@ -166,50 +160,41 @@ class _ListPersoStep1State extends ConsumerState<ListPersoStep1> {
   }
 
   Future<void> createList() async {
-    print("createLise");
     PersonalListUpdate =PersonalListModel(
         id: UUIDList.toString(),
         title: titleList.text,
         color: int.parse(colorList as String)
     );
-    print(PersonalListUpdate);
-    await Localstorelocal(ref: ref,context: context).createPersonalList(PersonalList:PersonalListUpdate);
+   await Localstorelocal(ref: ref,context: context).createPersonalList(PersonalList:PersonalListUpdate);
     nextPersonalList();
-    //setState(() {});
   }
+
   void changeText({required String value}){
     if(value != "") {
       formValide = true;
+      PersonalListUpdate=PersonalListUpdate.copyWith(title: value.toString());
       if(editMode) {
-        PersonalListUpdate=PersonalListUpdate.copyWith(title: value);
-        print(PersonalListUpdate);
         updatePersonalListStep1();
       }
+      formValide = true;
     }
     else{
-
       formValide = false;
     }
     setState(() {});
   }
 
   Future<void> updatePersonalListStep1({bool next =false}) async {
-    print("update Personal List");
-      await localstoreLocalObj.updatePersonalList(PersonalListUpdate);
+      localstoreLocalObj.updatePersonalList(PersonalList:PersonalListUpdate);
       if(next){
         nextPersonalList();
       }
-
   }
 
   void nextPersonalList(){
-    if(editMode){
-      context.goNamed("editListPersoStep2",pathParameters: {'idList': UUIDList});
-    }
-    else{
-      context.goNamed("addListPersoStep2",pathParameters: {'idList': UUIDList.toString()});
-    }
+    context.goNamed((editMode ? "editListPersoStep2": "addListPersoStep2"),pathParameters: {'idList': PersonalListUpdate.id.toString()});
   }
+
 }
 
 

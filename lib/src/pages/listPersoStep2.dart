@@ -38,7 +38,6 @@ class _ListPersoStep2State extends ConsumerState<ListPersoStep2> {
   @override
   void initState() {
     UUIDList=widget.idList.toString();
-    print('initstat ListVerb');
     Localstorelocal(context: context,ref: ref).getJsonPersonalistLocalStore(idList: UUIDList).then((value){
       PersonalListUpdate=value;
     });
@@ -54,7 +53,6 @@ class _ListPersoStep2State extends ConsumerState<ListPersoStep2> {
 
   @override
   Widget build(BuildContext context) {
-
     UUIDList=widget.idList.toString();
     locallang=ref.watch(localLangProvider);
     return Column(mainAxisAlignment: MainAxisAlignment.start, mainAxisSize: MainAxisSize.max, children: [
@@ -139,11 +137,6 @@ class _ListPersoStep2State extends ConsumerState<ListPersoStep2> {
     ]);
   }
 
-
-
-
-
-
   dynamic constraintsDataColumn({required int flexNumber}){
     return BoxConstraints(
         minWidth: ResponsiveContent(context: context).choseSize(
@@ -207,10 +200,7 @@ class _ListPersoStep2State extends ConsumerState<ListPersoStep2> {
     print("update data share Function $UUIDList");
       if(PersonalListUpdate.ownListShare) {
         print("go update server");
-        SharePersonalList(context:context).Share(
-            idListPerso: PersonalListUpdate.id,
-            ListePerso:PersonalListUpdate
-        );
+        SharePersonalList(context:context).Share(personalList: PersonalListUpdate);
       }
       else{
         print("NO go update server");
@@ -250,7 +240,7 @@ class _ListPersoStep2State extends ConsumerState<ListPersoStep2> {
 
   Future<void> addOrDeleteInList({required idVerbs}) async {
       print("addOrDeleteInList: $idVerbs");
-      //Loader(context: context,snackBar: false).showLoader();
+      Loader(context: context,snackBar: false).showLoader();
       bool isInList = await isIdInList(idVerbs: idVerbs);
       if (isInList) {
         await deleteInList(idVerbs: idVerbs);
@@ -259,15 +249,13 @@ class _ListPersoStep2State extends ConsumerState<ListPersoStep2> {
         await addInList(idVerbs: idVerbs);
         //await SnakBar(context: context, messageSnackBar: "Votre verbe est ajouté à votre liste", themeSnackBar: 'success').showSnakBar();
       };
-     // Future.delayed(const Duration(milliseconds: 500),(){
-      //  Loader(context: context, snackBar: false).hideLoader();
-      //});
+      Future.delayed(const Duration(milliseconds: 500),(){
+        Loader(context: context, snackBar: false).hideLoader();
+      });
       setState(() {
 
       });
   }
-
-
 }
 
 

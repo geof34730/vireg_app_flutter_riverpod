@@ -17,7 +17,7 @@ class SharePersonalList {
   Future<PersonalListModel> GetList({required String idListPerso}) async {
     final response = await dio.get(
         "${dotenv.get("URL_API")}/personalList/$idListPerso",
-        data: {'id': 12, 'name': 'dio'},
+        //data: {'id': 12, 'name': 'dio'},
         options: Options(
           headers: {
             "Content-type": "application/json;charset=utf-8",
@@ -28,20 +28,20 @@ class SharePersonalList {
     return PersonalListModel.fromJson(parsed);
   }
 
-  Future<dynamic> Share({required String idListPerso, required PersonalListModel? ListePerso }) async {
-    String urlEnv= "${dotenv.get("URL_API")}/personalList";
-    final url = Uri.parse(urlEnv);
-    print(url);
-    String stringDataListPerso  = jsonEncode(ListePerso);
-    final headers = {
-      "Content-type": "application/json;charset=utf-8",
-    };
-    final json = '{'
-        '"uuid": "$idListPerso",'
-        '"data":$stringDataListPerso'
-        '}';
-    final response = await post(url, headers: headers, body: json);
-    return jsonDecode(response.body);
+  Future<dynamic> Share({ required PersonalListModel personalList }) async {
+    final response = await dio.post(
+      "${dotenv.get("URL_API")}/personalList",
+      data: {
+        "uuid": personalList.id,
+        "data":personalListModelToJson(personalList)
+      },
+      options: Options(
+        headers: {
+          "Content-type": "application/json;charset=utf-8",
+        },
+      ),
+    );
+    return jsonDecode(response.data["data"].toString());;
   }
 
   Future<dynamic> UpdateOrDeleteLoadListeShare({required List listIdListShare}) async {

@@ -55,7 +55,11 @@ class Localstorelocal  {
   ////////BEGIN  PERSONALLIST/////////////
   Future<dynamic> updateLocalstoreList({required PersonalListModel PersonalList }) async =>(savePersonalList(PersonalList: PersonalList),"ok");
 
-  Future<dynamic> getJsonPersonalistLocalStore({required String idList }) async => await db.collection('personalList').doc(idList).get().then((value) async => await PersonalListModel.fromJson(value!));
+  Future<PersonalListModel> getJsonPersonalistLocalStore({required String idList }) async {
+    return  db.collection('personalList').doc(idList).get().then((value) {
+        return personalListModelFromJson(jsonEncode(value));
+    });
+  }
 
   Future<List<dynamic>> getJsonAllPersonalistLocalStore() async {
     late List<dynamic> ListPerso = [];
@@ -78,6 +82,7 @@ class Localstorelocal  {
   }
 
   updatePersonalList({required PersonalListModel PersonalList }){
+    print(PersonalList);
     db.collection('personalList').doc(PersonalList.id).set(PersonalList.toJson());
   }
 

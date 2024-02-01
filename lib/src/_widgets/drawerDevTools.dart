@@ -6,22 +6,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../_class/Localstore.dart';
+import '../_class/localOnlineDevice.dart';
 
 
 class drawerWidget extends ConsumerWidget {
   drawerWidget({super.key});
-
-
-
-
-
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
-      print(Localstorelocal(context: context,ref: ref).getJsonAllLocalStore());
-
-
     return Material(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -62,6 +53,33 @@ class drawerWidget extends ConsumerWidget {
               child:Column(
                 mainAxisSize: MainAxisSize.max,
                children: [
+                 Text("Riverpod Provider",
+                   style: TextStyle(
+                       fontWeight: FontWeight.bold,
+                       backgroundColor: Colors.amberAccent
+                   ),
+                 ),
+                 Container(
+                     width: double.infinity,
+                     color: Colors.black,
+                     padding: const EdgeInsets.all(5.00),
+                     child: Column(
+                       mainAxisAlignment: MainAxisAlignment.start,
+                       crossAxisAlignment: CrossAxisAlignment.start,
+                       children: [
+                         Text('localLangProvider => ${ref.watch(localLangProvider)}',
+                           style: TextStyle(
+                               color: Colors.yellow
+                           ),
+                         ),
+                         Text('localOnlineDeviceProvider => ${ref.watch(localOnlineDeviceProvider)}',
+                           style: TextStyle(
+                               color: Colors.yellow
+                           ),
+                         )
+                       ],
+                     )
+                 ),
                   Text("Localstore",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -112,23 +130,7 @@ class drawerWidget extends ConsumerWidget {
                             },
                           )
                         ),
-                 Text("Riverpod Provider",
-                   style: TextStyle(
-                       fontWeight: FontWeight.bold,
-                       backgroundColor: Colors.amberAccent
-                   ),
-                 ),
-                 Container(
-                   width: double.infinity,
-                   color: Colors.black,
-                   padding: const EdgeInsets.all(5.00),
-                   child: Text('localLangProvider => ${ref.watch(localLangProvider)}',
-                     style: TextStyle(
-                       color: Colors.yellow
-                     ),
 
-                   )
-                 )
                  ],
               )
               )

@@ -21,7 +21,7 @@
   "listePersoCreateTitle":"Création liste personnalisée",
   "listePersoLabelTitleField":"Titre de votre liste",
   "listePersoChoiseColor":"Choisissez la couleur de votre liste",
-  "listePersoButtonSuivant" : "Suivant"
-
-
+  "listePersoButtonSuivant" : "Suivant",
+  "fermer" : "fermer",
+  "alertOffLine" : "Vous devez être connecté à internet pour pouvoir utiliser cette fonctionnalitée"
 }

@@ -7,6 +7,8 @@ import '../_Utils/string.dart';
 import '../_class/GetDataVerbs.dart';
 import 'package:flip_card/flip_card.dart';
 
+import '../_class/localOnlineDevice.dart';
+
 class LearnVerb extends ConsumerStatefulWidget {
   const LearnVerb({Key? key,required this.idList, required this.personalList }) : super(key: key);
   final String? idList;
@@ -82,7 +84,7 @@ class _LearnVerbState extends ConsumerState<LearnVerb> {
             Column(mainAxisSize: MainAxisSize.max, children: [
               Padding(
                 padding: EdgeInsets.only(top: 15.0, bottom: 10.0),
-                child: Text(context.loc.learnClickCarte),
+                child: Text("${context.loc.learnClickCarte} => ${ref.watch(localOnlineDeviceProvider).toString()}"),
               )
             ]),
             GestureDetector(
