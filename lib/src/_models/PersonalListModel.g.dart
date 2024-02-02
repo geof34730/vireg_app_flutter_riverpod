@@ -18,7 +18,7 @@ _$PersonalListModelImpl _$$PersonalListModelImplFromJson(
           const [],
       isListShare: json['isListShare'] as bool? ?? false,
       ownListShare: json['ownListShare'] as bool? ?? false,
-      urlShare: json['urlShare'] as String? ?? null,
+      urlShare: json['urlShare'] as String? ?? "",
     );
 
 Map<String, dynamic> _$$PersonalListModelImplToJson(

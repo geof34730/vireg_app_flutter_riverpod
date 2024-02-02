@@ -17,7 +17,6 @@ class SharePersonalList {
   Future<PersonalListModel> GetList({required String idListPerso}) async {
     final response = await dio.get(
         "${dotenv.get("URL_API")}/personalList/$idListPerso",
-        //data: {'id': 12, 'name': 'dio'},
         options: Options(
           headers: {
             "Content-type": "application/json;charset=utf-8",
@@ -28,7 +27,7 @@ class SharePersonalList {
     return PersonalListModel.fromJson(parsed);
   }
 
-  Future<dynamic> Share({ required PersonalListModel personalList }) async {
+  Future<PersonalListModel> Share({ required PersonalListModel personalList }) async {
     final response = await dio.post(
       "${dotenv.get("URL_API")}/personalList",
       data: {
@@ -41,7 +40,8 @@ class SharePersonalList {
         },
       ),
     );
-    return jsonDecode(response.data["data"].toString());;
+    final Map<String, dynamic> parsed = jsonDecode(response.data["data"].toString());
+    return PersonalListModel.fromJson(parsed);
   }
 
   Future<dynamic> UpdateOrDeleteLoadListeShare({required List listIdListShare}) async {
@@ -57,15 +57,16 @@ class SharePersonalList {
     return jsonDecode(response.body);
   }
 
-  Future<dynamic> DeleteList({required String idListPerso, bool }) async {
-    String urlEnv= "${dotenv.get("URL_API")}/personalList/$idListPerso";
-    print(urlEnv);
-    final url = Uri.parse(urlEnv);
-    final headers = {
-      "Content-type": "application/json;charset=utf-8",
-    };
-    final response = await delete(url, headers: headers);
-    return jsonDecode(response.body);
+  Future<void> DeleteList({required PersonalListModel personalList}) async {
+    print("deletelist");
+    final response = await dio.delete(
+      "${dotenv.get("URL_API")}/personalList/${personalList.id}",
+      options: Options(
+        headers: {
+          "Content-type": "application/json;charset=utf-8",
+        },
+      ),
+    );
   }
 
   Future<dynamic> sendShareByEMail({required String pseudo, required String email, required String urlLinkShareFirebase, required String listName }) async {

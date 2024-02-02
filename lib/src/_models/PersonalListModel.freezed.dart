@@ -26,7 +26,7 @@ mixin _$PersonalListModel {
   List<ListIdVerb> get ListIdVerbs => throw _privateConstructorUsedError;
   bool get isListShare => throw _privateConstructorUsedError;
   bool get ownListShare => throw _privateConstructorUsedError;
-  String? get urlShare => throw _privateConstructorUsedError;
+  String get urlShare => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -47,7 +47,7 @@ abstract class $PersonalListModelCopyWith<$Res> {
       List<ListIdVerb> ListIdVerbs,
       bool isListShare,
       bool ownListShare,
-      String? urlShare});
+      String urlShare});
 }
 
 /// @nodoc
@@ -69,7 +69,7 @@ class _$PersonalListModelCopyWithImpl<$Res, $Val extends PersonalListModel>
     Object? ListIdVerbs = null,
     Object? isListShare = null,
     Object? ownListShare = null,
-    Object? urlShare = freezed,
+    Object? urlShare = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -96,10 +96,10 @@ class _$PersonalListModelCopyWithImpl<$Res, $Val extends PersonalListModel>
           ? _value.ownListShare
           : ownListShare // ignore: cast_nullable_to_non_nullable
               as bool,
-      urlShare: freezed == urlShare
+      urlShare: null == urlShare
           ? _value.urlShare
           : urlShare // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ) as $Val);
   }
 }
@@ -119,7 +119,7 @@ abstract class _$$PersonalListModelImplCopyWith<$Res>
       List<ListIdVerb> ListIdVerbs,
       bool isListShare,
       bool ownListShare,
-      String? urlShare});
+      String urlShare});
 }
 
 /// @nodoc
@@ -139,7 +139,7 @@ class __$$PersonalListModelImplCopyWithImpl<$Res>
     Object? ListIdVerbs = null,
     Object? isListShare = null,
     Object? ownListShare = null,
-    Object? urlShare = freezed,
+    Object? urlShare = null,
   }) {
     return _then(_$PersonalListModelImpl(
       id: null == id
@@ -166,10 +166,10 @@ class __$$PersonalListModelImplCopyWithImpl<$Res>
           ? _value.ownListShare
           : ownListShare // ignore: cast_nullable_to_non_nullable
               as bool,
-      urlShare: freezed == urlShare
+      urlShare: null == urlShare
           ? _value.urlShare
           : urlShare // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ));
   }
 }
@@ -184,7 +184,7 @@ class _$PersonalListModelImpl implements _PersonalListModel {
       final List<ListIdVerb> ListIdVerbs = const [],
       this.isListShare = false,
       this.ownListShare = false,
-      this.urlShare = null})
+      this.urlShare = ""})
       : _ListIdVerbs = ListIdVerbs;
 
   factory _$PersonalListModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -213,7 +213,7 @@ class _$PersonalListModelImpl implements _PersonalListModel {
   final bool ownListShare;
   @override
   @JsonKey()
-  final String? urlShare;
+  final String urlShare;
 
   @override
   String toString() {
@@ -273,7 +273,7 @@ abstract class _PersonalListModel implements PersonalListModel {
       final List<ListIdVerb> ListIdVerbs,
       final bool isListShare,
       final bool ownListShare,
-      final String? urlShare}) = _$PersonalListModelImpl;
+      final String urlShare}) = _$PersonalListModelImpl;
 
   factory _PersonalListModel.fromJson(Map<String, dynamic> json) =
       _$PersonalListModelImpl.fromJson;
@@ -291,7 +291,7 @@ abstract class _PersonalListModel implements PersonalListModel {
   @override
   bool get ownListShare;
   @override
-  String? get urlShare;
+  String get urlShare;
   @override
   @JsonKey(ignore: true)
   _$$PersonalListModelImplCopyWith<_$PersonalListModelImpl> get copyWith =>

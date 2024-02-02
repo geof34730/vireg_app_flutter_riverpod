@@ -27,7 +27,7 @@ class BoxCardListPerso extends ConsumerWidget {
 
     @override
     Widget build(BuildContext context, WidgetRef ref) {
-      return (personalList.isListShare
+      return (personalList.isListShare && !personalList.ownListShare
           ?
           Ribbon(
             nearLength: 30.00,
@@ -168,7 +168,7 @@ Card boxCardChild({required WidgetRef ref,  required BuildContext context,requir
                               onClickButton: () =>  {onClickShare.call(idList: personalList.id)}
                           ),
                           ElevatedButtonCardHomeEditDeleteShare(
-                              visibilityButton: personalList.isListShare ? false : true,
+                              visibilityButton: personalList.isListShare &&  !personalList.ownListShare ? false : true,
                               colorIcon: (personalList.ownListShare ? (ref.watch(localOnlineDeviceProvider) ? Colors.green : Colors.grey) : Colors.green),
                               iconContent: Icons.edit,
                               context: context,
@@ -181,8 +181,9 @@ Card boxCardChild({required WidgetRef ref,  required BuildContext context,requir
                               iconContent: Icons.delete, context: context,
                                   onClickButton: () => {
                                     localstoreLocalObj.deletePersonalList(
-                                      idPersonalList: personalList.id
-                                    )
+                                      personalList: personalList
+                                    ),
+
                                   }
                             ),
                         ],

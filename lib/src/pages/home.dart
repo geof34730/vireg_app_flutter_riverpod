@@ -291,22 +291,29 @@ class _HomeState extends ConsumerState<Home> {
   int getFlexListePerso({required int lenghtVerbs,required int numVerb}) =>((lenghtVerbs==1) ? 12 : ((lenghtVerbs==numVerb+1) ? ((numVerb.isEven) ? 12 : 6 ) : 6));
 
   Future<void> shareListPerso({required PersonalListModel personalList}) async {
-    SharePersonalList(context: context).Share(personalList: personalList).then((value){
+    Loader(context: context, snackBar: false).showLoader();
+    if(personalList.urlShare=="") {
+      SharePersonalList(context: context).Share(personalList: personalList).then((value) async {
+        value = await value.copyWith(isListShare: true,ownListShare: true);
+        await Localstorelocal(context: context, ref: ref).updatePersonalList(PersonalList: value);
+        _dialogBuilderShare(context: context, personalList: value);
+        setState(() {
 
-     print("return1");
-      print(value);
-     print("return2");
-     _dialogBuilderShare(context: context, urlLinkShareFirebase: value["urlLinkShareFirebase"], listName: "tesst");
-     Loader(context: context, snackBar: false).hideLoader();
-
-    });
+        });
+        Loader(context: context, snackBar: false).hideLoader();
+      });
+    }
+    else{
+      _dialogBuilderShare(context: context, personalList: personalList);
+      Loader(context: context, snackBar: false).hideLoader();
+    }
   }
-  void sendQrCode({required String urlLinkShareFirebase, required BuildContext context, required String listName}) {
+  void sendQrCode({required BuildContext context,required PersonalListModel personalList }) {
     Navigator.of(context).pop();
-    _dialogBuilderShare(urlLinkShareFirebase: urlLinkShareFirebase, context: context, listName: listName);
+    _dialogBuilderShare(context: context,personalList: personalList);
   }
 
-  Future<void> _dialogBuilderShare({required BuildContext context, required String urlLinkShareFirebase, required String listName}) {
+  Future<void> _dialogBuilderShare({required BuildContext context,required PersonalListModel personalList }) {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -346,7 +353,7 @@ class _HomeState extends ConsumerState<Home> {
                       height: 280,
                       color: Colors.blue,
                       child: QrImageView(
-                        data: urlLinkShareFirebase,
+                        data: personalList.urlShare,
                         version: 10,
                         size: 280,
                         gapless: true,
@@ -370,7 +377,7 @@ class _HomeState extends ConsumerState<Home> {
                       padding: const EdgeInsets.only(top: 10.0),
                       child: ElevatedButton.icon(
                           onPressed: () async {
-                            sendQrCode(urlLinkShareFirebase: urlLinkShareFirebase, context: context, listName: listName);
+                            sendQrCode(context: context,personalList: personalList);
                           },
                           icon: const Icon(
                             Icons.email,
@@ -385,9 +392,6 @@ class _HomeState extends ConsumerState<Home> {
       },
     );
   }
-
-
-
 
   Future<void> initConnectivity() async {
     late ConnectivityResult result;

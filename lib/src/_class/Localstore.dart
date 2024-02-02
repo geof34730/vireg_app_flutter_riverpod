@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:localstore/localstore.dart';
 import '../_models/PersonalListModel.dart';
+import '../_services/SharePersonalList.dart';
 import 'localLang.dart';
 
 final db = Localstore.instance;
@@ -82,13 +83,23 @@ class Localstorelocal  {
   }
 
   updatePersonalList({required PersonalListModel PersonalList }){
+    print("updatePersonalList");
+    if(PersonalList.isListShare && PersonalList.ownListShare){
+
+      print("update serveur");
+    }
     print(PersonalList);
     db.collection('personalList').doc(PersonalList.id).set(PersonalList.toJson());
   }
 
-  deletePersonalList({required String idPersonalList}){
-    db.collection('personalList').doc(idPersonalList).delete();
-    context.go('/');
+  deletePersonalList({required PersonalListModel personalList}){
+    print("personalList.ownListShare: ${personalList.ownListShare}");
+    if(personalList.ownListShare){
+      SharePersonalList(context:context).DeleteList(personalList: personalList).then((value) => db.collection('personalList').doc(personalList.id).delete()).then((value) => context.goNamed("Home"));
+    }
+    else{
+      db.collection('personalList').doc(personalList.id).delete().then((value) => context.goNamed("Home"));
+    }
   }
    ////////END  PERSONALLIST////////////
 }

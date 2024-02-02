@@ -11,6 +11,8 @@ import 'package:uuid/uuid.dart';
 import 'package:Vireg/src/_class/Localstore.dart';
 import 'package:Vireg/src//_utils/front.dart';
 
+import '../_services/SharePersonalList.dart';
+
 var uuid = const Uuid();
 class ListPersoStep1 extends ConsumerStatefulWidget {
   const ListPersoStep1({Key? key,this.idList }) : super(key: key);
@@ -40,6 +42,7 @@ class _ListPersoStep1State extends ConsumerState<ListPersoStep1> {
           formValide = true;
           loadDataEdit=true;
           setState(() {
+            colorList=PersonalListUpdate.color.toString();
             titleList.text=PersonalListUpdate.title;
           });
         });
@@ -185,7 +188,17 @@ class _ListPersoStep1State extends ConsumerState<ListPersoStep1> {
   }
 
   Future<void> updatePersonalListStep1({bool next =false}) async {
-      localstoreLocalObj.updatePersonalList(PersonalList:PersonalListUpdate);
+      print(PersonalListUpdate.color);
+      if(PersonalListUpdate.ownListShare) {
+        print("Update serveur");
+        SharePersonalList(context: context).Share(personalList: PersonalListUpdate).then((value) async {
+          await Localstorelocal(context: context, ref: ref).updatePersonalList(PersonalList: PersonalListUpdate);
+        });
+      }
+      else{
+        print("no Update serveur");
+        await Localstorelocal(context: context, ref: ref).updatePersonalList(PersonalList: PersonalListUpdate);
+      }
       if(next){
         nextPersonalList();
       }
