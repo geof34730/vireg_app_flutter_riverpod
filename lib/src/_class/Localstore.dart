@@ -4,9 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:localstore/localstore.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import '../_models/PersonalListModel.dart';
+
 import '../_services/SharePersonalList.dart';
-import 'localLang.dart';
+
+import '../_providers/localLang.dart';
+import '../../global.dart' as globals;
 
 final db = Localstore.instance;
 
@@ -24,15 +28,15 @@ class Localstorelocal  {
 
   Future<String> getLangLocalStore() async => await db.collection('store').doc("config").get().then((value) => ((value!=null && value["lang"]!=null) ? value["lang"].toString() : ""));
 
-  void updateLocalstoreLang({required String lang, bool withChange = true}) {
-    db.collection('store').doc("config").set({'lang':lang});
-    ref.read(localLangProvider.notifier).change(lang: lang);
+  void updateLocalstoreLang({required String lang}) async {
+      db.collection('store').doc("config").set({'lang': lang, 'versionApp': globals.versionApp});
+      ref.read(localLangProvider.notifier).change(lang: lang);
   }
 
   void initLang() async {
     String langApp=await getLangLoad();
     print('Init lang =>  $langApp');
-    updateLocalstoreLang(lang: await langApp, withChange: true);
+    updateLocalstoreLang(lang: langApp);
   }
 
   int getItemLangSelect(){

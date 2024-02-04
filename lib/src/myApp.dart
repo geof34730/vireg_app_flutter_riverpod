@@ -6,8 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '_class/DeepLink.dart';
 
-import '_class/localLang.dart';
-import '_class/localOnlineDevice.dart';
+import '_providers/localLang.dart';
+import '_providers/localOnlineDevice.dart';
 
 import 'router.dart';
 
@@ -18,7 +18,6 @@ late dynamic objDeeplinksInit=null;
 class MyApp extends ConsumerWidget {
   final PendingDynamicLinkData? initialLink;
   const MyApp({this.initialLink, Key? key}) : super(key: key);
-
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

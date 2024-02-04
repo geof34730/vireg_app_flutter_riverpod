@@ -1,17 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:loader_overlay/loader_overlay.dart';
-
-
-import '../_class/Localstore.dart';
 import 'EasySearchBar.dart';
 import 'bottomNavigationBar.dart';
 import 'drawerDevTools.dart';
+import '../../global.dart' as globals;
 
-Widget Layout({required BuildContext context,required child,bottomNavigationBar=false,double paddinLeftRight=15.0,appBar=true,indexBottomNavigationBar=0}) {
+Widget Layout({required BuildContext context,String versionApp="",required child,bottomNavigationBar=false,double paddinLeftRight=15.0,appBar=true,indexBottomNavigationBar=0}) {
+
   return Scaffold(
     appBar:  (appBar ? WidgetsEasySearchBar() : null),
-    bottomNavigationBar: (bottomNavigationBar ? WidgetbottomNavigationBar(indexNav: indexBottomNavigationBar) : null),
+    bottomNavigationBar: (bottomNavigationBar
+          ?
+        WidgetbottomNavigationBar(indexNav: indexBottomNavigationBar)
+          :
+        Text(
+          "Vireg ${globals.versionApp}",
+          style: TextStyle(
+              color: Colors.black,
+              fontSize: 12.00
+
+          ),
+          textAlign: TextAlign.center,
+
+
+        )
+    ),
     body: LoaderOverlay(
           overlayColor: Colors.black.withOpacity(0.6),
           useDefaultLoading: false,

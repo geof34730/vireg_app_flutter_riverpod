@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:Vireg/src/localization/app_localizations_context.dart';
 
 import '../_class/Localstore.dart';
-import '../_class/localOnlineDevice.dart';
+import '../_providers/localOnlineDevice.dart';
 import '../_utils/string.dart';
 import 'elevatedButtonCardHome.dart';
 import 'elevatedButtonCardHomeEditDeleteShare.dart';

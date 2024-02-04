@@ -17,6 +17,7 @@ final customRoutesVireg = GoRouter(
         path: '/',
         builder: (BuildContext context, GoRouterState state) {
           print("build route home");
+
           return Layout(child:Home(key: UniqueKey()),context: context);
         },
         routes: <RouteBase>[

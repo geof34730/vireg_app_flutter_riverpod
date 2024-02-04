@@ -11,7 +11,7 @@ import '../_class/DataTableListeVerbesPersoAction.dart';
 import '../_class/GetDataVerbs.dart';
 import '../_class/Loader.dart';
 import '../_class/Localstore.dart';
-import '../_class/localLang.dart';
+import '../_providers/localLang.dart';
 import '../_models/PersonalListModel.dart';
 import '../_services/SharePersonalList.dart';
 import '../_utils/front.dart';

@@ -60,6 +60,7 @@ dependencies:
   connectivity_plus: ^5.0.2
   ribbon_widget: ^1.0.5
   qr_flutter: ^4.1.0
+  package_info_plus: ^5.0.1
 
 dev_dependencies:
   flutter_test:

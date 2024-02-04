@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../_class/PlaySoond.dart';
-import '../_class/localLang.dart';
+import '../_providers/localLang.dart';
 import 'package:Vireg/src/localization/app_localizations_context.dart';
 import '../_Utils/string.dart';
 import '../_class/GetDataVerbs.dart';
 import 'package:flip_card/flip_card.dart';
 
-import '../_class/localOnlineDevice.dart';
+import '../_providers/localOnlineDevice.dart';
 
 class LearnVerb extends ConsumerStatefulWidget {
   const LearnVerb({Key? key,required this.idList, required this.personalList }) : super(key: key);

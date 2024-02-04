@@ -22,6 +22,7 @@ ConfigModel _$ConfigModelFromJson(Map<String, dynamic> json) {
 mixin _$ConfigModel {
   String get lang => throw _privateConstructorUsedError;
   bool get onlineDevice => throw _privateConstructorUsedError;
+  String get versionapp => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +36,7 @@ abstract class $ConfigModelCopyWith<$Res> {
           ConfigModel value, $Res Function(ConfigModel) then) =
       _$ConfigModelCopyWithImpl<$Res, ConfigModel>;
   @useResult
-  $Res call({String lang, bool onlineDevice});
+  $Res call({String lang, bool onlineDevice, String versionapp});
 }
 
 /// @nodoc
@@ -53,6 +54,7 @@ class _$ConfigModelCopyWithImpl<$Res, $Val extends ConfigModel>
   $Res call({
     Object? lang = null,
     Object? onlineDevice = null,
+    Object? versionapp = null,
   }) {
     return _then(_value.copyWith(
       lang: null == lang
@@ -63,6 +65,10 @@ class _$ConfigModelCopyWithImpl<$Res, $Val extends ConfigModel>
           ? _value.onlineDevice
           : onlineDevice // ignore: cast_nullable_to_non_nullable
               as bool,
+      versionapp: null == versionapp
+          ? _value.versionapp
+          : versionapp // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -75,7 +81,7 @@ abstract class _$$ConfigModelImplCopyWith<$Res>
       __$$ConfigModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String lang, bool onlineDevice});
+  $Res call({String lang, bool onlineDevice, String versionapp});
 }
 
 /// @nodoc
@@ -91,6 +97,7 @@ class __$$ConfigModelImplCopyWithImpl<$Res>
   $Res call({
     Object? lang = null,
     Object? onlineDevice = null,
+    Object? versionapp = null,
   }) {
     return _then(_$ConfigModelImpl(
       lang: null == lang
@@ -101,6 +108,10 @@ class __$$ConfigModelImplCopyWithImpl<$Res>
           ? _value.onlineDevice
           : onlineDevice // ignore: cast_nullable_to_non_nullable
               as bool,
+      versionapp: null == versionapp
+          ? _value.versionapp
+          : versionapp // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -108,7 +119,8 @@ class __$$ConfigModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$ConfigModelImpl with DiagnosticableTreeMixin implements _ConfigModel {
-  const _$ConfigModelImpl({required this.lang, this.onlineDevice = false});
+  const _$ConfigModelImpl(
+      {required this.lang, this.onlineDevice = false, this.versionapp = ""});
 
   factory _$ConfigModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$ConfigModelImplFromJson(json);
@@ -118,10 +130,13 @@ class _$ConfigModelImpl with DiagnosticableTreeMixin implements _ConfigModel {
   @override
   @JsonKey()
   final bool onlineDevice;
+  @override
+  @JsonKey()
+  final String versionapp;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ConfigModel(lang: $lang, onlineDevice: $onlineDevice)';
+    return 'ConfigModel(lang: $lang, onlineDevice: $onlineDevice, versionapp: $versionapp)';
   }
 
   @override
@@ -130,7 +145,8 @@ class _$ConfigModelImpl with DiagnosticableTreeMixin implements _ConfigModel {
     properties
       ..add(DiagnosticsProperty('type', 'ConfigModel'))
       ..add(DiagnosticsProperty('lang', lang))
-      ..add(DiagnosticsProperty('onlineDevice', onlineDevice));
+      ..add(DiagnosticsProperty('onlineDevice', onlineDevice))
+      ..add(DiagnosticsProperty('versionapp', versionapp));
   }
 
   @override
@@ -140,12 +156,14 @@ class _$ConfigModelImpl with DiagnosticableTreeMixin implements _ConfigModel {
             other is _$ConfigModelImpl &&
             (identical(other.lang, lang) || other.lang == lang) &&
             (identical(other.onlineDevice, onlineDevice) ||
-                other.onlineDevice == onlineDevice));
+                other.onlineDevice == onlineDevice) &&
+            (identical(other.versionapp, versionapp) ||
+                other.versionapp == versionapp));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, lang, onlineDevice);
+  int get hashCode => Object.hash(runtimeType, lang, onlineDevice, versionapp);
 
   @JsonKey(ignore: true)
   @override
@@ -164,7 +182,8 @@ class _$ConfigModelImpl with DiagnosticableTreeMixin implements _ConfigModel {
 abstract class _ConfigModel implements ConfigModel {
   const factory _ConfigModel(
       {required final String lang,
-      final bool onlineDevice}) = _$ConfigModelImpl;
+      final bool onlineDevice,
+      final String versionapp}) = _$ConfigModelImpl;
 
   factory _ConfigModel.fromJson(Map<String, dynamic> json) =
       _$ConfigModelImpl.fromJson;
@@ -173,6 +192,8 @@ abstract class _ConfigModel implements ConfigModel {
   String get lang;
   @override
   bool get onlineDevice;
+  @override
+  String get versionapp;
   @override
   @JsonKey(ignore: true)
   _$$ConfigModelImplCopyWith<_$ConfigModelImpl> get copyWith =>

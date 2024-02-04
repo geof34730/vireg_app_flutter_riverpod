@@ -4,7 +4,7 @@ import 'package:diacritic/diacritic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../_class/PlaySoond.dart';
-import '../_class/localLang.dart';
+import '../_providers/localLang.dart';
 import 'package:Vireg/src/localization/app_localizations_context.dart';
 import '../_Utils/string.dart';
 import '../_class/GetDataVerbs.dart';

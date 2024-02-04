@@ -7,7 +7,7 @@ import 'package:go_router/go_router.dart';
 import '../_Utils/string.dart';
 import '../_class/DataTableListeVerbes.dart';
 import '../_class/GetDataVerbs.dart';
-import '../_class/localLang.dart';
+import '../_providers/localLang.dart';
 import '../_utils/front.dart';
 import '../router.dart';
 

@@ -1,4 +1,4 @@
-import 'package:Vireg/src/_class/localLang.dart';
+import 'package:Vireg/src/_providers/localLang.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:colored_json/colored_json.dart';
@@ -6,7 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../_class/Localstore.dart';
-import '../_class/localOnlineDevice.dart';
+import '../_providers/localOnlineDevice.dart';
+
 
 
 class drawerWidget extends ConsumerWidget {
@@ -76,7 +77,8 @@ class drawerWidget extends ConsumerWidget {
                            style: TextStyle(
                                color: Colors.yellow
                            ),
-                         )
+                         ),
+
                        ],
                      )
                  ),

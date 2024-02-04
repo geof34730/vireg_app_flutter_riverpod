@@ -9,6 +9,8 @@ class ConfigModel with _$ConfigModel {
   const factory ConfigModel({
     required String lang,
     @Default(false) bool onlineDevice,
+    @Default("") String versionapp,
+
   }) = _ConfigModel;
 
   factory ConfigModel.fromJson(Map<String, Object?> json) => _$ConfigModelFromJson(json);

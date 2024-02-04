@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../_class/localLang.dart';
+import '../_providers/localLang.dart';
 import '../_class/Localstore.dart';
 
 class WidgetsEasySearchBar extends ConsumerWidget implements PreferredSizeWidget {
@@ -30,7 +30,7 @@ class WidgetsEasySearchBar extends ConsumerWidget implements PreferredSizeWidget
           String urlCurrentPage = GoRouter.of(context).routeInformationProvider.value.uri.toString();
           int positionTypeUrl = urlCurrentPage.indexOf('add/ListPersoStep1');
           if(positionTypeUrl>0){
-            customRoutesVireg.goNamed("Home");
+            customRoutesVireg.pushNamed("Home");
           }
           else{
             Navigator.pop(context);
@@ -45,6 +45,7 @@ class WidgetsEasySearchBar extends ConsumerWidget implements PreferredSizeWidget
         searchTextStyle:TextStyle(color: (errorSearchValue ? Colors.red : Colors.black)),
         searchBackIconTheme: IconThemeData(color: (errorSearchValue ? Colors.red : Colors.blue),),
         openOverlayOnSearch: false,
+
         title:Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

@@ -9,20 +9,20 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import '../_class/Loader.dart';
-import '../_class/localLang.dart';
+import '../_providers/localLang.dart';
 import '../_class/localstore.dart';
 import '../_services/SharePersonalList.dart';
 import '../_utils/front.dart';
 import '../_widgets/boxCard.dart';
 import '../_widgets/boxCardListPerso.dart';
 import '../router.dart';
-import '../_class/localOnlineDevice.dart';
-
+import '../_providers/localOnlineDevice.dart';
 
 bool initConfig=false;
 
@@ -35,7 +35,6 @@ class Home extends ConsumerStatefulWidget {
 class _HomeState extends ConsumerState<Home> {
   final FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
   bool isoffline=true;
-  //ConnectivityResult _connectionStatus = ConnectivityResult.none;
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
 
@@ -53,13 +52,11 @@ class _HomeState extends ConsumerState<Home> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
-    late Localstorelocal localstoreLocalObj=Localstorelocal(ref: ref,context: context);
     print("build Home");
     if (!initConfig){
-      localstoreLocalObj.initLang();
+      Localstorelocal(ref: ref,context: context).initLang();
       initConfig=true;
     }
     Future<List<dynamic>> _futureOfListPerso() async => await Localstorelocal(ref: ref,context: context).getJsonAllPersonalistLocalStore();
@@ -290,6 +287,8 @@ class _HomeState extends ConsumerState<Home> {
 
   int getFlexListePerso({required int lenghtVerbs,required int numVerb}) =>((lenghtVerbs==1) ? 12 : ((lenghtVerbs==numVerb+1) ? ((numVerb.isEven) ? 12 : 6 ) : 6));
 
+
+
   Future<void> shareListPerso({required PersonalListModel personalList}) async {
     Loader(context: context, snackBar: false).showLoader();
     if(personalList.urlShare=="") {
@@ -392,6 +391,9 @@ class _HomeState extends ConsumerState<Home> {
       },
     );
   }
+
+
+
 
   Future<void> initConnectivity() async {
     late ConnectivityResult result;
