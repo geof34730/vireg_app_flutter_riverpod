@@ -84,7 +84,7 @@ class _LearnVerbState extends ConsumerState<LearnVerb> {
             Column(mainAxisSize: MainAxisSize.max, children: [
               Padding(
                 padding: EdgeInsets.only(top: 15.0, bottom: 10.0),
-                child: Text("${context.loc.learnClickCarte} => ${ref.watch(localOnlineDeviceProvider).toString()}"),
+                child: Text("${context.loc.learnClickCarte}"),
               )
             ]),
             GestureDetector(

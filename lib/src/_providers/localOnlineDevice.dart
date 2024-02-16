@@ -5,7 +5,7 @@ part 'localOnlineDevice.g.dart';
 @riverpod
 class localOnlineDevice extends _$localOnlineDevice {
   @override
-  bool build() => false;
+  bool build() => true;
 
   void change({required bool onlineDevice}) {
     state = onlineDevice;

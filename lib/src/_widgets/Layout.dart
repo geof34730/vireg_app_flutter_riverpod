@@ -47,7 +47,7 @@ Widget Layout({required BuildContext context,String versionApp="",required child
                 )
             )
     ),
-
+/*
     floatingActionButton: FloatingActionButton(
         elevation: 15,
         onPressed: (){
@@ -68,5 +68,6 @@ Widget Layout({required BuildContext context,String versionApp="",required child
           ),
         )
     ),
+    */
   );
 }
