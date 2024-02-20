@@ -412,6 +412,7 @@ class _HomeState extends ConsumerState<Home> {
   Future<void> _updateConnectionStatus(ConnectivityResult connectivityResult) async {
     if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi || connectivityResult == ConnectivityResult.ethernet || connectivityResult == ConnectivityResult.vpn) {
       ref.read(localOnlineDeviceProvider.notifier).change(onlineDevice: true);
+      print("NEW connection");
     } else {
       ref.read(localOnlineDeviceProvider.notifier).change(onlineDevice: false);
       print("plus de connection");
