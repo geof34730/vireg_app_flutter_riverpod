@@ -7,7 +7,9 @@ class localOnlineDevice extends _$localOnlineDevice {
   @override
   bool build() => true;
 
-  void change({required bool onlineDevice}) {
+
+
+  Future<void> change({required bool onlineDevice}) async {
     state = onlineDevice;
   }
 }

@@ -270,7 +270,6 @@ class _LearnVerbState extends ConsumerState<LearnVerb> {
 
 
   Future<List<dynamic>> getdataList({required String idList, required bool personalList}) async {
-print('********************');
     print("personalList $personalList");
     print('getdataList : $idList');
     List<dynamic> dataListResp=await GetDataVerbs().getDataJson(idList: idList,personalList: personalList);

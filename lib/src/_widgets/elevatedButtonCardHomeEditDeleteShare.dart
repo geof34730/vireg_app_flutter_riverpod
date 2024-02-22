@@ -31,9 +31,6 @@ Widget ElevatedButtonCardHomeEditDeleteShare({visibilityButton = true, bool disa
                     null
             ),
           )
-      ));
-
-
-
-
+      )
+  );
 }

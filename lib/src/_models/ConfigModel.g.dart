@@ -9,7 +9,7 @@ part of 'ConfigModel.dart';
 _$ConfigModelImpl _$$ConfigModelImplFromJson(Map<String, dynamic> json) =>
     _$ConfigModelImpl(
       lang: json['lang'] as String,
-      onlineDevice: json['onlineDevice'] as bool? ?? false,
+      onlineDevice: json['onlineDevice'] as bool? ?? true,
       versionapp: json['versionapp'] as String? ?? "",
     );
 

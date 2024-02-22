@@ -6,7 +6,7 @@ part of 'localOnlineDevice.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$localOnlineDeviceHash() => r'0ccd7d339d18141c92526664427e13916da8ffdd';
+String _$localOnlineDeviceHash() => r'e900109fe078db97c342ee2c901730542c6248e3';
 
 /// See also [localOnlineDevice].
 @ProviderFor(localOnlineDevice)

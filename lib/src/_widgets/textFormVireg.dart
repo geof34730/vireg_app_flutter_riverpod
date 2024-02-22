@@ -26,9 +26,6 @@ class TextFormViregClass extends StatefulWidget {
 }
 
 class _TextFormViregState extends State<TextFormViregClass> {
-
-
-
   @override
   Widget build(BuildContext context) {
    final Map mapForPlayer={"titreVerbe":widget.StockField};

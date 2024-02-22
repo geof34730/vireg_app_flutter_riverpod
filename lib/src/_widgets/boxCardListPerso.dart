@@ -18,12 +18,14 @@ class BoxCardListPerso extends ConsumerWidget {
   const BoxCardListPerso( {
     required this.context,
     required this.personalList,
-    required this.onClickShare
+    required this.onClickShare,
+    required this.alerOfflineBoxCard
 
   });
     final BuildContext context;
     final PersonalListModel personalList;
     final dynamic Function({required String idList}) onClickShare;
+    final dynamic Function() alerOfflineBoxCard;
 
     @override
     Widget build(BuildContext context, WidgetRef ref) {
@@ -42,7 +44,7 @@ class BoxCardListPerso extends ConsumerWidget {
             child:boxCardChild(context: context,ref:ref,personalList:personalList,onClickShare:  onClickShare)
           )
           :
-          boxCardChild(context: context,ref:ref,personalList:personalList,onClickShare:  onClickShare)
+      boxCardChild(context: context,ref:ref,personalList:personalList,onClickShare:  onClickShare)
       );
     }
 Card boxCardChild({required WidgetRef ref,  required BuildContext context,required PersonalListModel personalList, required dynamic onClickShare}){
@@ -146,7 +148,7 @@ Card boxCardChild({required WidgetRef ref,  required BuildContext context,requir
                                         }
                                     ),
                                     ElevatedButtonCardHome(
-                                        label: context.loc.widgetBoxCardList,
+                                        label: "${context.loc.widgetBoxCardList} - ${ref.watch(localOnlineDeviceProvider)}",
                                         iconContent: Icons.visibility,
                                         indexRubrique: 2,
                                         context: context,
@@ -165,25 +167,52 @@ Card boxCardChild({required WidgetRef ref,  required BuildContext context,requir
                           ElevatedButtonCardHomeEditDeleteShare(visibilityButton:(nbVerbsPerso==0 ? false : true),
                               colorIcon: (ref.watch(localOnlineDeviceProvider) ? Colors.blue : Colors.grey),
                               iconContent: Icons.share, context: context,
-                              onClickButton: () =>  {onClickShare.call(idList: personalList.id)}
+                              onClickButton: () =>  {
+                                (ref.watch(localOnlineDeviceProvider)
+                                    ?
+                                    onClickShare.call(idList: personalList.id)
+                                    :
+                                    alerOfflineBoxCard.call()
+                                )}
                           ),
                           ElevatedButtonCardHomeEditDeleteShare(
                               visibilityButton: personalList.isListShare &&  !personalList.ownListShare ? false : true,
                               colorIcon: (personalList.ownListShare ? (ref.watch(localOnlineDeviceProvider) ? Colors.green : Colors.grey) : Colors.green),
                               iconContent: Icons.edit,
                               context: context,
-                              onClickButton: () => {
-                                context.go("/edit/ListPersoStep1/${personalList.id}")
-                                }
+                              onClickButton: (){
+                                (
+                                    (personalList.ownListShare
+                                        ?
+                                    (ref.watch(localOnlineDeviceProvider)
+                                        ?
+                                    context.go("/edit/ListPersoStep1/${personalList.id}")
+                                        :
+                                    alerOfflineBoxCard.call())
+                                        :
+                                    context.go("/edit/ListPersoStep1/${personalList.id}")
+                                    )
+                                );
+                              }
+
                           ),
                           ElevatedButtonCardHomeEditDeleteShare(
                               colorIcon: (personalList.ownListShare ? (ref.watch(localOnlineDeviceProvider) ? Colors.red : Colors.grey) : Colors.red),
                               iconContent: Icons.delete, context: context,
                                   onClickButton: () => {
-                                    localstoreLocalObj.deletePersonalList(
-                                      personalList: personalList
-                                    ),
-
+                                    (
+                                    (personalList.ownListShare
+                                      ?
+                                        (ref.watch(localOnlineDeviceProvider)
+                                          ?
+                                          localstoreLocalObj.deletePersonalList(personalList: personalList)
+                                          :
+                                          alerOfflineBoxCard.call()
+                                        )
+                                      :
+                                      localstoreLocalObj.deletePersonalList(personalList: personalList)
+                                      )
+                                    )
                                   }
                             ),
                         ],

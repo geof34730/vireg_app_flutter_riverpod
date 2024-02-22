@@ -15,6 +15,7 @@ import 'package:responsive_grid/responsive_grid.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import '../_class/Loader.dart';
+import '../_class/SnackBar.dart';
 import '../_providers/localLang.dart';
 import '../_class/localstore.dart';
 import '../_services/SharePersonalList.dart';
@@ -34,7 +35,6 @@ class Home extends ConsumerStatefulWidget {
 
 class _HomeState extends ConsumerState<Home> {
   final FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
-  bool isoffline=true;
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
 
@@ -55,6 +55,7 @@ class _HomeState extends ConsumerState<Home> {
   @override
   Widget build(BuildContext context) {
     print("build Home");
+
     if (!initConfig){
       Localstorelocal(ref: ref,context: context).initLang();
       initConfig=true;
@@ -63,7 +64,10 @@ class _HomeState extends ConsumerState<Home> {
     return Center(
       child: Column(
         children: [
-         /* Row(
+          Visibility(visible: false,child: Text((ref.watch(localOnlineDeviceProvider) ? "online" : "offline"))),
+
+
+          Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -71,31 +75,14 @@ class _HomeState extends ConsumerState<Home> {
                     children:[
                       ElevatedButton(
                           onPressed: (){
-                            context.go('/share/3e9a3881-92f2-4341-b2bf-40a30c55c750');
+                            context.go('/share/415e29ea-e793-49b1-8c8f-7271673c3f9c');
                           },
-                          child: Text('share test 3e9a3881')
+                          child: Text('share test 415e29ea-e793-49b1-8c8f-7271673c3f9c')
                       ),
-                      ElevatedButton(
-                          onPressed: (){
-                            context.go('/share/b72a6c67-a71d-4c2d-b67e-bc8ed28bf013');
-                          },
-                          child: Text('share test b72a6c67')
-                      ),
-                      ElevatedButton(
-                          onPressed: (){
-                            context.go('/share/568458ef-ff58-42fa-bcdc-34fe8a38556a');
-                          },
-                          child: Text('share test 568458ef')
-                      ),
-                      ElevatedButton(
-                          onPressed: (){
-                            context.go('/share/767b87d2-8b84-418b-a6aa-f7c4de480ed4');
-                          },
-                          child: Text(ref.watch(localOnlineDeviceProvider).toString())
-                      ),
+
                     ]
                 ),
-              ]),*/
+              ]),
 
           Column(
               mainAxisSize: MainAxisSize.max,
@@ -129,7 +116,7 @@ class _HomeState extends ConsumerState<Home> {
                     return const Text('Error');
                   } else
                     if (snapshot.hasData) {
-                    return Column(
+                      return Column(
                         mainAxisAlignment:MainAxisAlignment.center,
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -161,7 +148,8 @@ class _HomeState extends ConsumerState<Home> {
                                       child: BoxCardListPerso(
                                           context:context,
                                           personalList:personalListModelFromJson(jsonEncode(snapshot.data![i]).toString()),
-                                          onClickShare: ({required String idList}) async =>(ref.watch(localOnlineDeviceProvider) ? shareListPerso(personalList: personalListModelFromJson(jsonEncode(snapshot.data![i]).toString())) : alertOffline())
+                                          onClickShare: ({required String idList}) async => shareListPerso(personalList: personalListModelFromJson(jsonEncode(snapshot.data![i]).toString())) ,
+                                          alerOfflineBoxCard: () async => alertOffline()
                                       )
                                   ),
                                 ],
@@ -287,8 +275,6 @@ class _HomeState extends ConsumerState<Home> {
 
   int getFlexListePerso({required int lenghtVerbs,required int numVerb}) =>((lenghtVerbs==1) ? 12 : ((lenghtVerbs==numVerb+1) ? ((numVerb.isEven) ? 12 : 6 ) : 6));
 
-
-
   Future<void> shareListPerso({required PersonalListModel personalList}) async {
     Loader(context: context, snackBar: false).showLoader();
     if(personalList.urlShare=="") {
@@ -331,17 +317,17 @@ class _HomeState extends ConsumerState<Home> {
                       Icons.close,
                     ))
               ]),
-              title: const Text(
-                'Partager votre liste personnalisée',
+              title:  Text(
+                context.loc.homeShareListTitle,
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 18.00),
               ),
               content: Column(mainAxisSize: MainAxisSize.min, mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                const SizedBox(
+                SizedBox(
                     width: 360,
                     height: 40,
                     child: Text(
-                      'En faisant scanner le QR code ci-dessous à la personne avec qui vous souhaitez partager cette liste',
+                      context.loc.homeShareListeDescription,
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 14.00),
                     )),
@@ -359,15 +345,15 @@ class _HomeState extends ConsumerState<Home> {
                         backgroundColor: Colors.white,
                       )),
                 ),
-                const Padding(
+                 Padding(
                     padding: EdgeInsets.only(bottom: 10.0),
                     child: Text(
-                      'OU',
+                      context.loc.homeShareListeOr,
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 18.00, fontWeight: FontWeight.bold),
                     )),
-                const Text(
-                  'En envoyant le QR code de votre liste par email',
+                 Text(
+                  context.loc.homeShareTitleChoiseSend,
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 14.00),
                 ),
@@ -381,8 +367,8 @@ class _HomeState extends ConsumerState<Home> {
                           icon: const Icon(
                             Icons.email,
                           ),
-                          label: const Text(
-                            "Partager par email",
+                          label: Text(
+                            context.loc.homeShareButtonendByEmail,
                             style: TextStyle(fontWeight: FontWeight.bold),
                           )))
                 ])
@@ -391,9 +377,6 @@ class _HomeState extends ConsumerState<Home> {
       },
     );
   }
-
-
-
 
   Future<void> initConnectivity() async {
     late ConnectivityResult result;
@@ -408,18 +391,27 @@ class _HomeState extends ConsumerState<Home> {
     }
     return _updateConnectionStatus(result);
   }
-
-  Future<void> _updateConnectionStatus(ConnectivityResult connectivityResult) async {
+bool isOnline=false;
+  void _updateConnectionStatus(ConnectivityResult connectivityResult)  {
     if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi || connectivityResult == ConnectivityResult.ethernet || connectivityResult == ConnectivityResult.vpn) {
       ref.read(localOnlineDeviceProvider.notifier).change(onlineDevice: true);
-      print("NEW connection");
+      print("OK connection: ${ref.watch(localOnlineDeviceProvider)}" );
+      if(!isOnline) {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+
+        isOnline=true;
+      }
     } else {
       ref.read(localOnlineDeviceProvider.notifier).change(onlineDevice: false);
-      print("plus de connection");
+      print("NO connection: ${ref.watch(localOnlineDeviceProvider)}" );
+      if(isOnline) {
+        SnakBar(context: context, messageSnackBar: "Vous ètes hors ligne",themeSnackBar: 'error',duration:3600).showSnakBar();
+        isOnline=false;
+      }
     }
-    //setState(() {
-    //_connectionStatus = result;
-    // });
+  //  setState(() {
+   // _connectionStatus = result;
+  //  });
   }
 
   Future<String?> alertOffline() {

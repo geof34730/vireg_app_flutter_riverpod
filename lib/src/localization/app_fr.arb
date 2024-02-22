@@ -23,5 +23,14 @@
   "listePersoChoiseColor":"Choisissez la couleur de votre liste",
   "listePersoButtonSuivant" : "Suivant",
   "fermer" : "fermer",
-  "alertOffLine" : "Vous devez être connecté à internet pour pouvoir utiliser cette fonctionnalitée"
+  "alertOffLine" : "Vous devez être connecté à internet pour pouvoir utiliser cette fonctionnalitée",
+  "homeShareListTitle" : "Partager votre liste personnalisée",
+  "homeShareListeDescription" : "En faisant scanner le QR code ci-dessous à la personne avec qui vous souhaitez partager cette liste",
+  "homeShareListeOr" : "OU",
+  "homeShareTitleChoiseSend" : "En envoyant le QR code de votre liste par email",
+  "homeShareButtonendByEmail" : "Partager par email",
+  "snackBarResetVerb" : "Votre verbe à été retiré de votre liste",
+  "snackBarAddVerb" : "Votre verbe est ajouté à votre liste"
+
+
 }

@@ -120,7 +120,7 @@ class __$$ConfigModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ConfigModelImpl with DiagnosticableTreeMixin implements _ConfigModel {
   const _$ConfigModelImpl(
-      {required this.lang, this.onlineDevice = false, this.versionapp = ""});
+      {required this.lang, this.onlineDevice = true, this.versionapp = ""});
 
   factory _$ConfigModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$ConfigModelImplFromJson(json);

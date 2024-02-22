@@ -8,7 +8,7 @@ part 'ConfigModel.g.dart';
 class ConfigModel with _$ConfigModel {
   const factory ConfigModel({
     required String lang,
-    @Default(false) bool onlineDevice,
+    @Default(true) bool onlineDevice,
     @Default("") String versionapp,
 
   }) = _ConfigModel;

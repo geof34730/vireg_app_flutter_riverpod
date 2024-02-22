@@ -11,6 +11,7 @@ import '../_class/DataTableListeVerbesPersoAction.dart';
 import '../_class/GetDataVerbs.dart';
 import '../_class/Loader.dart';
 import '../_class/Localstore.dart';
+import '../_class/SnackBar.dart';
 import '../_providers/localLang.dart';
 import '../_models/PersonalListModel.dart';
 import '../_services/SharePersonalList.dart';
@@ -244,12 +245,12 @@ class _ListPersoStep2State extends ConsumerState<ListPersoStep2> {
       bool isInList = await isIdInList(idVerbs: idVerbs);
       if (isInList) {
         await deleteInList(idVerbs: idVerbs);
-        //await SnakBar(context: context, messageSnackBar: 'Votre verbe à été retiré de votre liste', themeSnackBar: 'success').showSnakBar();
+        SnakBar(context: context, messageSnackBar: context.loc.snackBarResetVerb, themeSnackBar: 'error').showSnakBar();
       } else {
         await addInList(idVerbs: idVerbs);
-        //await SnakBar(context: context, messageSnackBar: "Votre verbe est ajouté à votre liste", themeSnackBar: 'success').showSnakBar();
+        SnakBar(context: context, messageSnackBar: context.loc.snackBarAddVerb, themeSnackBar: 'success').showSnakBar();
       };
-      Future.delayed(const Duration(milliseconds: 500),(){
+      Future.delayed(const Duration(milliseconds: 1000),(){
         Loader(context: context, snackBar: false).hideLoader();
       });
       setState(() {
