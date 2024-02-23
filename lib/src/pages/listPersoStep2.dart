@@ -14,9 +14,12 @@ import '../_class/Localstore.dart';
 import '../_class/SnackBar.dart';
 import '../_providers/localLang.dart';
 import '../_models/PersonalListModel.dart';
+import '../_providers/localOnlineDevice.dart';
 import '../_services/SharePersonalList.dart';
 import '../_utils/front.dart';
+import '../_widgets/dialogues.dart';
 import '../router.dart';
+import 'home.dart';
 
 
 class ListPersoStep2 extends ConsumerStatefulWidget {
@@ -127,10 +130,22 @@ class _ListPersoStep2State extends ConsumerState<ListPersoStep2> {
                   source: DataTableListeVerbesPersoAction(
                       localLang: locallang,
                       filteredData: filteredData,
+                      PersonalListUpdate:PersonalListUpdate,
                       context: context,
+                      isOnline:ref.watch(localOnlineDeviceProvider),
                       addOrDeleteInList: ({required idVerbs}) =>
                       {
-                        addOrDeleteInList(idVerbs: idVerbs)
+                          (PersonalListUpdate.ownListShare
+                          ?
+                          (ref.watch(localOnlineDeviceProvider)
+                            ?
+                              addOrDeleteInList(idVerbs: idVerbs)
+                            :
+                              Dialogues(context: context).alertOffline()
+                          )
+                          :
+                              addOrDeleteInList(idVerbs: idVerbs)
+                          )
                       }),
                 )
 
@@ -240,23 +255,27 @@ class _ListPersoStep2State extends ConsumerState<ListPersoStep2> {
   }
 
   Future<void> addOrDeleteInList({required idVerbs}) async {
-      print("addOrDeleteInList: $idVerbs");
-      Loader(context: context,snackBar: false).showLoader();
+     print("addOrDeleteInList: $idVerbs");
+      Loader(context: context, snackBar: false).showLoader();
       bool isInList = await isIdInList(idVerbs: idVerbs);
       if (isInList) {
         await deleteInList(idVerbs: idVerbs);
-        SnakBar(context: context, messageSnackBar: context.loc.snackBarResetVerb, themeSnackBar: 'error').showSnakBar();
+        SnakBar(context: context,
+            messageSnackBar: context.loc.snackBarResetVerb,
+            themeSnackBar: 'error').showSnakBar();
       } else {
         await addInList(idVerbs: idVerbs);
-        SnakBar(context: context, messageSnackBar: context.loc.snackBarAddVerb, themeSnackBar: 'success').showSnakBar();
+        SnakBar(context: context,
+            messageSnackBar: context.loc.snackBarAddVerb,
+            themeSnackBar: 'success').showSnakBar();
       };
-      Future.delayed(const Duration(milliseconds: 1000),(){
+      Future.delayed(const Duration(milliseconds: 1000), () {
         Loader(context: context, snackBar: false).hideLoader();
       });
       setState(() {
 
       });
-  }
+    }
 }
 
 

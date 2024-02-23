@@ -3,6 +3,7 @@
 
 
 
+import 'package:Vireg/src/_models/PersonalListModel.dart';
 import 'package:flutter/material.dart';
 
 import '../_Utils/string.dart';
@@ -12,17 +13,19 @@ import '../_utils/front.dart';
 class DataTableListeVerbesPersoAction extends DataTableSource {
   final List<dynamic> filteredData;
   final BuildContext context;
-
   final String localLang;
   Set<Future<void>> Function({required dynamic idVerbs}) addOrDeleteInList;
+  final PersonalListModel PersonalListUpdate;
 
   DataTableListeVerbesPersoAction({
     required this.filteredData,
     required this.context,
     required this.addOrDeleteInList,
-    required this.localLang
+    required this.localLang,
+    required this.isOnline,
+    required this.PersonalListUpdate
   });
-
+  bool isOnline;
   bool loopMapFilter = false;
   List<dynamic> ListPerso = [];
 
@@ -117,7 +120,7 @@ class DataTableListeVerbesPersoAction extends DataTableSource {
              Center(
                 child:CircleAvatar(
                       radius: 30,
-                      backgroundColor: (filteredData[index]['isInListPerso'] ? Colors.red : Colors.green),
+                      backgroundColor: (PersonalListUpdate.ownListShare ? (isOnline ?  (filteredData[index]['isInListPerso'] ? Colors.red : Colors.green): Colors.grey) :(filteredData[index]['isInListPerso'] ? Colors.red : Colors.green)),
                       child: IconButton(
                         icon: Icon(
                           filteredData[index]['isInListPerso']  ? Icons.remove : Icons.add,

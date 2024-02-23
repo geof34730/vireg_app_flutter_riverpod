@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:core';
 import 'dart:async';
 import 'dart:developer' as developer;
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:Vireg/src/_models/PersonalListModel.dart';
 import 'package:Vireg/src/localization/app_localizations_context.dart';
@@ -22,6 +23,7 @@ import '../_services/SharePersonalList.dart';
 import '../_utils/front.dart';
 import '../_widgets/boxCard.dart';
 import '../_widgets/boxCardListPerso.dart';
+import '../_widgets/dialogues.dart';
 import '../router.dart';
 import '../_providers/localOnlineDevice.dart';
 
@@ -149,7 +151,7 @@ class _HomeState extends ConsumerState<Home> {
                                           context:context,
                                           personalList:personalListModelFromJson(jsonEncode(snapshot.data![i]).toString()),
                                           onClickShare: ({required String idList}) async => shareListPerso(personalList: personalListModelFromJson(jsonEncode(snapshot.data![i]).toString())) ,
-                                          alerOfflineBoxCard: () async => alertOffline()
+                                          alerOfflineBoxCard: () async => Dialogues(context: context).alertOffline()
                                       )
                                   ),
                                 ],
@@ -172,7 +174,7 @@ class _HomeState extends ConsumerState<Home> {
                                               ?
                                               context.go("/")
                                               :
-                                              alertOffline()
+                                              Dialogues(context: context).alertOffline()
                                           );
                                         },
                                         child: const Icon(
@@ -414,36 +416,8 @@ bool isOnline=false;
   //  });
   }
 
-  Future<String?> alertOffline() {
-    return showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => Dialog(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                 SizedBox(
-                    width:280.0,
-                    child:Text(
-                      context.loc.alertOffLine,
-                      style: TextStyle(color: Colors.red, fontSize: 16.0),
-                      textAlign: TextAlign.center,
-                    )
-                ),
-                const SizedBox(height: 15, width: 150),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text(context.loc.fermer),
-                ),
-              ],
-            ),
-          ),
-        ));
-  }
+
 
 
 }
+

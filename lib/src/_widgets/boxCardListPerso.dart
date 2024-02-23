@@ -148,7 +148,7 @@ Card boxCardChild({required WidgetRef ref,  required BuildContext context,requir
                                         }
                                     ),
                                     ElevatedButtonCardHome(
-                                        label: "${context.loc.widgetBoxCardList} - ${ref.watch(localOnlineDeviceProvider)}",
+                                        label: context.loc.widgetBoxCardList,
                                         iconContent: Icons.visibility,
                                         indexRubrique: 2,
                                         context: context,
@@ -165,10 +165,10 @@ Card boxCardChild({required WidgetRef ref,  required BuildContext context,requir
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           ElevatedButtonCardHomeEditDeleteShare(visibilityButton:(nbVerbsPerso==0 ? false : true),
-                              colorIcon: (ref.watch(localOnlineDeviceProvider) ? Colors.blue : Colors.grey),
+                              colorIcon: ((ref.watch(localOnlineDeviceProvider) || personalList.urlShare!="")? Colors.blue : Colors.grey),
                               iconContent: Icons.share, context: context,
                               onClickButton: () =>  {
-                                (ref.watch(localOnlineDeviceProvider)
+                                ((ref.watch(localOnlineDeviceProvider) || personalList.urlShare!="")
                                     ?
                                     onClickShare.call(idList: personalList.id)
                                     :
