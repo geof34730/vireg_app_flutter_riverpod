@@ -10,21 +10,17 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:package_info_plus/package_info_plus.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import '../_class/Loader.dart';
 import '../_class/SnackBar.dart';
-import '../_providers/localLang.dart';
 import '../_class/localstore.dart';
 import '../_services/SharePersonalList.dart';
 import '../_utils/front.dart';
 import '../_widgets/boxCard.dart';
 import '../_widgets/boxCardListPerso.dart';
 import '../_widgets/dialogues.dart';
-import '../router.dart';
 import '../_providers/localOnlineDevice.dart';
 
 bool initConfig=false;
@@ -42,6 +38,7 @@ class _HomeState extends ConsumerState<Home> {
 
   @override
   void initState() {
+
     print("init state home");
     super.initState();
     initConnectivity();
@@ -57,7 +54,8 @@ class _HomeState extends ConsumerState<Home> {
   @override
   Widget build(BuildContext context) {
     print("build Home");
-
+    dynamic ResponsiveContentObj=ResponsiveContent(context: context);
+    dynamic DialoguesObj=Dialogues(context: context);
     if (!initConfig){
       Localstorelocal(ref: ref,context: context).initLang();
       initConfig=true;
@@ -67,8 +65,6 @@ class _HomeState extends ConsumerState<Home> {
       child: Column(
         children: [
           Visibility(visible: false,child: Text((ref.watch(localOnlineDeviceProvider) ? "online" : "offline"))),
-
-
           Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -92,15 +88,15 @@ class _HomeState extends ConsumerState<Home> {
               children:[
                 Padding(
                   padding: EdgeInsets.only(
-                      top: ResponsiveContent(context: context).choseSize(mobileSize: 10.00, otherSize: 15.00),
-                      bottom: ResponsiveContent(context: context).choseSize(mobileSize: 5.00, otherSize: 5.00)
+                      top: ResponsiveContentObj.choseSize(mobileSize: 10.00, otherSize: 15.00),
+                      bottom: ResponsiveContentObj.choseSize(mobileSize: 5.00, otherSize: 5.00)
                   ),
                   child: Text(
                     context.loc.homeTitlePersoList,
                     style: GoogleFonts.roboto(
                         textStyle: TextStyle(
                           color: Colors.black,
-                          fontSize: ResponsiveContent(context: context).choseSize(mobileSize: 20.00, otherSize: 25.00),
+                          fontSize: ResponsiveContentObj.choseSize(mobileSize: 20.00, otherSize: 25.00),
                           fontWeight: FontWeight.bold,
                         )),
                     textAlign: TextAlign.center,
@@ -128,12 +124,12 @@ class _HomeState extends ConsumerState<Home> {
                               width: MediaQuery.of(context).size.width,
                               child: Padding(
                                   padding: EdgeInsets.only(
-                                      top: ResponsiveContent(context: context).choseSize(mobileSize: 5.00, otherSize: 20.00),
-                                      left: ResponsiveContent(context: context).choseSize(mobileSize: 15.00, otherSize: 35.00),
-                                      right: ResponsiveContent(context: context).choseSize(mobileSize: 15.00, otherSize: 35.00)),
+                                      top: ResponsiveContentObj.choseSize(mobileSize: 5.00, otherSize: 20.00),
+                                      left: ResponsiveContentObj.choseSize(mobileSize: 15.00, otherSize: 35.00),
+                                      right: ResponsiveContentObj.choseSize(mobileSize: 15.00, otherSize: 35.00)),
                                   child: Text(
                                     context.loc.homeDesciptionListePerso,
-                                    style: TextStyle(fontSize: ResponsiveContent(context: context).choseSize(mobileSize: 14.00, otherSize: 18.00)),
+                                    style: TextStyle(fontSize: ResponsiveContentObj.choseSize(mobileSize: 14.00, otherSize: 18.00)),
                                     textAlign: TextAlign.center,
                                   )
                               )
@@ -145,13 +141,13 @@ class _HomeState extends ConsumerState<Home> {
                                   ...[
                                   ResponsiveGridCol(
                                       xs: 12,
-                                      sm:getFlexListePerso(lenghtVerbs:snapshot.data!.length,numVerb:i),
-                                      md: getFlexListePerso(lenghtVerbs:snapshot.data!.length,numVerb:i),
+                                      sm:ResponsiveContentObj.getFlexListePerso(lenghtVerbs:snapshot.data!.length,numVerb:i),
+                                      md:ResponsiveContentObj.getFlexListePerso(lenghtVerbs:snapshot.data!.length,numVerb:i),
                                       child: BoxCardListPerso(
                                           context:context,
                                           personalList:personalListModelFromJson(jsonEncode(snapshot.data![i]).toString()),
-                                          onClickShare: ({required String idList}) async => shareListPerso(personalList: personalListModelFromJson(jsonEncode(snapshot.data![i]).toString())) ,
-                                          alerOfflineBoxCard: () async => Dialogues(context: context).alertOffline()
+                                          onClickShare: ({required String idList}) async => shareListPerso(personalList: personalListModelFromJson(jsonEncode(snapshot.data![i]).toString()),DialoguesObj:DialoguesObj) ,
+                                          alerOfflineBoxCard: () async => DialoguesObj.alertOffline()
                                       )
                                   ),
                                 ],
@@ -165,7 +161,7 @@ class _HomeState extends ConsumerState<Home> {
                                 Visibility(
                                     visible: (snapshot.data!.length>0),
                                     child:Padding(
-                                      padding: EdgeInsets.only(bottom: 10.00,right: 5.0, top: ResponsiveContent(context: context).choseSize(mobileSize: 5.00, otherSize: 10.00)),
+                                      padding: EdgeInsets.only(bottom: 10.00,right: 5.0, top: ResponsiveContentObj.choseSize(mobileSize: 5.00, otherSize: 10.00)),
                                       child: FloatingActionButton(
                                         elevation: 10,
                                         backgroundColor: (ref.watch(localOnlineDeviceProvider) ? Colors.blue : Colors.grey) ,
@@ -174,7 +170,7 @@ class _HomeState extends ConsumerState<Home> {
                                               ?
                                               context.go("/")
                                               :
-                                              Dialogues(context: context).alertOffline()
+                                          DialoguesObj.alertOffline()
                                           );
                                         },
                                         child: const Icon(
@@ -186,7 +182,7 @@ class _HomeState extends ConsumerState<Home> {
                                     )
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(bottom: 10.00,left:((snapshot.data!.length>0) ? 0.0 : 5.0), top: ResponsiveContent(context: context).choseSize(mobileSize: 5.00, otherSize: 10.00)),
+                                  padding: EdgeInsets.only(bottom: 10.00,left:((snapshot.data!.length>0) ? 0.0 : 5.0), top: ResponsiveContentObj.choseSize(mobileSize: 5.00, otherSize: 10.00)),
                                   child: FloatingActionButton(
                                     elevation: 10,
                                     backgroundColor: Colors.blue,
@@ -216,8 +212,8 @@ class _HomeState extends ConsumerState<Home> {
           Divider(
             height: 10,
             thickness: 1,
-            indent: ResponsiveContent(context: context).choseSize(mobileSize: 20.00, otherSize: 35.00),
-            endIndent: ResponsiveContent(context: context).choseSize(mobileSize: 20.00, otherSize: 35.00),
+            indent: ResponsiveContentObj.choseSize(mobileSize: 20.00, otherSize: 35.00),
+            endIndent: ResponsiveContentObj.choseSize(mobileSize: 20.00, otherSize: 35.00),
             color: Colors.grey,
           ),
           Column(
@@ -226,15 +222,15 @@ class _HomeState extends ConsumerState<Home> {
               children:[
                 Padding(
                   padding: EdgeInsets.only(
-                      top: ResponsiveContent(context: context).choseSize(mobileSize: 10.00, otherSize: 15.00),
-                      bottom: ResponsiveContent(context: context).choseSize(mobileSize: 5.00, otherSize: 5.00)
+                      top: ResponsiveContentObj.choseSize(mobileSize: 10.00, otherSize: 15.00),
+                      bottom: ResponsiveContentObj.choseSize(mobileSize: 5.00, otherSize: 5.00)
                   ),
                   child: Text(
                     context.loc.homeTitleDefaultList,
                     style: GoogleFonts.roboto(
                         textStyle: TextStyle(
                           color: Colors.black,
-                          fontSize: ResponsiveContent(context: context).choseSize(mobileSize: 20.00, otherSize: 25.00),
+                          fontSize: ResponsiveContentObj.choseSize(mobileSize: 20.00, otherSize: 25.00),
                           fontWeight: FontWeight.bold,
                         )),
                     textAlign: TextAlign.center,
@@ -275,15 +271,14 @@ class _HomeState extends ConsumerState<Home> {
     );
   }
 
-  int getFlexListePerso({required int lenghtVerbs,required int numVerb}) =>((lenghtVerbs==1) ? 12 : ((lenghtVerbs==numVerb+1) ? ((numVerb.isEven) ? 12 : 6 ) : 6));
 
-  Future<void> shareListPerso({required PersonalListModel personalList}) async {
+  Future<void> shareListPerso({required PersonalListModel personalList,required dynamic DialoguesObj}) async {
     Loader(context: context, snackBar: false).showLoader();
     if(personalList.urlShare=="") {
       SharePersonalList(context: context).Share(personalList: personalList).then((value) async {
         value = await value.copyWith(isListShare: true,ownListShare: true);
         await Localstorelocal(context: context, ref: ref).updatePersonalList(PersonalList: value);
-        _dialogBuilderShare(context: context, personalList: value);
+        DialoguesObj.dialogBuilderShare(personalList: value);
         setState(() {
 
         });
@@ -291,94 +286,13 @@ class _HomeState extends ConsumerState<Home> {
       });
     }
     else{
-      _dialogBuilderShare(context: context, personalList: personalList);
+      DialoguesObj.dialogBuilderShare(personalList: personalList);
       Loader(context: context, snackBar: false).hideLoader();
     }
   }
-  void sendQrCode({required BuildContext context,required PersonalListModel personalList }) {
-    Navigator.of(context).pop();
-    _dialogBuilderShare(context: context,personalList: personalList);
-  }
 
-  Future<void> _dialogBuilderShare({required BuildContext context,required PersonalListModel personalList }) {
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return SingleChildScrollView(
-          //  scrollDirection: Axis.vertical,
-            child: AlertDialog(
-              insetPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-              contentPadding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              icon: Column(mainAxisSize: MainAxisSize.min, mainAxisAlignment: MainAxisAlignment.end, crossAxisAlignment: CrossAxisAlignment.end, children: [
-                InkWell(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: const Icon(
-                      Icons.close,
-                    ))
-              ]),
-              title:  Text(
-                context.loc.homeShareListTitle,
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 18.00),
-              ),
-              content: Column(mainAxisSize: MainAxisSize.min, mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
-                SizedBox(
-                    width: 360,
-                    height: 40,
-                    child: Text(
-                      context.loc.homeShareListeDescription,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 14.00),
-                    )),
-                Padding(
-                  padding: const EdgeInsets.only(top: 10.00, bottom: 10.0),
-                  child: Container(
-                      width: 280,
-                      height: 280,
-                      color: Colors.blue,
-                      child: QrImageView(
-                        data: personalList.urlShare,
-                        version: 10,
-                        size: 280,
-                        gapless: true,
-                        backgroundColor: Colors.white,
-                      )),
-                ),
-                 Padding(
-                    padding: EdgeInsets.only(bottom: 10.0),
-                    child: Text(
-                      context.loc.homeShareListeOr,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 18.00, fontWeight: FontWeight.bold),
-                    )),
-                 Text(
-                  context.loc.homeShareTitleChoiseSend,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 14.00),
-                ),
-                Row(crossAxisAlignment: CrossAxisAlignment.center, mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Padding(
-                      padding: const EdgeInsets.only(top: 10.0),
-                      child: ElevatedButton.icon(
-                          onPressed: () async {
-                            sendQrCode(context: context,personalList: personalList);
-                          },
-                          icon: const Icon(
-                            Icons.email,
-                          ),
-                          label: Text(
-                            context.loc.homeShareButtonendByEmail,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          )))
-                ])
-              ]),
-            ));
-      },
-    );
-  }
+
+
 
   Future<void> initConnectivity() async {
     late ConnectivityResult result;
@@ -393,7 +307,7 @@ class _HomeState extends ConsumerState<Home> {
     }
     return _updateConnectionStatus(result);
   }
-bool isOnline=false;
+  bool isOnline=false;
   void _updateConnectionStatus(ConnectivityResult connectivityResult)  {
     if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi || connectivityResult == ConnectivityResult.ethernet || connectivityResult == ConnectivityResult.vpn) {
       ref.read(localOnlineDeviceProvider.notifier).change(onlineDevice: true);
@@ -407,7 +321,7 @@ bool isOnline=false;
       ref.read(localOnlineDeviceProvider.notifier).change(onlineDevice: false);
       print("NO connection: ${ref.watch(localOnlineDeviceProvider)}" );
       if(isOnline) {
-        SnakBar(context: context, messageSnackBar: "Vous ètes hors ligne",themeSnackBar: 'error',duration:3600).showSnakBar();
+        SnakBar(context: context, messageSnackBar: "Vous êtes hors ligne",themeSnackBar: 'error',duration:3600).showSnakBar();
         isOnline=false;
       }
     }

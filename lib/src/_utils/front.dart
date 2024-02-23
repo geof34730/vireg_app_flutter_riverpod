@@ -43,7 +43,6 @@ class ResponsiveContent{
     }
   }
 
-
   dynamic choseSize({required dynamic mobileSize, required otherSize}){
     if(typeScreenBreakpoint()=="tablette"){
       return otherSize;
@@ -52,4 +51,8 @@ class ResponsiveContent{
       return mobileSize;
     }
   }
+
+  int getFlexListePerso({required int lenghtVerbs,required int numVerb}) =>((lenghtVerbs==1) ? 12 : ((lenghtVerbs==numVerb+1) ? ((numVerb.isEven) ? 12 : 6 ) : 6));
+
+
 }
