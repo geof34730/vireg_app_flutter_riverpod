@@ -17,14 +17,17 @@ class WidgetbottomNavigationBar extends ConsumerWidget {
       type: BottomNavigationBarType.fixed,
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
+          key:UniqueKey(),
           icon: const Icon(Icons.school),
           label: context.loc.bottomNavigationBarLearn,
         ),
         BottomNavigationBarItem(
+          key:UniqueKey(),
           icon: Icon(Icons.quiz),
           label: context.loc.bottomNavigationBarTest,
         ),
         BottomNavigationBarItem(
+          key:UniqueKey(),
           icon: const Icon(Icons.visibility),
           label: context.loc.bottomNavigationBarSeeTheList,
         ),

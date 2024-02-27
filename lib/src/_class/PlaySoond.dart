@@ -30,6 +30,7 @@ class PlaySoond{
 
   iconPlay(){
     return IconButton(
+      key: UniqueKey(),
       icon:  Icon(
         Icons.volume_up,
         color: iconColor,

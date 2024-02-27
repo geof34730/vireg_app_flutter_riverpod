@@ -41,13 +41,13 @@ class BoxCardListPerso extends ConsumerWidget {
                 fontWeight: FontWeight.bold
             ),
             color: Colors.blue,
-            child:boxCardChild(context: context,ref:ref,personalList:personalList,onClickShare:  onClickShare)
+            child:boxCardChildPerso(context: context,ref:ref,personalList:personalList,onClickShare:  onClickShare)
           )
           :
-      boxCardChild(context: context,ref:ref,personalList:personalList,onClickShare:  onClickShare)
+            boxCardChildPerso(context: context,ref:ref,personalList:personalList,onClickShare:  onClickShare)
       );
     }
-Card boxCardChild({required WidgetRef ref,  required BuildContext context,required PersonalListModel personalList, required dynamic onClickShare}){
+Card boxCardChildPerso({required WidgetRef ref,  required BuildContext context,required PersonalListModel personalList, required dynamic onClickShare}){
         final localstoreLocalObj=Localstorelocal(ref: ref,context: context);
         int nbVerbsPerso=personalList.ListIdVerbs.length;
         return Card(
@@ -129,6 +129,8 @@ Card boxCardChild({required WidgetRef ref,  required BuildContext context,requir
                                   runSpacing: 10.0,
                                   // gap between lines
                                   children: [
+
+
                                     ElevatedButtonCardHome(
                                         label: context.loc.widgetBoxCardLearn,
                                         iconContent: Icons.school,

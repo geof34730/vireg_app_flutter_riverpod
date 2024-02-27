@@ -15,7 +15,8 @@ Widget ElevatedButtonCardHomeEditDeleteShare({visibilityButton = true, bool disa
           ),
           margin: const EdgeInsets.all(5.0),
           padding: const EdgeInsets.all(0.0),
-          child: IconButton(
+          child:IconButton(
+            key:UniqueKey(),
             padding: const EdgeInsets.all(0.0),
             color: colorIcon,
             alignment: Alignment.center,

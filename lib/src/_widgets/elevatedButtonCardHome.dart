@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 Widget ElevatedButtonCardHome({required dynamic onClickButton,  required String label, required IconData iconContent, required int indexRubrique, required BuildContext context}) {
   return ElevatedButton.icon(
+    key:UniqueKey(),
     onPressed: () {
       onClickButton();
     },

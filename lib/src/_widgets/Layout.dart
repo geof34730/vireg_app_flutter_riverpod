@@ -6,10 +6,10 @@ import 'bottomNavigationBar.dart';
 import 'drawerDevTools.dart';
 import '../../global.dart' as globals;
 
-Widget Layout({required BuildContext context,String versionApp="",required child,bottomNavigationBar=false,double paddinLeftRight=15.0,appBar=true,indexBottomNavigationBar=0}) {
+Widget Layout({required BuildContext context,String versionApp="",required child,bottomNavigationBar=false,double paddinLeftRight=15.0,appBar=true,indexBottomNavigationBar=0, String? backButton }) {
 
   return Scaffold(
-    appBar:  (appBar ? WidgetsEasySearchBar() : null),
+    appBar:  (appBar ? WidgetsEasySearchBar(backButton:backButton) : null),
     bottomNavigationBar: (bottomNavigationBar
           ?
         WidgetbottomNavigationBar(indexNav: indexBottomNavigationBar)
@@ -47,7 +47,7 @@ Widget Layout({required BuildContext context,String versionApp="",required child
                 )
             )
     ),
-
+/*
     floatingActionButton: FloatingActionButton(
         elevation: 15,
         onPressed: (){
@@ -67,7 +67,7 @@ Widget Layout({required BuildContext context,String versionApp="",required child
               fontWeight: FontWeight.bold
           ),
         )
-    ),
+    ),*/
 
   );
 }

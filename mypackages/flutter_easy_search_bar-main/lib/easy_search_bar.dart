@@ -76,6 +76,8 @@ class EasySearchBar extends StatefulWidget implements PreferredSizeWidget {
   /// Can be used to set the AppBar title style
   final TextStyle? titleTextStyle;
 
+  final bool canPop;
+
   /// Can be used to set the search input background color
   final Color? searchBackgroundColor;
 
@@ -127,6 +129,8 @@ class EasySearchBar extends StatefulWidget implements PreferredSizeWidget {
   /// Can be used to set the debounce time for async data fetch
   final Duration debounceDuration;
 
+
+
   const EasySearchBar(
       {Key? key,
       required this.title,
@@ -159,7 +163,10 @@ class EasySearchBar extends StatefulWidget implements PreferredSizeWidget {
       this.animationDuration = const Duration(milliseconds: 450),
       this.debounceDuration = const Duration(milliseconds: 400),
       required this.callBackBackNav,
-      this.searchTextKeyboardType = TextInputType.text})
+      this.searchTextKeyboardType = TextInputType.text,
+      required this.canPop
+
+      })
 
       : assert(elevation == null || elevation >= 0.0),
         super(key: key);
@@ -365,8 +372,10 @@ class _EasySearchBarState extends State<EasySearchBar>
     final AppBarTheme appBarTheme = AppBarTheme.of(context);
     final ScaffoldState? scaffold = Scaffold.maybeOf(context);
     final ModalRoute<dynamic>? parentRoute = ModalRoute.of(context);
+    final bool canPop = widget.canPop;
 
-    final bool canPop = parentRoute?.canPop ?? false;
+
+        //parentRoute?.canPop ?? false;
 
     //assert(widget.leading == null || !scaffold!.hasDrawer, 'Cannot use leading with drawer');
     //assert(widget.leading == null || !canPop, 'Cannot use leading when back button exists');

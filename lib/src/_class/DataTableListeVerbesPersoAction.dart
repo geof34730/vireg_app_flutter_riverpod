@@ -122,6 +122,7 @@ class DataTableListeVerbesPersoAction extends DataTableSource {
                       radius: 30,
                       backgroundColor: (PersonalListUpdate.ownListShare ? (isOnline ?  (filteredData[index]['isInListPerso'] ? Colors.red : Colors.green): Colors.grey) :(filteredData[index]['isInListPerso'] ? Colors.red : Colors.green)),
                       child: IconButton(
+                        key: UniqueKey(),
                         icon: Icon(
                           filteredData[index]['isInListPerso']  ? Icons.remove : Icons.add,
                           color: Colors.white,

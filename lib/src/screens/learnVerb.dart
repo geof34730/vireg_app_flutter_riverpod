@@ -26,10 +26,11 @@ class _LearnVerbState extends ConsumerState<LearnVerb> {
   bool visibleButtonPlay=false;
   String locallang="";
   late bool personalList;
+  late bool getdataListOK=false;
   @override
   void initState() {
     personalList = (widget.personalList=='true' ? true : false);
-    getListVerbsJson(idList: widget.idList.toString());
+    getListVerbsJson(idList: widget.idList.toString()).then((value) => getdataList(idList: widget.idList.toString(), personalList: personalList));
     learnNumCard = 1;
     visibleButtonPlay=false;
 
@@ -44,41 +45,46 @@ class _LearnVerbState extends ConsumerState<LearnVerb> {
   @override
   Widget build(BuildContext context) {
     locallang=ref.watch(localLangProvider);
-    print("dataList.isEmpty: ${dataList.isEmpty}");
+    //print("dataList.isEmpty: ${dataList.isEmpty}");
 
-    if(dataList.isEmpty) {
-      return FutureBuilder<List<dynamic>>(
-          future: getdataList(idList: widget.idList.toString(),personalList: personalList),
-          initialData: dataList,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            } else if (snapshot.connectionState == ConnectionState.done) {
-              if (snapshot.hasError) {
-                return const Text('Error');
-              } else if (snapshot.hasData) {
-                return SizedBox();
+    
+
+
+    if(getdataListOK) {
+      if (dataList.isEmpty) {
+        return FutureBuilder<List<dynamic>>(
+            future: getdataList(idList: widget.idList.toString(), personalList: personalList),
+            initialData: dataList,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator();
+              } else if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasError) {
+                  return const Text('Error');
+                } else if (snapshot.hasData) {
+                  return SizedBox();
+                } else {
+                  return const Text('Empty data');
+                }
               } else {
-                return const Text('Empty data');
+                return Text('State: ${snapshot.connectionState}');
               }
-            } else {
-              return Text('State: ${snapshot.connectionState}');
-            }
-          });
-    }
-
-    if (cardKeys.length !=dataList.length+1) {
-      cardKeys = [];
-      for (int i = 0; i < dataList.length+1; i++) {
-        cardKeys.add(GlobalKey<FlipCardState>());
+            });
       }
-      setState(() {
+      if (cardKeys.length != dataList.length + 1) {
+        cardKeys = [];
+        for (int i = 0; i < dataList.length + 1; i++) {
+          cardKeys.add(GlobalKey<FlipCardState>());
+        }
 
-      });
-    }
-
-    double sizeCard = getWidthAndHeightCard();
-    return Column(mainAxisAlignment: MainAxisAlignment.center,
+        if (this.mounted) { // check whether the state object is in tree
+          setState(() {
+            // make changes here
+          });
+        }
+      }
+      double sizeCard = getWidthAndHeightCard();
+      return Column(mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.max,
           children: [
             Column(mainAxisSize: MainAxisSize.max, children: [
@@ -99,6 +105,7 @@ class _LearnVerbState extends ConsumerState<LearnVerb> {
                 width: sizeCard,
                 height: sizeCard,
                 child: InkWell(
+                    key:UniqueKey(),
                     onTap: () {
                       cardKeys[learnNumCard].currentState?.toggleCard();
                       setState(() {
@@ -227,6 +234,7 @@ class _LearnVerbState extends ConsumerState<LearnVerb> {
                       child: Visibility(
                         visible: learnNumCard != 1 && learnNumCard != 0,
                         child: FloatingActionButton(
+                          heroTag: UniqueKey(),
                           onPressed: () async {
                             learnBack();
                           },
@@ -251,6 +259,7 @@ class _LearnVerbState extends ConsumerState<LearnVerb> {
                       child: Visibility(
                         visible: learnNumCard <= dataList.length - 1,
                         child: FloatingActionButton(
+                          heroTag: UniqueKey(),
                           onPressed: () {
                             learnNext();
                           },
@@ -266,6 +275,14 @@ class _LearnVerbState extends ConsumerState<LearnVerb> {
               ),
             ])
           ]);
+    }
+    else{
+      return Text('Loading Data');
+    }
+
+
+
+
   }
 
 
@@ -274,16 +291,27 @@ class _LearnVerbState extends ConsumerState<LearnVerb> {
     print('getdataList : $idList');
     List<dynamic> dataListResp=await GetDataVerbs().getDataJson(idList: idList,personalList: personalList);
     dataList=dataListResp.toList();
+    if(!getdataListOK) {
+      setState(() {
+        getdataListOK = true;
+      });
+    }
+
     return dataList;
   }
 
   Future<void> getListVerbsJson({required String idList}) async {
     List<dynamic> dataListResp=await GetDataVerbs().getDataJson(idList: idList,personalList: personalList);
     dataList=dataListResp.toList();
-    setState(() {
-      dataList=dataListResp.toList();
-     // filteredData = sortVerbsByFrancais(dataList);
-    });
+
+    if (this.mounted) { // check whether the state object is in tree
+      setState(() {
+        dataList=dataListResp.toList();
+      });
+    }
+
+
+
   }
 
   double getWidthAndHeightCard() {

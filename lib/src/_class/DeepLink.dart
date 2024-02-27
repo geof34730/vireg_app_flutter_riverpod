@@ -20,11 +20,11 @@ class DeepLink {
   final BuildContext context;
 
   void initDeepLinks({required PendingDynamicLinkData? initialLink}) {
-    print("initDeepLinks");
+   // print("initDeepLinks");
 
     if (initialLink != null) {
       print("************REDIRECT LOAD WITH PARAM DEEP LINK => ${initialLink.link.path} **************");
-      context.go(initialLink.link.path);
+     // context.go(initialLink.link.path);
     }
     FirebaseDynamicLinks.instance.onLink.listen((deepLinkData) {
       final deepLink = deepLinkData.link;

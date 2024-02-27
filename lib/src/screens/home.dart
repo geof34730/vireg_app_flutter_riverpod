@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:core';
 import 'dart:async';
 import 'dart:developer' as developer;
+import 'dart:js_util';
+import 'package:Vireg/src/_class/Connectivity.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:Vireg/src/_models/PersonalListModel.dart';
@@ -10,6 +12,7 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:localstore/localstore.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -33,21 +36,91 @@ class Home extends ConsumerStatefulWidget {
 
 class _HomeState extends ConsumerState<Home> {
   final FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
-  final Connectivity _connectivity = Connectivity();
-  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
 
   @override
   void initState() {
-
     print("init state home");
+    ConectivityVireg(ref: ref,context: context).init();
+
+    List listIdListShare = [];
+    final LocalstorelocalObj = Localstorelocal(context: context,ref: ref);
+    LocalstorelocalObj.getJsonAllPersonalistLocalStore().then((value)  async {
+        value.forEach((element) {
+          print(element['isListShare']);
+          if(element['isListShare']){
+            listIdListShare.add(element['id']);
+          }
+        });
+        print(listIdListShare);
+        if (ref.watch(localOnlineDeviceProvider) ) {
+          print("LOAD");
+        //  Loader(context: context, snackBar: false).showLoader();
+          print('CONNECTION');
+
+           SharePersonalList(context: context).UpdateOrDeleteLoadListeShare(listIdListShare: listIdListShare).then((value) async => {
+             LocalstorelocalObj.getJsonAllPersonalistLocalStore().then((valueList) {
+                    valueList.forEach((element)  {
+                      PersonalListModel elementPersonalistModel = PersonalListModel.fromJson(element);
+                      if (elementPersonalistModel.isListShare) {
+                        bool existInBdd = value.toString().indexOf(elementPersonalistModel.id) > 0;
+                        print("existe toujours en bdd: ${existInBdd.toString()}");
+                        print(elementPersonalistModel);
+                        if (!existInBdd) {
+                          print("Delete: ${element['id']}");
+                          Localstorelocal(context: context,ref: ref).deletePersonalList(personalList: elementPersonalistModel);
+                        }
+                      }
+                    });
+             }),
+         /* await value["data"]?.forEach((element) async {
+            dynamic elementObj = jsonDecode(element["data"]);
+            print(elementObj['title']);
+            dynamic newListVerb = [];
+            print("************** ${elementObj['ListIdVerbs']}");
+            for (var item in elementObj['ListIdVerbs']) {
+              print(item);
+              newListVerb.add(item);
+            }
+            //await _db.collection('personalLists').doc(element['uuid']).set(PersonalList(id: element['uuid'], title: elementObj['title'], color: int.parse(elementObj['color'].toString()), isListShare: true, ListIdVerbs: newListVerb).toMap());
+          }),*/
+          /*await _db.collection('personalLists').get().then((value) async {
+            print(value);
+            ListPerso = [];
+            value?.entries.forEach((element) {
+              print(element);
+              bool isListShareCond=false;
+              ListPerso.add(PersonalList(
+                id: element.value['id'],
+                title: element.value['title'],
+                color: element.value['color'],
+                ListIdVerbs: element.value['ListIdVerbs'],
+                isListShare: nullToBool(valueNullToBool: element.value['isListShare']),
+                ownListShare: nullToBool(valueNullToBool: element.value['ownListShare']),
+              ));
+            });
+
+            loaderEnd=true;
+
+
+            setState(() {});
+          }),*/
+
+        });
+
+
+
+        }
+      }
+    );
+
+
     super.initState();
-    initConnectivity();
-    _connectivitySubscription = _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+
   }
 
   @override
   void dispose() {
-    _connectivitySubscription.cancel();
+    //_connectivitySubscription.cancel();
     super.dispose();
   }
 
@@ -64,7 +137,7 @@ class _HomeState extends ConsumerState<Home> {
     return Center(
       child: Column(
         children: [
-          Visibility(visible: false,child: Text((ref.watch(localOnlineDeviceProvider) ? "online" : "offline"))),
+          Visibility(visible: true,child: Text((ref.watch(localOnlineDeviceProvider) ? "online" : "offline"))),
           Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -72,10 +145,11 @@ class _HomeState extends ConsumerState<Home> {
                 Column(
                     children:[
                       ElevatedButton(
+
                           onPressed: (){
-                            context.go('/share/415e29ea-e793-49b1-8c8f-7271673c3f9c');
+                            context.go('/share/b96d2677-104b-4789-a030-fa8e249d7495');
                           },
-                          child: Text('share test 415e29ea-e793-49b1-8c8f-7271673c3f9c')
+                          child: Text('share test b96d2677-104b-4789-a030-fa8e249d7495')
                       ),
 
                     ]
@@ -104,7 +178,9 @@ class _HomeState extends ConsumerState<Home> {
                 )
               ]
           ),
+
           FutureBuilder<List<dynamic>>(
+            key:UniqueKey(),
               future: _futureOfListPerso(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -163,6 +239,7 @@ class _HomeState extends ConsumerState<Home> {
                                     child:Padding(
                                       padding: EdgeInsets.only(bottom: 10.00,right: 5.0, top: ResponsiveContentObj.choseSize(mobileSize: 5.00, otherSize: 10.00)),
                                       child: FloatingActionButton(
+                                        heroTag: UniqueKey(),
                                         elevation: 10,
                                         backgroundColor: (ref.watch(localOnlineDeviceProvider) ? Colors.blue : Colors.grey) ,
                                         onPressed: () {
@@ -184,6 +261,7 @@ class _HomeState extends ConsumerState<Home> {
                                 Padding(
                                   padding: EdgeInsets.only(bottom: 10.00,left:((snapshot.data!.length>0) ? 0.0 : 5.0), top: ResponsiveContentObj.choseSize(mobileSize: 5.00, otherSize: 10.00)),
                                   child: FloatingActionButton(
+                                    heroTag: UniqueKey(),
                                     elevation: 10,
                                     backgroundColor: Colors.blue,
                                     onPressed: () {
@@ -293,7 +371,7 @@ class _HomeState extends ConsumerState<Home> {
 
 
 
-
+/*
   Future<void> initConnectivity() async {
     late ConnectivityResult result;
     try {
@@ -314,7 +392,6 @@ class _HomeState extends ConsumerState<Home> {
       print("OK connection: ${ref.watch(localOnlineDeviceProvider)}" );
       if(!isOnline) {
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
-
         isOnline=true;
       }
     } else {
@@ -325,11 +402,10 @@ class _HomeState extends ConsumerState<Home> {
         isOnline=false;
       }
     }
-  //  setState(() {
-   // _connectionStatus = result;
-  //  });
+   // setState(() {
+   // });
   }
-
+*/
 
 
 

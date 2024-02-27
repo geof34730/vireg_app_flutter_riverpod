@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../_Utils/string.dart';
+import '../_class/Connectivity.dart';
 import '../_class/DataTableListeVerbes.dart';
 import '../_class/DataTableListeVerbesPersoAction.dart';
 import '../_class/GetDataVerbs.dart';
@@ -23,8 +24,9 @@ import 'home.dart';
 
 
 class ListPersoStep2 extends ConsumerStatefulWidget {
-  const ListPersoStep2({Key? key, required this.idList}) : super(key: key);
+  const ListPersoStep2( {Key? key, required this.idList, required this.extraPersonalistUpdate }) : super(key: key);
   final String? idList;
+  final PersonalListModel extraPersonalistUpdate;
   @override
   _ListPersoStep2State createState() => _ListPersoStep2State();
 }
@@ -37,14 +39,12 @@ class _ListPersoStep2State extends ConsumerState<ListPersoStep2> {
   String locallang="";
   bool form2Valide=false;
   String UUIDList="";
-  late PersonalListModel PersonalListUpdate;
+  late PersonalListModel PersonalListUpdate=widget.extraPersonalistUpdate;
 
   @override
   void initState() {
+    ConectivityVireg(ref: ref,context: context).init();
     UUIDList=widget.idList.toString();
-    Localstorelocal(context: context,ref: ref).getJsonPersonalistLocalStore(idList: UUIDList).then((value){
-      PersonalListUpdate=value;
-    });
     getListVerbsJson(idList: widget.idList.toString());
     super.initState();
   }
@@ -59,6 +59,7 @@ class _ListPersoStep2State extends ConsumerState<ListPersoStep2> {
   Widget build(BuildContext context) {
     UUIDList=widget.idList.toString();
     locallang=ref.watch(localLangProvider);
+
     return Column(mainAxisAlignment: MainAxisAlignment.start, mainAxisSize: MainAxisSize.max, children: [
       Padding(
         padding: const EdgeInsets.all(8.0),
@@ -277,6 +278,8 @@ class _ListPersoStep2State extends ConsumerState<ListPersoStep2> {
       });
     }
 }
+
+
 
 
 

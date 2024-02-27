@@ -40,11 +40,12 @@ class _TestVerbState extends ConsumerState<TestVerb> {
 
   late  bool viewButtonNextTest=false;
   late bool personalList;
+  late bool readJsonOk=false;
 
   @override
   void initState() {
     personalList = (widget.personalList=='true' ? true : false);
-    readJson(idList: widget.idList.toString(),personalList:personalList);
+    readJson(idList: widget.idList.toString(), personalList: personalList);
     super.initState();
   }
 
@@ -56,69 +57,110 @@ class _TestVerbState extends ConsumerState<TestVerb> {
   @override
   Widget build(BuildContext context) {
     locallang=ref.watch(localLangProvider);
-
-
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        TextFormViregClass(context:context,ControlerField: controllerFrancais, StockField: StockFrancais, labelField: context.loc.listVersItemLang, firstField: true,
-          updateStateParent:  () => {
-            setState(() {
-            })
-          },
-        ),
-        TextFormViregClass(context:context,ControlerField: controllerInfinitif, StockField: StockInfinitif, labelField: "Infinitive", firstField: false,
-          updateStateParent:  () => {
-            setState(() {
-            })
-          },
-        ),
-        TextFormViregClass(context:context,ControlerField: controllerPastSimple, StockField: StockPastSimple, labelField: "Past Simple", firstField: false,
-          updateStateParent:  () => {
-            setState(() {
-            })
-          },
-        ),
-        TextFormViregClass(context:context,ControlerField: controllerPastParticipe, StockField: StockPastParticipe, labelField: "Past Participle", firstField: false,
-          updateStateParent:  () => {
-            setState(() {
-            })
-          },
-        ),
-        Padding(
-            padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 10.00),
-            child: Row(mainAxisSize: MainAxisSize.min, children: [
-              ElevatedButton.icon(
-                onPressed: () {
-                  controllerFrancais.text = StockFrancais;
-                  controllerInfinitif.text = StockInfinitif;
-                  controllerPastSimple.text = StockPastSimple;
-                  controllerPastParticipe.text = StockPastParticipe;
-                  setState(() {});
-                },
-                icon: const Icon(
-                  Icons.visibility,
-                  size: 19.0,
+    if(readJsonOk) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          TextFormViregClass(context: context,
+            ControlerField: controllerFrancais,
+            StockField: StockFrancais,
+            labelField: context.loc.listVersItemLang,
+            firstField: true,
+            updateStateParent: () =>
+            {
+              if (mounted) {
+                setState(() {})
+              }
+            },
+          ),
+          TextFormViregClass(context: context,
+            ControlerField: controllerInfinitif,
+            StockField: StockInfinitif,
+            labelField: "Infinitive",
+            firstField: false,
+            updateStateParent: () =>
+            {
+              if (mounted) {
+                setState(() {})
+              }
+            },
+          ),
+          TextFormViregClass(context: context,
+            ControlerField: controllerPastSimple,
+            StockField: StockPastSimple,
+            labelField: "Past Simple",
+            firstField: false,
+            updateStateParent: () =>
+            {
+              if (mounted) {
+                setState(() {})
+              }
+            },
+          ),
+          TextFormViregClass(context: context,
+            ControlerField: controllerPastParticipe,
+            StockField: StockPastParticipe,
+            labelField: "Past Participle",
+            firstField: false,
+            updateStateParent: () =>
+            {
+              if (mounted) {
+                setState(() {})
+              }
+            },
+          ),
+          Padding(
+              padding: const EdgeInsets.only(
+                  left: 10.0, right: 10.0, top: 10.00),
+              child: Row(mainAxisSize: MainAxisSize.min, children: [
+                ElevatedButton.icon(
+                  key:UniqueKey(),
+                  onPressed: () {
+                    controllerFrancais.text = StockFrancais;
+                    controllerInfinitif.text = StockInfinitif;
+                    controllerPastSimple.text = StockPastSimple;
+                    controllerPastParticipe.text = StockPastParticipe;
+                    if (mounted) {
+                      setState(() {});
+                    }
+                  },
+                  icon: const Icon(
+                    Icons.visibility,
+                    size: 19.0,
+                  ),
+                  label: Text(context.loc.testVerbsButtonSolutions,
+                      style: TextStyle(fontSize: 19)),
                 ),
-                label:  Text(context.loc.testVerbsButtonSolutions, style: TextStyle(fontSize: 19)),
-              ),
-              Visibility(
-                  visible: viewButtonNextTest,
-                  child: Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
-                      child: ElevatedButton.icon(
-                        style:(goNextVerb() ? ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.green), foregroundColor: MaterialStatePropertyAll(Colors.white)) : null),
-                        onPressed:(goNextVerb() ? (){readJson(idList: widget.idList.toString(),personalList: personalList);} : null),
-                        icon: const Icon(
-                          Icons.check,
-                          size: 19.0,
-                        ),
-                        label: Text(context.loc.testVerbsButtonSuivant, style: TextStyle(fontSize: 19)),
-                      ))
-                  )
-            ]))
-      ],
-    );
+                Visibility(
+                    visible: viewButtonNextTest,
+                    child: Padding(
+                        padding: const EdgeInsets.only(left: 20.0),
+                        child: ElevatedButton.icon(
+                          key:UniqueKey(),
+                          style: (goNextVerb() ? ButtonStyle(
+                              backgroundColor: MaterialStatePropertyAll(
+                                  Colors.green),
+                              foregroundColor: MaterialStatePropertyAll(
+                                  Colors.white)) : null),
+                          onPressed: (goNextVerb() ? () {
+                            readJson(idList: widget.idList.toString(),
+                                personalList: personalList);
+                          } : null),
+                          icon: const Icon(
+                            Icons.check,
+                            size: 19.0,
+                          ),
+                          label: Text(context.loc.testVerbsButtonSuivant,
+                              style: TextStyle(fontSize: 19)),
+                        ))
+                )
+              ]))
+        ],
+      );
+    }
+    else{
+      return Text("");
+    }
   }
 
   bool goNextVerb() {
@@ -134,7 +176,7 @@ class _TestVerbState extends ConsumerState<TestVerb> {
 
   Future<void> readJson({required String idList, String? valueSearch,required bool personalList}) async {
     List<dynamic> data = await GetDataVerbs().getDataJson(idList: idList,personalList:personalList);
-    print("************************ $data");
+    //print("************************ $data");
     bool resultSearch=false;
     int numberVerbData = 0;
     if (resultSearch) {
@@ -202,9 +244,12 @@ class _TestVerbState extends ConsumerState<TestVerb> {
           }
           break;
       }
+
       setState(() {
         viewButtonNextTest = true;
+        readJsonOk=true;
       });
+
     }
   }
 

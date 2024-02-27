@@ -21,11 +21,13 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if(objDeeplinksInit==null){
         print('initDeeplink');
-        objDeeplinksInit=DeepLink(context:context,ref:ref);
+        final objDeeplinksInit=DeepLink(context:context,ref:ref);
         objDeeplinksInit.initDeepLinks(initialLink:initialLink);
+
       }
       else{
         print("rebuild myapp");

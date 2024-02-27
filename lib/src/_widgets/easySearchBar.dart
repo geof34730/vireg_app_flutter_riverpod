@@ -11,9 +11,11 @@ import '../_providers/localLang.dart';
 import '../_class/Localstore.dart';
 
 class WidgetsEasySearchBar extends ConsumerWidget implements PreferredSizeWidget {
-  const WidgetsEasySearchBar({super.key});
-  final bool errorSearchValue = false;
 
+
+  const WidgetsEasySearchBar({super.key,required this.backButton });
+  final bool errorSearchValue = false;
+  final String? backButton;
   @override
   Size get preferredSize => Size.fromHeight(AppBar().preferredSize.height);
 
@@ -25,17 +27,10 @@ class WidgetsEasySearchBar extends ConsumerWidget implements PreferredSizeWidget
       var listLangSupported = getlocalstorelocal.listLangSupported();
     /*******END Manage lang*********/
 
+
     return EasySearchBar(
-        callBackBackNav: () async {
-          String urlCurrentPage = GoRouter.of(context).routeInformationProvider.value.uri.toString();
-          int positionTypeUrl = urlCurrentPage.indexOf('add/ListPersoStep1');
-          if(positionTypeUrl>0){
-            customRoutesVireg.pushNamed("Home");
-          }
-          else{
-            Navigator.pop(context);
-          }
-        },
+        canPop:(backButton!=null),
+        callBackBackNav: () => (backButton!=null ? customRoutesVireg.go(backButton!) : null),
         animationDuration: const Duration(milliseconds: 100),
         systemOverlayStyle: const SystemUiOverlayStyle(statusBarColor: Colors.blue),
         searchBackgroundColor: Colors.blue,

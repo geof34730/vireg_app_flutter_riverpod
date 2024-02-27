@@ -11,6 +11,7 @@ import 'package:uuid/uuid.dart';
 import 'package:Vireg/src/_class/Localstore.dart';
 import 'package:Vireg/src//_utils/front.dart';
 
+import '../_class/Connectivity.dart';
 import '../_services/SharePersonalList.dart';
 
 var uuid = const Uuid();
@@ -33,6 +34,7 @@ class _ListPersoStep1State extends ConsumerState<ListPersoStep1> {
 
   @override
   void initState() {
+    ConectivityVireg(ref: ref,context: context).init();
     if (!loadDataEdit){
       if (widget.idList != null) {
         editMode = true;
@@ -205,7 +207,7 @@ class _ListPersoStep1State extends ConsumerState<ListPersoStep1> {
   }
 
   void nextPersonalList(){
-    context.goNamed((editMode ? "editListPersoStep2": "addListPersoStep2"),pathParameters: {'idList': PersonalListUpdate.id.toString()});
+    context.goNamed((editMode ? "editListPersoStep2": "addListPersoStep2"),pathParameters: {'idList': PersonalListUpdate.id.toString()},extra: PersonalListUpdate);
   }
 
 }

@@ -77,7 +77,8 @@ class BoxCard extends ConsumerWidget {
                                 indexRubrique: 1,
                                 context: context,
                                 onClickButton: () => {
-                                  context.go('/learnVerb/$idListPerso/false')
+                                  customRoutesVireg.go('/learnVerb/$idListPerso/false')
+                                 // context.go('/learnVerb/$idListPerso/false')
                                 }
                             ),
                             ElevatedButtonCardHome(
@@ -86,7 +87,7 @@ class BoxCard extends ConsumerWidget {
                                 indexRubrique: 0,
                                 context: context,
                                 onClickButton: () => {
-                                  context.go('/testVerb/$idListPerso/false')
+                                  customRoutesVireg.go('/testVerb/$idListPerso/false')
                                 }
                             ),
                             ElevatedButtonCardHome(
@@ -95,7 +96,7 @@ class BoxCard extends ConsumerWidget {
                                 indexRubrique: 2,
                                 context: context,
                                 onClickButton: () => {
-                                  context.go('/listVerb/$idListPerso/false')
+                                  customRoutesVireg.go('/listVerb/$idListPerso/false')
                                 }
                             ),
                           ],

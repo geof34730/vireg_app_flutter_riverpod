@@ -33,6 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       home: Scaffold(
         appBar: EasySearchBar(
+          canPop: true,
           callBackBackNav: (){print('action back');},
           title: const Text('Example'),
           onSearch: (value) => setState(() => searchValue = value),

@@ -17,7 +17,7 @@ class PersonalListModel with _$PersonalListModel {
     @Default([]) List<ListIdVerb> ListIdVerbs,
     @Default(false) bool isListShare,
     @Default(false) bool ownListShare,
-    @Default("") String urlShare
+    @Default(null) String urlShare
 
 
   }) = _PersonalListModel;

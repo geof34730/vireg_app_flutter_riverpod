@@ -12,7 +12,7 @@ class GetDataVerbs  {
       List<dynamic> data = [];
       if(personalList){
         ///LISTE PERSO
-          print("liste perso");
+         // print("liste perso");
             for (var item in jsonDecode(AllVerbsReponse)) {
                 if (await isIdInList(idVerbs: item['id'],idList: idList)) {
                   print(item['id']);
@@ -22,7 +22,7 @@ class GetDataVerbs  {
       }
       else {
         ///LISTE PREDEFINIS
-        print("liste predefinie");
+       // print("liste predefinie");
         final String response = await rootBundle.loadString('assets/data/$idList.json');
         final List<dynamic> dataJsonFile = await json.decode(response);
         data = [];
