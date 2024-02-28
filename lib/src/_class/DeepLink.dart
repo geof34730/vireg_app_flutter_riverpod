@@ -20,11 +20,11 @@ class DeepLink {
   final BuildContext context;
 
   void initDeepLinks({required PendingDynamicLinkData? initialLink}) {
-   // print("initDeepLinks");
+    print("initDeepLinks Cjass");
 
     if (initialLink != null) {
       print("************REDIRECT LOAD WITH PARAM DEEP LINK => ${initialLink.link.path} **************");
-     // context.go(initialLink.link.path);
+      context.go(initialLink.link.path);
     }
     FirebaseDynamicLinks.instance.onLink.listen((deepLinkData) {
       final deepLink = deepLinkData.link;
@@ -37,7 +37,7 @@ class DeepLink {
     });
   }
 
-  Future<void> shareReceive({required String personalListId }) async {
+  Future<void> shareReceive({required String? personalListId }) async {
     print("shareReceive $personalListId");
     SharePersonalList(context: context).GetList(idListPerso: personalListId).then((value)  async {
       PersonalListModel valueUpdate = value.copyWith(
@@ -45,6 +45,8 @@ class DeepLink {
         );
       await  Localstorelocal(context:context,ref:ref).updateLocalstoreList(PersonalList: valueUpdate);
     });
+
+
   }
 
 }

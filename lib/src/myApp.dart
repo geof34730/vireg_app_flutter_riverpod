@@ -7,13 +7,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '_class/DeepLink.dart';
 
 import '_providers/localLang.dart';
-import '_providers/localOnlineDevice.dart';
+
 
 import 'router.dart';
 
-
 late dynamic objDeeplinksInit=null;
-
 
 class MyApp extends ConsumerWidget {
   final PendingDynamicLinkData? initialLink;
@@ -21,19 +19,15 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if(objDeeplinksInit==null){
-        print('initDeeplink');
         final objDeeplinksInit=DeepLink(context:context,ref:ref);
         objDeeplinksInit.initDeepLinks(initialLink:initialLink);
-
       }
       else{
         print("rebuild myapp");
       }
     });
-
 
     return MaterialApp.router(
       theme: getThemeData(),
@@ -42,7 +36,6 @@ class MyApp extends ConsumerWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,
-
     );
   }
 }

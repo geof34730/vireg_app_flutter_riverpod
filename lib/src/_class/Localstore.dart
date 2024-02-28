@@ -89,7 +89,6 @@ class Localstorelocal  {
   updatePersonalList({required PersonalListModel PersonalList }){
     print("updatePersonalList");
     if(PersonalList.isListShare && PersonalList.ownListShare){
-
       print("update serveur");
     }
     print(PersonalList);

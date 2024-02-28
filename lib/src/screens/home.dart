@@ -18,6 +18,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import '../_class/Loader.dart';
 import '../_class/SnackBar.dart';
+import '../_class/SyncroServer.dart';
 import '../_class/localstore.dart';
 import '../_services/SharePersonalList.dart';
 import '../_utils/front.dart';
@@ -41,81 +42,10 @@ class _HomeState extends ConsumerState<Home> {
   void initState() {
     print("init state home");
     ConectivityVireg(ref: ref,context: context).init();
-
-    List listIdListShare = [];
-    final LocalstorelocalObj = Localstorelocal(context: context,ref: ref);
-    LocalstorelocalObj.getJsonAllPersonalistLocalStore().then((value)  async {
-        value.forEach((element) {
-          print(element['isListShare']);
-          if(element['isListShare']){
-            listIdListShare.add(element['id']);
-          }
-        });
-        print(listIdListShare);
-        if (ref.watch(localOnlineDeviceProvider) ) {
-          print("LOAD");
-        //  Loader(context: context, snackBar: false).showLoader();
-          print('CONNECTION');
-
-           SharePersonalList(context: context).UpdateOrDeleteLoadListeShare(listIdListShare: listIdListShare).then((value) async => {
-             LocalstorelocalObj.getJsonAllPersonalistLocalStore().then((valueList) {
-                    valueList.forEach((element)  {
-                      PersonalListModel elementPersonalistModel = PersonalListModel.fromJson(element);
-                      if (elementPersonalistModel.isListShare) {
-                        bool existInBdd = value.toString().indexOf(elementPersonalistModel.id) > 0;
-                        print("existe toujours en bdd: ${existInBdd.toString()}");
-                        print(elementPersonalistModel);
-                        if (!existInBdd) {
-                          print("Delete: ${element['id']}");
-                          Localstorelocal(context: context,ref: ref).deletePersonalList(personalList: elementPersonalistModel);
-                        }
-                      }
-                    });
-             }),
-         /* await value["data"]?.forEach((element) async {
-            dynamic elementObj = jsonDecode(element["data"]);
-            print(elementObj['title']);
-            dynamic newListVerb = [];
-            print("************** ${elementObj['ListIdVerbs']}");
-            for (var item in elementObj['ListIdVerbs']) {
-              print(item);
-              newListVerb.add(item);
-            }
-            //await _db.collection('personalLists').doc(element['uuid']).set(PersonalList(id: element['uuid'], title: elementObj['title'], color: int.parse(elementObj['color'].toString()), isListShare: true, ListIdVerbs: newListVerb).toMap());
-          }),*/
-          /*await _db.collection('personalLists').get().then((value) async {
-            print(value);
-            ListPerso = [];
-            value?.entries.forEach((element) {
-              print(element);
-              bool isListShareCond=false;
-              ListPerso.add(PersonalList(
-                id: element.value['id'],
-                title: element.value['title'],
-                color: element.value['color'],
-                ListIdVerbs: element.value['ListIdVerbs'],
-                isListShare: nullToBool(valueNullToBool: element.value['isListShare']),
-                ownListShare: nullToBool(valueNullToBool: element.value['ownListShare']),
-              ));
-            });
-
-            loaderEnd=true;
-
-
-            setState(() {});
-          }),*/
-
-        });
-
-
-
-        }
-      }
-    );
-
-
+    SynchroServer(ref: ref,context: context).init().then((value) {
+      //setState((){});
+    });
     super.initState();
-
   }
 
   @override
@@ -137,7 +67,7 @@ class _HomeState extends ConsumerState<Home> {
     return Center(
       child: Column(
         children: [
-          Visibility(visible: true,child: Text((ref.watch(localOnlineDeviceProvider) ? "online" : "offline"))),
+          Visibility(visible: false,child: Text((ref.watch(localOnlineDeviceProvider) ? "online" : "offline"))),
           Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -145,11 +75,10 @@ class _HomeState extends ConsumerState<Home> {
                 Column(
                     children:[
                       ElevatedButton(
-
                           onPressed: (){
-                            context.go('/share/b96d2677-104b-4789-a030-fa8e249d7495');
+                            context.go('/share/4cf683a2-4514-46e6-957d-36ae4bebf4ed');
                           },
-                          child: Text('share test b96d2677-104b-4789-a030-fa8e249d7495')
+                          child: Text('share test 4cf683a2-4514-46e6-957d-36ae4bebf4ed')
                       ),
 
                     ]
@@ -368,45 +297,6 @@ class _HomeState extends ConsumerState<Home> {
       Loader(context: context, snackBar: false).hideLoader();
     }
   }
-
-
-
-/*
-  Future<void> initConnectivity() async {
-    late ConnectivityResult result;
-    try {
-      result = await _connectivity.checkConnectivity();
-    } on PlatformException catch (e) {
-      developer.log('******************Couldn\'t check connectivity status: ', error: e);
-      return;
-    }
-    if (!mounted) {
-      return Future.value(null);
-    }
-    return _updateConnectionStatus(result);
-  }
-  bool isOnline=false;
-  void _updateConnectionStatus(ConnectivityResult connectivityResult)  {
-    if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi || connectivityResult == ConnectivityResult.ethernet || connectivityResult == ConnectivityResult.vpn) {
-      ref.read(localOnlineDeviceProvider.notifier).change(onlineDevice: true);
-      print("OK connection: ${ref.watch(localOnlineDeviceProvider)}" );
-      if(!isOnline) {
-        ScaffoldMessenger.of(context).hideCurrentSnackBar();
-        isOnline=true;
-      }
-    } else {
-      ref.read(localOnlineDeviceProvider.notifier).change(onlineDevice: false);
-      print("NO connection: ${ref.watch(localOnlineDeviceProvider)}" );
-      if(isOnline) {
-        SnakBar(context: context, messageSnackBar: "Vous êtes hors ligne",themeSnackBar: 'error',duration:3600).showSnakBar();
-        isOnline=false;
-      }
-    }
-   // setState(() {
-   // });
-  }
-*/
-
 
 
 }

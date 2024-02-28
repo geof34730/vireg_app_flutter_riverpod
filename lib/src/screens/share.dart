@@ -20,13 +20,14 @@ class Share extends ConsumerStatefulWidget {
 class _ShareState extends ConsumerState<Share> {
   @override
   void initState() {
-    print("initState Share");
-    objDeeplinksInit.shareReceive(personalListId: widget.idList).then((value) {
-      print("delay redirect");
-      Future.delayed(const Duration(seconds: 2), () {
-        context.go('/');
+    print("initState Share ${widget.idList}");
+    if(widget.idList!=null) {
+      DeepLink(context:context,ref:ref).shareReceive(personalListId: widget.idList).then((value) {
+        Future.delayed(const Duration(seconds: 2), () {
+          context.go('/');
+        });
       });
-    });
+    }
     super.initState();
   }
 

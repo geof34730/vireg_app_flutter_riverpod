@@ -14,7 +14,7 @@ class SharePersonalList {
     required this.context,
   });
   final dio = Dio();
-  Future<PersonalListModel> GetList({required String idListPerso}) async {
+  Future<PersonalListModel> GetList({required String? idListPerso}) async {
     final response = await dio.get(
         "${dotenv.get("URL_API")}/personalList/$idListPerso",
         options: Options(

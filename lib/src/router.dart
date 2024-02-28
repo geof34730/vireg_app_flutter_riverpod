@@ -34,8 +34,9 @@ final customRoutesVireg = GoRouter(
       GoRoute(
         name:"Share",
         path: '/share/:idList',
-        pageBuilder: (context, state) {
-          return transitionRouter(state: state, context: context, child: Layout(child:Share(key: UniqueKey(),idList:state.pathParameters["idList"]),context: context,appBar: true));
+        builder: (BuildContext context, GoRouterState state) {
+          print("***************** share deep link");
+          return Layout(child:Share(key: UniqueKey(),idList:state.pathParameters["idList"]),context: context,appBar: true);
         },
       ),
 
