@@ -21,7 +21,7 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if(objDeeplinksInit==null){
-        final objDeeplinksInit=DeepLink(context:context,ref:ref);
+        objDeeplinksInit=DeepLink(context:context,ref:ref);
         objDeeplinksInit.initDeepLinks(initialLink:initialLink);
       }
       else{
