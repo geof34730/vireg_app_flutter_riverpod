@@ -23,21 +23,31 @@ class SynchroServer {
   dynamic  LocalstorelocalObj;
   List listIdListShare = [];
 
-  Future<bool> init() async{
+  Future<List<dynamic>> init() async{
     LocalstorelocalObj = Localstorelocal(context: context,ref: ref);
     await LocalstorelocalObj.getJsonAllPersonalistLocalStore().then((value)  async {
       await getListLocal(value);
       if (ref.watch(localOnlineDeviceProvider) ) {
         //Loader(context: context, snackBar: false).showLoader();
-        await SharePersonalList(context: context).UpdateOrDeleteLoadListeShare(listIdListShare: listIdListShare).then((elementServer) async => {
-        await deletePersonalist(elementServer: elementServer["data"]),
-        await updatePersonalistLocal(elementServer: elementServer["data"])
-          //Loader(context: context, snackBar: false).hideLoader()
-        });
-
+        if(listIdListShare.length>0) {
+          print("******check list server");
+          await SharePersonalList(context: context).UpdateOrDeleteLoadListeShare(listIdListShare: listIdListShare).then((elementServer) async =>
+          {
+            await deletePersonalist(elementServer: elementServer["data"]),
+            await updatePersonalistLocal(elementServer: elementServer["data"]),
+            //Loader(context: context, snackBar: false).hideLoader()
+            print("getJsonAllPersonalistLocalStore   ${LocalstorelocalObj.getJsonAllPersonalistLocalStore().toString()}"),
+              await Future.delayed(const Duration(milliseconds: 100), () {
+              print('Pause for write localstore'); // Prints after 1 second.
+              })
+          });
+        }
+        else{
+          print("don't check list server");
+        }
       }
     });
-    return true;
+    return LocalstorelocalObj.getJsonAllPersonalistLocalStore();
   }
 
   Future<void> deletePersonalist({required dynamic elementServer}) async {
@@ -48,7 +58,9 @@ class SynchroServer {
           bool existInBdd = elementServer.toString().indexOf(elementLocalPersonalistModel.id) > 0;
           if (!existInBdd) {
             print("Delete: ${elementLocal['id']}");
-            Localstorelocal(context: context,ref: ref).deletePersonalList(personalList: elementLocalPersonalistModel);
+            if(!elementLocal['ownListShare']) {
+              Localstorelocal(context: context, ref: ref).deletePersonalList(personalList: elementLocalPersonalistModel);
+            }
           }
           else{
             print("existe toujours en bdd: ${existInBdd.toString()}");
@@ -68,6 +80,9 @@ class SynchroServer {
                 isListShare: elementvalueLocal["isListShare"],
                 ownListShare: elementvalueLocal["ownListShare"]
             );
+            print("********************************");
+            print(PersonalistUpdateByServer);
+            print("********************************");
             LocalstorelocalObj.createPersonalList(PersonalList: PersonalistUpdateByServer);
           }
         });
@@ -77,7 +92,7 @@ class SynchroServer {
 
   Future<void> getListLocal(value) async {
     value.forEach((element) {
-      if(element['isListShare']){
+      if(element['isListShare'] && !element['ownListShare']){
         listIdListShare.add(element['id']);
       }
     });

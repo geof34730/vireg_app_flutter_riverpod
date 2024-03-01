@@ -29,8 +29,8 @@ class DeepLink {
     FirebaseDynamicLinks.instance.onLink.listen((deepLinkData) {
       final deepLink = deepLinkData.link;
       print('Link received: $deepLink');
-      print("Redirect  listen deeplink");
-      context.go(deepLink.path);
+      print("Redirect  listen deeplink ${deepLink.path}");
+      customRoutesVireg.go(deepLink.path);
     }).onError((error) {
       print('onLink error:');
       print(error.message);

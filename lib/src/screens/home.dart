@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:core';
 import 'dart:async';
-import 'dart:developer' as developer;
-import 'dart:js_util';
+
 import 'package:Vireg/src/_class/Connectivity.dart';
+import 'package:Vireg/src/router.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:Vireg/src/_models/PersonalListModel.dart';
@@ -42,9 +42,7 @@ class _HomeState extends ConsumerState<Home> {
   void initState() {
     print("init state home");
     ConectivityVireg(ref: ref,context: context).init();
-    SynchroServer(ref: ref,context: context).init().then((value) {
-      //setState((){});
-    });
+   // setState(() {});
     super.initState();
   }
 
@@ -63,7 +61,7 @@ class _HomeState extends ConsumerState<Home> {
       Localstorelocal(ref: ref,context: context).initLang();
       initConfig=true;
     }
-    Future<List<dynamic>> _futureOfListPerso() async => await Localstorelocal(ref: ref,context: context).getJsonAllPersonalistLocalStore();
+    Future<List<dynamic>> futureOfListPerso=SynchroServer(ref: ref, context: context).init();
     return Center(
       child: Column(
         children: [
@@ -76,9 +74,9 @@ class _HomeState extends ConsumerState<Home> {
                     children:[
                       ElevatedButton(
                           onPressed: (){
-                            context.go('/share/4cf683a2-4514-46e6-957d-36ae4bebf4ed');
+                            customRoutesVireg.go('/share/4cf683a2-4514-46e6-957d-36ae4bebf4ed');
                           },
-                          child: Text('share test 4cf683a2-4514-46e6-957d-36ae4bebf4ed')
+                          child: Text('share test 4cf683..')
                       ),
 
                     ]
@@ -110,7 +108,7 @@ class _HomeState extends ConsumerState<Home> {
 
           FutureBuilder<List<dynamic>>(
             key:UniqueKey(),
-              future: _futureOfListPerso(),
+              future: futureOfListPerso,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator();
@@ -174,7 +172,7 @@ class _HomeState extends ConsumerState<Home> {
                                         onPressed: () {
                                           (ref.watch(localOnlineDeviceProvider)
                                               ?
-                                              context.go("/")
+                                          customRoutesVireg.go("/")
                                               :
                                           DialoguesObj.alertOffline()
                                           );
@@ -194,7 +192,7 @@ class _HomeState extends ConsumerState<Home> {
                                     elevation: 10,
                                     backgroundColor: Colors.blue,
                                     onPressed: () {
-                                      context.go("/add/ListPersoStep1");
+                                      customRoutesVireg.go("/add/ListPersoStep1");
                                     },
                                     child: const Icon(
                                         Icons.add,
