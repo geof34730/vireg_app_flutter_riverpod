@@ -12,6 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+
+import '_utils/logger.dart';
 final _navKey = GlobalKey<NavigatorState>();
 final customRoutesVireg = GoRouter(
     navigatorKey: _navKey,
@@ -86,8 +88,8 @@ final customRoutesVireg = GoRouter(
       )
     ],
     errorBuilder: (context, state) {
-      print("**************REDIRECT 404************");
-      print("path ${state.path}");
+      Logger.Red.log("**************REDIRECT 404************");
+      Logger.Red.log("path ${state.path}");
       return Layout(child:Home(key: UniqueKey()),context: context);
     }
 );

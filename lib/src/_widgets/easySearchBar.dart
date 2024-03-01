@@ -9,6 +9,7 @@ import 'package:go_router/go_router.dart';
 
 import '../_providers/localLang.dart';
 import '../_class/Localstore.dart';
+import '../_utils/logger.dart';
 
 class WidgetsEasySearchBar extends ConsumerWidget implements PreferredSizeWidget {
 
@@ -82,7 +83,7 @@ class WidgetsEasySearchBar extends ConsumerWidget implements PreferredSizeWidget
             ),
           )
         ],
-        onSearch: (value) => {print('value')},
+        onSearch: (value) => {Logger.Green.log('value')},
         asyncSuggestions: (value) async => await _fetchSuggestions(value));
   }
 

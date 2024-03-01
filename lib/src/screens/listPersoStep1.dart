@@ -13,6 +13,7 @@ import 'package:Vireg/src//_utils/front.dart';
 
 import '../_class/Connectivity.dart';
 import '../_services/SharePersonalList.dart';
+import '../_utils/logger.dart';
 
 var uuid = const Uuid();
 class ListPersoStep1 extends ConsumerStatefulWidget {
@@ -190,7 +191,7 @@ class _ListPersoStep1State extends ConsumerState<ListPersoStep1> {
   }
 
   Future<void> updatePersonalListStep1({bool next =false}) async {
-      print(PersonalListUpdate.color);
+      Logger.Green.log(PersonalListUpdate.color);
       if(PersonalListUpdate.ownListShare) {
         print("Update serveur");
         SharePersonalList(context: context).Share(personalList: PersonalListUpdate).then((value) async {
@@ -207,7 +208,7 @@ class _ListPersoStep1State extends ConsumerState<ListPersoStep1> {
   }
 
   void nextPersonalList(){
-    context.goNamed((editMode ? "editListPersoStep2": "addListPersoStep2"),pathParameters: {'idList': PersonalListUpdate.id.toString()},extra: PersonalListUpdate);
+    customRoutesVireg.goNamed((editMode ? "editListPersoStep2": "addListPersoStep2"),pathParameters: {'idList': PersonalListUpdate.id.toString()},extra: PersonalListUpdate);
   }
 
 }

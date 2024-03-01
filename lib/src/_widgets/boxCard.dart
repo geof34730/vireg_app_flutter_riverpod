@@ -78,7 +78,6 @@ class BoxCard extends ConsumerWidget {
                                 context: context,
                                 onClickButton: () => {
                                   customRoutesVireg.go('/learnVerb/$idListPerso/false')
-                                 // context.go('/learnVerb/$idListPerso/false')
                                 }
                             ),
                             ElevatedButtonCardHome(

@@ -22,6 +22,7 @@ import '../_class/SyncroServer.dart';
 import '../_class/localstore.dart';
 import '../_services/SharePersonalList.dart';
 import '../_utils/front.dart';
+import '../_utils/logger.dart';
 import '../_widgets/boxCard.dart';
 import '../_widgets/boxCardListPerso.dart';
 import '../_widgets/dialogues.dart';
@@ -40,9 +41,8 @@ class _HomeState extends ConsumerState<Home> {
 
   @override
   void initState() {
-    print("init state home");
+    Logger.Green.log("init state home");
     ConectivityVireg(ref: ref,context: context).init();
-   // setState(() {});
     super.initState();
   }
 
@@ -54,7 +54,7 @@ class _HomeState extends ConsumerState<Home> {
 
   @override
   Widget build(BuildContext context) {
-    print("build Home");
+    Logger.Green.log("build Home");
     dynamic ResponsiveContentObj=ResponsiveContent(context: context);
     dynamic DialoguesObj=Dialogues(context: context);
     if (!initConfig){
@@ -66,7 +66,7 @@ class _HomeState extends ConsumerState<Home> {
       child: Column(
         children: [
           Visibility(visible: false,child: Text((ref.watch(localOnlineDeviceProvider) ? "online" : "offline"))),
-          Row(
+          /*Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -81,7 +81,7 @@ class _HomeState extends ConsumerState<Home> {
 
                     ]
                 ),
-              ]),
+              ]),*/
 
           Column(
               mainAxisSize: MainAxisSize.max,

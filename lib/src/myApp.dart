@@ -9,6 +9,7 @@ import '_class/DeepLink.dart';
 import '_providers/localLang.dart';
 
 
+import '_utils/logger.dart';
 import 'router.dart';
 
 late dynamic objDeeplinksInit=null;
@@ -19,13 +20,16 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
+
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if(objDeeplinksInit==null){
         objDeeplinksInit=DeepLink(context:context,ref:ref);
         objDeeplinksInit.initDeepLinks(initialLink:initialLink);
       }
       else{
-        print("rebuild myapp");
+        Logger.Green.log("rebuild myapp");
       }
     });
 

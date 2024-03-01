@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../_providers/localOnlineDevice.dart';
+import '../_utils/logger.dart';
 import 'SnackBar.dart';
 
 class ConectivityVireg {
@@ -33,7 +34,7 @@ class ConectivityVireg {
     try {
       result = await _connectivity.checkConnectivity();
     } on PlatformException catch (e) {
-      print('******************Couldn\'t check connectivity status:');
+      Logger.Red.log('******************Couldn\'t check connectivity status:');
       //print('******************Couldn\'t check connectivity status: ', error: e);
       return;
     }
@@ -51,14 +52,14 @@ class ConectivityVireg {
   void updateConnectionStatus(ConnectivityResult connectivityResult)  {
     if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi || connectivityResult == ConnectivityResult.ethernet || connectivityResult == ConnectivityResult.vpn) {
       ref.read(localOnlineDeviceProvider.notifier).change(onlineDevice: true);
-      print("OK connection: ${ref.watch(localOnlineDeviceProvider)}" );
+      Logger.Green.log("OK connection: ${ref.watch(localOnlineDeviceProvider)}" );
       if(!isOnline) {
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
         isOnline=true;
       }
     } else {
       ref.read(localOnlineDeviceProvider.notifier).change(onlineDevice: false);
-      print("NO connection: ${ref.watch(localOnlineDeviceProvider)}" );
+      Logger.Magenta.log("NO connection: ${ref.watch(localOnlineDeviceProvider)}" );
       if(isOnline) {
         SnakBar(context: context, messageSnackBar: "Vous êtes hors ligne",themeSnackBar: 'error',duration:3600).showSnakBar();
         isOnline=false;

@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:localstore/localstore.dart';
 
+import '../_utils/logger.dart';
+
 class GetDataVerbs  {
   final db = Localstore.instance;
 
@@ -15,7 +17,7 @@ class GetDataVerbs  {
          // print("liste perso");
             for (var item in jsonDecode(AllVerbsReponse)) {
                 if (await isIdInList(idVerbs: item['id'],idList: idList)) {
-                  print(item['id']);
+                  Logger.Green.log(item['id']);
                   data.add(item);
                 }
             }

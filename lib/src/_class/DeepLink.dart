@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../_models/PersonalListModel.dart';
+import '../_utils/logger.dart';
 import '../router.dart';
 import 'Localstore.dart';
 
@@ -20,25 +21,25 @@ class DeepLink {
   final BuildContext context;
 
   void initDeepLinks({required PendingDynamicLinkData? initialLink}) {
-    print("initDeepLinks Cjass");
+    Logger.Green.log("initDeepLinks Class");
 
     if (initialLink != null) {
-      print("************REDIRECT LOAD WITH PARAM DEEP LINK => ${initialLink.link.path} **************");
-      context.go(initialLink.link.path);
+      Logger.Red.log("************REDIRECT LOAD WITH PARAM DEEP LINK => ${initialLink.link.path} **************");
+      customRoutesVireg.go(initialLink.link.path);
     }
     FirebaseDynamicLinks.instance.onLink.listen((deepLinkData) {
       final deepLink = deepLinkData.link;
-      print('Link received: $deepLink');
-      print("Redirect  listen deeplink ${deepLink.path}");
+      Logger.Magenta.log('Link received: $deepLink');
+      Logger.Magenta.log("Redirect  listen deeplink ${deepLink.path}");
       customRoutesVireg.go(deepLink.path);
     }).onError((error) {
-      print('onLink error:');
-      print(error.message);
+      Logger.Red.log('onLink error:');
+      Logger.Red.log(error.message);
     });
   }
 
   Future<void> shareReceive({required String? personalListId }) async {
-    print("shareReceive $personalListId");
+    Logger.Magenta.log("shareReceive $personalListId");
     SharePersonalList(context: context).GetList(idListPerso: personalListId).then((value)  async {
       PersonalListModel valueUpdate = value.copyWith(
         isListShare: true,

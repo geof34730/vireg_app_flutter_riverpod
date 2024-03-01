@@ -8,6 +8,7 @@ import '../_class/GetDataVerbs.dart';
 import 'package:flip_card/flip_card.dart';
 
 import '../_providers/localOnlineDevice.dart';
+import '../_utils/logger.dart';
 
 class LearnVerb extends ConsumerStatefulWidget {
   const LearnVerb({Key? key,required this.idList, required this.personalList }) : super(key: key);
@@ -287,8 +288,8 @@ class _LearnVerbState extends ConsumerState<LearnVerb> {
 
 
   Future<List<dynamic>> getdataList({required String idList, required bool personalList}) async {
-    print("personalList $personalList");
-    print('getdataList : $idList');
+    Logger.Green.log("personalList $personalList");
+    Logger.Green.log('getdataList : $idList');
     List<dynamic> dataListResp=await GetDataVerbs().getDataJson(idList: idList,personalList: personalList);
     dataList=dataListResp.toList();
     if(!getdataListOK) {

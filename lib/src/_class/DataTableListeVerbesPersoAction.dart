@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 import '../_Utils/string.dart';
 import '../_utils/front.dart';
+import '../_utils/logger.dart';
 
 
 class DataTableListeVerbesPersoAction extends DataTableSource {
@@ -129,7 +130,7 @@ class DataTableListeVerbesPersoAction extends DataTableSource {
                         ),
                         onPressed: () {
                           filteredData[index]['isInListPerso']=!filteredData[index]['isInListPerso'];
-                          print(filteredData[index]['isInListPerso']);
+                          Logger.Green.log(filteredData[index]['isInListPerso']);
                           addOrDeleteInList.call(idVerbs:filteredData[index]['id'] );
                         },
                       ),

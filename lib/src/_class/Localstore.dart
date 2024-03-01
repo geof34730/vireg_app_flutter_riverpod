@@ -11,6 +11,8 @@ import '../_services/SharePersonalList.dart';
 
 import '../_providers/localLang.dart';
 import '../../global.dart' as globals;
+import '../_utils/logger.dart';
+import '../router.dart';
 
 final db = Localstore.instance;
 
@@ -35,7 +37,7 @@ class Localstorelocal  {
 
   void initLang() async {
     String langApp=await getLangLoad();
-    print('Init lang =>  $langApp');
+    Logger.Green.log('Init lang =>  $langApp');
     updateLocalstoreLang(lang: langApp);
   }
 
@@ -87,21 +89,21 @@ class Localstorelocal  {
   }
 
   updatePersonalList({required PersonalListModel PersonalList }){
-    print("updatePersonalList");
+    Logger.Green.log("updatePersonalList");
     if(PersonalList.isListShare && PersonalList.ownListShare){
-      print("update serveur");
+      Logger.Green.log("update serveur");
     }
-    print(PersonalList);
+    Logger.Green.log(PersonalList);
     db.collection('personalList').doc(PersonalList.id).set(PersonalList.toJson());
   }
 
   deletePersonalList({required PersonalListModel personalList}){
-    print("personalList.ownListShare: ${personalList.ownListShare}");
+    Logger.Green.log("personalList.ownListShare: ${personalList.ownListShare}");
     if(personalList.ownListShare){
-      SharePersonalList(context:context).DeleteList(personalList: personalList).then((value) => db.collection('personalList').doc(personalList.id).delete()).then((value) => context.goNamed("Home"));
+      SharePersonalList(context:context).DeleteList(personalList: personalList).then((value) => db.collection('personalList').doc(personalList.id).delete()).then((value) => customRoutesVireg.go("Home"));
     }
     else{
-      db.collection('personalList').doc(personalList.id).delete().then((value) => context.goNamed("Home"));
+      db.collection('personalList').doc(personalList.id).delete().then((value) => customRoutesVireg.goNamed("Home"));
     }
   }
    ////////END  PERSONALLIST////////////

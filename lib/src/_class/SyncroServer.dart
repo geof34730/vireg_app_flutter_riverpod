@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../_models/PersonalListModel.dart';
 import '../_providers/localOnlineDevice.dart';
 import '../_services/SharePersonalList.dart';
+import '../_utils/logger.dart';
 import 'Loader.dart';
 import 'Localstore.dart';
 
@@ -30,20 +31,20 @@ class SynchroServer {
       if (ref.watch(localOnlineDeviceProvider) ) {
         //Loader(context: context, snackBar: false).showLoader();
         if(listIdListShare.length>0) {
-          print("******check list server");
+          Logger.Green.log("******check list server");
           await SharePersonalList(context: context).UpdateOrDeleteLoadListeShare(listIdListShare: listIdListShare).then((elementServer) async =>
           {
             await deletePersonalist(elementServer: elementServer["data"]),
             await updatePersonalistLocal(elementServer: elementServer["data"]),
             //Loader(context: context, snackBar: false).hideLoader()
-            print("getJsonAllPersonalistLocalStore   ${LocalstorelocalObj.getJsonAllPersonalistLocalStore().toString()}"),
+            Logger.Green.log("getJsonAllPersonalistLocalStore   ${LocalstorelocalObj.getJsonAllPersonalistLocalStore().toString()}"),
               await Future.delayed(const Duration(milliseconds: 100), () {
-              print('Pause for write localstore'); // Prints after 1 second.
+                Logger.Green.log('Pause for write localstore'); // Prints after 1 second.
               })
           });
         }
         else{
-          print("don't check list server");
+          Logger.Green.log("don't check list server");
         }
       }
     });
@@ -57,13 +58,13 @@ class SynchroServer {
         if (elementLocalPersonalistModel.isListShare) {
           bool existInBdd = elementServer.toString().indexOf(elementLocalPersonalistModel.id) > 0;
           if (!existInBdd) {
-            print("Delete: ${elementLocal['id']}");
+            Logger.Green.log("Delete: ${elementLocal['id']}");
             if(!elementLocal['ownListShare']) {
               Localstorelocal(context: context, ref: ref).deletePersonalList(personalList: elementLocalPersonalistModel);
             }
           }
           else{
-            print("existe toujours en bdd: ${existInBdd.toString()}");
+            Logger.Green.log("existe toujours en bdd: ${existInBdd.toString()}");
           }
         }
       });
@@ -80,9 +81,9 @@ class SynchroServer {
                 isListShare: elementvalueLocal["isListShare"],
                 ownListShare: elementvalueLocal["ownListShare"]
             );
-            print("********************************");
-            print(PersonalistUpdateByServer);
-            print("********************************");
+            Logger.White.log("********************************");
+            Logger.Green.log(PersonalistUpdateByServer);
+            Logger.White.log("********************************");
             LocalstorelocalObj.createPersonalList(PersonalList: PersonalistUpdateByServer);
           }
         });

@@ -7,6 +7,7 @@ import 'package:Vireg/src/localization/app_localizations_context.dart';
 
 
 import '../_class/DeepLink.dart';
+import '../_utils/logger.dart';
 import '../myApp.dart';
 
 
@@ -20,11 +21,11 @@ class Share extends ConsumerStatefulWidget {
 class _ShareState extends ConsumerState<Share> {
   @override
   void initState() {
-    print("initState Share ${widget.idList}");
+    Logger.Green.log("initState Share ${widget.idList}");
     if(widget.idList!=null) {
       DeepLink(context:context,ref:ref).shareReceive(personalListId: widget.idList).then((value) {
         Future.delayed(const Duration(seconds: 2), () {
-          context.go('/');
+          customRoutesVireg.go('/');
         });
       });
     }
@@ -38,7 +39,7 @@ class _ShareState extends ConsumerState<Share> {
 
   @override
   Widget build(BuildContext context) {
-    print("build share");
+    Logger.Green.log("build share");
     return Container(
         width: double.infinity,
         height: MediaQuery.of(context).size.height-180  ,

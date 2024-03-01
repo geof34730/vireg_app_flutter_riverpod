@@ -9,6 +9,7 @@ import '../_class/DataTableListeVerbes.dart';
 import '../_class/GetDataVerbs.dart';
 import '../_providers/localLang.dart';
 import '../_utils/front.dart';
+import '../_utils/logger.dart';
 import '../router.dart';
 
 
@@ -31,7 +32,7 @@ class _ListVerbState extends ConsumerState<ListVerb> {
 
   @override
   void initState() {
-    print('initstat ListVerb');
+    Logger.Green.log('initstat ListVerb');
     personalList = (widget.personalList=='true' ? true : false);
     getListVerbsJson(idList: widget.idList.toString(),personalList:personalList);
     DataTableSource data = DataTableListeVerbes(filteredData: filteredData, context: context,localLang: locallang);

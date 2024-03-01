@@ -137,7 +137,7 @@ Card boxCardChildPerso({required WidgetRef ref,  required BuildContext context,r
                                         indexRubrique: 1,
                                         context: context,
                                         onClickButton: () => {
-                                          context.go('/learnVerb/${personalList.id}/true')
+                                          customRoutesVireg.go('/learnVerb/${personalList.id}/true')
                                         }
                                     ),
                                     ElevatedButtonCardHome(
@@ -146,7 +146,7 @@ Card boxCardChildPerso({required WidgetRef ref,  required BuildContext context,r
                                         indexRubrique: 0,
                                         context: context,
                                         onClickButton: () => {
-                                          context.go('/testVerb/${personalList.id}/true')
+                                          customRoutesVireg.go('/testVerb/${personalList.id}/true')
                                         }
                                     ),
                                     ElevatedButtonCardHome(
@@ -155,7 +155,7 @@ Card boxCardChildPerso({required WidgetRef ref,  required BuildContext context,r
                                         indexRubrique: 2,
                                         context: context,
                                         onClickButton: () => {
-                                          context.go('/listVerb/${personalList.id}/true')
+                                          customRoutesVireg.go('/listVerb/${personalList.id}/true')
                                         }
                                     ),
                                   ],
@@ -188,11 +188,11 @@ Card boxCardChildPerso({required WidgetRef ref,  required BuildContext context,r
                                         ?
                                     (ref.watch(localOnlineDeviceProvider)
                                         ?
-                                    context.go("/edit/ListPersoStep1/${personalList.id}")
+                                    customRoutesVireg.go("/edit/ListPersoStep1/${personalList.id}")
                                         :
                                     alerOfflineBoxCard.call())
                                         :
-                                    context.go("/edit/ListPersoStep1/${personalList.id}")
+                                    customRoutesVireg.go("/edit/ListPersoStep1/${personalList.id}")
                                     )
                                 );
                               }

@@ -7,6 +7,8 @@ import '../_Utils/string.dart';
 import '../_models/PersonalListModel.dart';
 import 'dart:convert';
 
+import '../_utils/logger.dart';
+
 
 class SharePersonalList {
   late BuildContext context;
@@ -58,7 +60,7 @@ class SharePersonalList {
   }
 
   Future<void> DeleteList({required PersonalListModel personalList}) async {
-    print("deletelist");
+    Logger.Green.log("deletelist");
     final response = await dio.delete(
       "${dotenv.get("URL_API")}/personalList/${personalList.id}",
       options: Options(
@@ -72,7 +74,7 @@ class SharePersonalList {
   Future<dynamic> sendShareByEMail({required String pseudo, required String email, required String urlLinkShareFirebase, required String listName }) async {
     String urlEnv = "${dotenv.get("URL_API")}/personalList/sendshare";
     final url = Uri.parse(urlEnv);
-    print(url);
+    Logger.Blue.log(url);
     final headers = {
       "Content-type": "application/json;charset=utf-8",
     };
@@ -82,7 +84,7 @@ class SharePersonalList {
         '"pseudo":"${capitalize(pseudo)}",'
         '"listName":"${capitalize(listName)}"'
         '}';
-    print(json);
+    Logger.Green.log(json);
     final response = await post(url, headers: headers, body: json);
     return jsonDecode(response.body);
   }
