@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
+import '../_utils/logger.dart';
+
 class Loader{
   late BuildContext context;
   late bool snackBar;
@@ -31,6 +33,7 @@ class Loader{
       if(snackBar) {
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
       }
+      Logger.Green.log("hide loader");
     context.loaderOverlay.hide();
   }
 

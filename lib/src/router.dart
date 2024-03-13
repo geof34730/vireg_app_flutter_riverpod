@@ -7,14 +7,17 @@ import 'package:Vireg/src/screens/listPersoStep2.dart';
 import 'package:Vireg/src/screens/listVerb.dart';
 import 'package:Vireg/src/screens/share.dart';
 import 'package:Vireg/src/screens/testVerb.dart';
+import 'package:Vireg/src/screens/update.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
+import '_class/Connectivity.dart';
 import '_utils/logger.dart';
 final _navKey = GlobalKey<NavigatorState>();
+
 final customRoutesVireg = GoRouter(
     navigatorKey: _navKey,
     debugLogDiagnostics: false,
@@ -24,6 +27,13 @@ final customRoutesVireg = GoRouter(
         path: '/',
         pageBuilder: (context, state) {
           return transitionRouter(state: state, context: context, child: Layout(backButton:null,child: Home(key: UniqueKey()), context: context));
+        },
+      ),
+      GoRoute(
+        name:"Update",
+        path: '/update',
+        pageBuilder: (context, state) {
+          return transitionRouter(state: state, context: context, child:Layout(backButton:null,child:Update(key: UniqueKey()),context: context));
         },
       ),
       GoRoute(
@@ -91,7 +101,7 @@ final customRoutesVireg = GoRouter(
       Logger.Red.log("**************REDIRECT 404************");
       Logger.Red.log("path ${state.path}");
       return Layout(child:Home(key: UniqueKey()),context: context);
-    }
+    },
 );
 
 

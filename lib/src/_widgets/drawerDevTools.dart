@@ -5,8 +5,9 @@ import 'package:colored_json/colored_json.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../_class/Connectivity.dart';
 import '../_class/Localstore.dart';
-import '../_providers/localOnlineDevice.dart';
+
 
 
 
@@ -73,7 +74,7 @@ class drawerWidget extends ConsumerWidget {
                                color: Colors.yellow
                            ),
                          ),
-                         Text('localOnlineDeviceProvider => ${ref.watch(localOnlineDeviceProvider)}',
+                         Text('localOnlineDeviceProvider => ${(ref.watch(connectivityStatusProviders) == ConnectivityStatus.isConnected).toString()}',
                            style: TextStyle(
                                color: Colors.yellow
                            ),

@@ -7,7 +7,7 @@ import '../_Utils/string.dart';
 import '../_class/GetDataVerbs.dart';
 import 'package:flip_card/flip_card.dart';
 
-import '../_providers/localOnlineDevice.dart';
+
 import '../_utils/logger.dart';
 
 class LearnVerb extends ConsumerStatefulWidget {

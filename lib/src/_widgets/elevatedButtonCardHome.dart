@@ -20,7 +20,7 @@ Widget ElevatedButtonCardHome({required dynamic onClickButton,  required String 
       style: GoogleFonts.sourceSans3(
           textStyle: TextStyle(
             color: Colors.black,
-            fontSize: 13,
+            fontSize: 16,
             height: 1.2,
             fontWeight: FontWeight.bold,
           )),

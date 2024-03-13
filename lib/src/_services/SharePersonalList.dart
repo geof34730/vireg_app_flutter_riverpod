@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart';
 import 'dart:convert';
+import '../../global.dart';
 import '../_Utils/string.dart';
 import '../_models/PersonalListModel.dart';
 import 'dart:convert';
@@ -18,20 +19,21 @@ class SharePersonalList {
   final dio = Dio();
   Future<PersonalListModel> GetList({required String? idListPerso}) async {
     final response = await dio.get(
-        "${dotenv.get("URL_API")}/personalList/$idListPerso",
+        "$URL_API/personalList/$idListPerso",
         options: Options(
           headers: {
             "Content-type": "application/json;charset=utf-8",
           },
         ),
     );
-    final Map<String, dynamic> parsed = jsonDecode(response.data["data"].toString());
-    return PersonalListModel.fromJson(parsed);
+    Logger.Blue.log(personalListModelFromResponseDio(response));
+    return personalListModelFromResponseDio(response);
+
   }
 
   Future<PersonalListModel> Share({ required PersonalListModel personalList }) async {
     final response = await dio.post(
-      "${dotenv.get("URL_API")}/personalList",
+      "$URL_API/personalList",
       data: {
         "uuid": personalList.id,
         "data":personalListModelToJson(personalList)
@@ -42,12 +44,12 @@ class SharePersonalList {
         },
       ),
     );
-    final Map<String, dynamic> parsed = jsonDecode(response.data["data"].toString());
-    return PersonalListModel.fromJson(parsed);
+    Logger.Blue.log(personalListModelFromResponseDio(response));
+    return personalListModelFromResponseDio(response);
   }
 
   Future<dynamic> UpdateOrDeleteLoadListeShare({required List listIdListShare}) async {
-    String urlEnv= "${dotenv.get("URL_API")}/checklistshare";
+    String urlEnv= "$URL_API/checklistshare";
     final url = Uri.parse(urlEnv);
     final headers = {
       "Content-type": "application/json;charset=utf-8",
@@ -62,7 +64,7 @@ class SharePersonalList {
   Future<void> DeleteList({required PersonalListModel personalList}) async {
     Logger.Green.log("deletelist");
     final response = await dio.delete(
-      "${dotenv.get("URL_API")}/personalList/${personalList.id}",
+      "$URL_API/personalList/${personalList.id}",
       options: Options(
         headers: {
           "Content-type": "application/json;charset=utf-8",
@@ -72,7 +74,7 @@ class SharePersonalList {
   }
 
   Future<dynamic> sendShareByEMail({required String pseudo, required String email, required String urlLinkShareFirebase, required String listName }) async {
-    String urlEnv = "${dotenv.get("URL_API")}/personalList/sendshare";
+    String urlEnv = "$URL_API/personalList/sendshare";
     final url = Uri.parse(urlEnv);
     Logger.Blue.log(url);
     final headers = {

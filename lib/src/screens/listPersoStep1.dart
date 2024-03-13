@@ -35,7 +35,7 @@ class _ListPersoStep1State extends ConsumerState<ListPersoStep1> {
 
   @override
   void initState() {
-    ConectivityVireg(ref: ref,context: context).init();
+   // ConectivityVireg(ref: ref,context: context).init();
     if (!loadDataEdit){
       if (widget.idList != null) {
         editMode = true;

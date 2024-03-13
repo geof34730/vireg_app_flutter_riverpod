@@ -32,6 +32,11 @@ class SnakBar{
     );
   }
 
+  hideSnakBar(){
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+  }
+
+
   getThemeSnackBar(){
     late dynamic colorsReturn;
     switch (themeSnackBar) {

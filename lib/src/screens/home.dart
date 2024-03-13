@@ -16,17 +16,18 @@ import 'package:localstore/localstore.dart';
 import 'package:responsive_grid/responsive_grid.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import '../../global.dart';
 import '../_class/Loader.dart';
 import '../_class/SnackBar.dart';
 import '../_class/SyncroServer.dart';
 import '../_class/localstore.dart';
+import '../_services/Common.dart';
 import '../_services/SharePersonalList.dart';
 import '../_utils/front.dart';
 import '../_utils/logger.dart';
 import '../_widgets/boxCard.dart';
 import '../_widgets/boxCardListPerso.dart';
 import '../_widgets/dialogues.dart';
-import '../_providers/localOnlineDevice.dart';
 
 bool initConfig=false;
 
@@ -41,20 +42,27 @@ class _HomeState extends ConsumerState<Home> {
 
   @override
   void initState() {
-    Logger.Green.log("init state home");
-    ConectivityVireg(ref: ref,context: context).init();
     super.initState();
+
+    Logger.Green.log("init state home");
   }
 
   @override
   void dispose() {
-    //_connectivitySubscription.cancel();
+    Logger.Green.log("dispose home");
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     Logger.Green.log("build Home");
+
+        var connectivityStatusProvider = ref.watch(connectivityStatusProviders);
+        if (ref.watch(connectivityStatusProviders) == ConnectivityStatus.isConnected) {
+
+        }
+
+
     dynamic ResponsiveContentObj=ResponsiveContent(context: context);
     dynamic DialoguesObj=Dialogues(context: context);
     if (!initConfig){
@@ -65,8 +73,8 @@ class _HomeState extends ConsumerState<Home> {
     return Center(
       child: Column(
         children: [
-          Visibility(visible: false,child: Text((ref.watch(localOnlineDeviceProvider) ? "online" : "offline"))),
-          /*Row(
+          Visibility(visible: true,child: Text((ref.watch(connectivityStatusProviders) == ConnectivityStatus.isConnected ?  "online" : "offline"))),
+          Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -78,11 +86,9 @@ class _HomeState extends ConsumerState<Home> {
                           },
                           child: Text('share test 4cf683..')
                       ),
-
                     ]
                 ),
-              ]),*/
-
+              ]),
           Column(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -168,9 +174,9 @@ class _HomeState extends ConsumerState<Home> {
                                       child: FloatingActionButton(
                                         heroTag: UniqueKey(),
                                         elevation: 10,
-                                        backgroundColor: (ref.watch(localOnlineDeviceProvider) ? Colors.blue : Colors.grey) ,
+                                        backgroundColor: (ref.watch(connectivityStatusProviders) == ConnectivityStatus.isConnected  ? Colors.blue : Colors.grey) ,
                                         onPressed: () {
-                                          (ref.watch(localOnlineDeviceProvider)
+                                          (ref.watch(connectivityStatusProviders) == ConnectivityStatus.isConnected
                                               ?
                                           customRoutesVireg.go("/")
                                               :

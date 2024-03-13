@@ -1,3 +1,5 @@
+import '../../global.dart';
+
 enum Logger {
   Black("30"),
   Red("31"),
@@ -11,5 +13,5 @@ enum Logger {
   final String code;
   const Logger(this.code);
 
-  void log(dynamic text) =>  print('\x1B[' + code+ 'm' + text.toString() + '\x1B[0m');
+  void log(dynamic text) => (DEBUG ?  print('\x1B[' + code+ 'm' + text.toString() + '\x1B[0m') : null);
 }

@@ -15,7 +15,6 @@ import '../_class/Localstore.dart';
 import '../_class/SnackBar.dart';
 import '../_providers/localLang.dart';
 import '../_models/PersonalListModel.dart';
-import '../_providers/localOnlineDevice.dart';
 import '../_services/SharePersonalList.dart';
 import '../_utils/front.dart';
 import '../_widgets/dialogues.dart';
@@ -43,7 +42,7 @@ class _ListPersoStep2State extends ConsumerState<ListPersoStep2> {
 
   @override
   void initState() {
-    ConectivityVireg(ref: ref,context: context).init();
+   // ConectivityVireg(ref: ref,context: context).init();
     UUIDList=widget.idList.toString();
     getListVerbsJson(idList: widget.idList.toString());
     super.initState();
@@ -133,12 +132,12 @@ class _ListPersoStep2State extends ConsumerState<ListPersoStep2> {
                       filteredData: filteredData,
                       PersonalListUpdate:PersonalListUpdate,
                       context: context,
-                      isOnline:ref.watch(localOnlineDeviceProvider),
+                      isOnline:(ref.watch(connectivityStatusProviders) == ConnectivityStatus.isConnected),
                       addOrDeleteInList: ({required idVerbs}) =>
                       {
                           (PersonalListUpdate.ownListShare
                           ?
-                          (ref.watch(localOnlineDeviceProvider)
+                          (ref.watch(connectivityStatusProviders) == ConnectivityStatus.isConnected
                             ?
                               addOrDeleteInList(idVerbs: idVerbs)
                             :

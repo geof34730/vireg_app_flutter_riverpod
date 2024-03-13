@@ -6,6 +6,11 @@ part 'PersonalListModel.g.dart';
 
 PersonalListModel personalListModelFromJson(String str) => PersonalListModel.fromJson(json.decode(str));
 
+PersonalListModel personalListModelFromResponseDio(dynamic response) => PersonalListModel.fromJson(jsonDecode(response.data["data"].toString()));
+
+
+
+
 String personalListModelToJson(PersonalListModel data) => json.encode(data.toJson());
 
 @freezed
@@ -17,7 +22,7 @@ class PersonalListModel with _$PersonalListModel {
     @Default([]) List<ListIdVerb> ListIdVerbs,
     @Default(false) bool isListShare,
     @Default(false) bool ownListShare,
-    @Default(null) String urlShare
+    @Default("") String urlShare
 
 
   }) = _PersonalListModel;

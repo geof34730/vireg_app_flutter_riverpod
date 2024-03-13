@@ -4,10 +4,14 @@
 <dict>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:vireg.fr?mode=developer</string>
-		<string>applinks:vireg.page.link?mode=developer</string>
+		<string>applinks:vireg.fr</string>
+		<string>applinks:vireg.page.link</string>
 	</array>
 	<key>com.apple.security.app-sandbox</key>
+	<true/>
+	<key>com.apple.security.cs.allow-jit</key>
+	<true/>
+	<key>com.apple.security.network.server</key>
 	<true/>
 </dict>
 </plist>

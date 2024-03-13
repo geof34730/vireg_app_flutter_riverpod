@@ -30,7 +30,9 @@
   "homeShareTitleChoiseSend" : "En envoyant le QR code de votre liste par email",
   "homeShareButtonendByEmail" : "Partager par email",
   "snackBarResetVerb" : "Votre verbe à été retiré de votre liste",
-  "snackBarAddVerb" : "Votre verbe est ajouté à votre liste"
+  "snackBarAddVerb" : "Votre verbe est ajouté à votre liste",
+  "updateAppMessage" : "Vous devez mettre à jour Vireg avec la dernière version disponible",
+  "updateButton" : "Mettre à jour"
 
 
 }

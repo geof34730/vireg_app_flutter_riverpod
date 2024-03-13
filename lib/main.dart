@@ -13,7 +13,7 @@ import 'global.dart' as globals;
 
 
 Future<void> main() async {
-  await dotenv.load(fileName: ".env");
+ // await dotenv.load(fileName: ".env");
   WidgetsFlutterBinding.ensureInitialized();
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   globals.versionApp=packageInfo.version;

@@ -6,8 +6,9 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:Vireg/src/localization/app_localizations_context.dart';
 
+import '../_class/Connectivity.dart';
 import '../_class/Localstore.dart';
-import '../_providers/localOnlineDevice.dart';
+
 import '../_utils/string.dart';
 import 'elevatedButtonCardHome.dart';
 import 'elevatedButtonCardHomeEditDeleteShare.dart';
@@ -126,7 +127,7 @@ Card boxCardChildPerso({required WidgetRef ref,  required BuildContext context,r
                                   verticalDirection: VerticalDirection.down,
                                   spacing: 10.0,
                                   // gap between adjacent chips
-                                  runSpacing: 10.0,
+                                  runSpacing: 0.0,
                                   // gap between lines
                                   children: [
 
@@ -167,10 +168,10 @@ Card boxCardChildPerso({required WidgetRef ref,  required BuildContext context,r
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           ElevatedButtonCardHomeEditDeleteShare(visibilityButton:(nbVerbsPerso==0 ? false : true),
-                              colorIcon: ((ref.watch(localOnlineDeviceProvider) || personalList.urlShare!="")? Colors.blue : Colors.grey),
+                              colorIcon: (ref.watch(connectivityStatusProviders) == ConnectivityStatus.isConnected  || (personalList.urlShare!="") ? Colors.blue : Colors.grey),
                               iconContent: Icons.share, context: context,
                               onClickButton: () =>  {
-                                ((ref.watch(localOnlineDeviceProvider) || personalList.urlShare!="")
+                                (ref.watch(connectivityStatusProviders) == ConnectivityStatus.isConnected  || personalList.urlShare!=""
                                     ?
                                     onClickShare.call(idList: personalList.id)
                                     :
@@ -179,14 +180,14 @@ Card boxCardChildPerso({required WidgetRef ref,  required BuildContext context,r
                           ),
                           ElevatedButtonCardHomeEditDeleteShare(
                               visibilityButton: personalList.isListShare &&  !personalList.ownListShare ? false : true,
-                              colorIcon: (personalList.ownListShare ? (ref.watch(localOnlineDeviceProvider) ? Colors.green : Colors.grey) : Colors.green),
+                              colorIcon: (personalList.ownListShare ? (ref.watch(connectivityStatusProviders) == ConnectivityStatus.isConnected  ? Colors.green : Colors.grey) : Colors.green),
                               iconContent: Icons.edit,
                               context: context,
                               onClickButton: (){
                                 (
                                     (personalList.ownListShare
                                         ?
-                                    (ref.watch(localOnlineDeviceProvider)
+                                    (ref.watch(connectivityStatusProviders) == ConnectivityStatus.isConnected
                                         ?
                                     customRoutesVireg.go("/edit/ListPersoStep1/${personalList.id}")
                                         :
@@ -199,13 +200,13 @@ Card boxCardChildPerso({required WidgetRef ref,  required BuildContext context,r
 
                           ),
                           ElevatedButtonCardHomeEditDeleteShare(
-                              colorIcon: (personalList.ownListShare ? (ref.watch(localOnlineDeviceProvider) ? Colors.red : Colors.grey) : Colors.red),
+                              colorIcon: (personalList.ownListShare ? (ref.watch(connectivityStatusProviders) == ConnectivityStatus.isConnected ? Colors.red : Colors.grey) : Colors.red),
                               iconContent: Icons.delete, context: context,
                                   onClickButton: () => {
                                     (
                                     (personalList.ownListShare
                                       ?
-                                        (ref.watch(localOnlineDeviceProvider)
+                                        (ref.watch(connectivityStatusProviders) == ConnectivityStatus.isConnected
                                           ?
                                           localstoreLocalObj.deletePersonalList(personalList: personalList)
                                           :
