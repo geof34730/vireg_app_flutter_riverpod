@@ -18,6 +18,9 @@ class SharePersonalList {
   });
   final dio = Dio();
   Future<PersonalListModel> GetList({required String? idListPerso}) async {
+
+
+
     final response = await dio.get(
         "$URL_API/personalList/$idListPerso",
         options: Options(
@@ -32,6 +35,22 @@ class SharePersonalList {
   }
 
   Future<PersonalListModel> Share({ required PersonalListModel personalList }) async {
+/*
+    String urlEnv= "$URL_API/personalList";
+    final url = Uri.parse(urlEnv);
+    final headers = {
+      "Content-type": "application/json;charset=utf-8",
+    };
+    final json = '{'
+        '"uuid":"${personalList.id}",'
+        '"data":"${personalListModelToJson(personalList)}",'
+
+        '}';
+    final response = await post(url, headers: headers, body: jsonEncode(json));
+    return jsonDecode(response.body);
+*/
+
+
     final response = await dio.post(
       "$URL_API/personalList",
       data: {

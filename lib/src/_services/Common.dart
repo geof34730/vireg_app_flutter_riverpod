@@ -26,7 +26,7 @@ class ServiceCommon {
         },
       ),
     );
-    //Logger.Blue.log(jsonDecode(response.toString())["lastVersionApp"]);
+    Logger.Blue.log(jsonDecode(response.toString())["lastVersionApp"]);
     return jsonDecode(response.toString())["lastVersionApp"];
   }
 }

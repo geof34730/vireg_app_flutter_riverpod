@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import '../_class/Connectivity.dart';
 import 'EasySearchBar.dart';
 import 'bottomNavigationBar.dart';
 import 'drawerDevTools.dart';

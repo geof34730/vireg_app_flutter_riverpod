@@ -20,7 +20,7 @@ final _navKey = GlobalKey<NavigatorState>();
 
 final customRoutesVireg = GoRouter(
     navigatorKey: _navKey,
-    debugLogDiagnostics: false,
+    debugLogDiagnostics: true,
     routes:[
       GoRoute(
         name:"Home",
@@ -40,6 +40,7 @@ final customRoutesVireg = GoRouter(
         name:"LearnVerb",
         path: '/learnVerb/:idList/:perso',
         pageBuilder: (context, state) {
+
           return transitionRouter(state: state, context: context, child: Layout(backButton:"/",child:LearnVerb(key: UniqueKey(),idList:state.pathParameters["idList"],personalList:state.pathParameters["perso"]),bottomNavigationBar: true,indexBottomNavigationBar: 0,context: context));
         },
       ),
@@ -48,6 +49,7 @@ final customRoutesVireg = GoRouter(
         path: '/share/:idList',
         builder: (BuildContext context, GoRouterState state) {
           print("***************** share deep link");
+          Logger.Blue.log("Go router capte Share");
           return Layout(child:Share(key: UniqueKey(),idList:state.pathParameters["idList"]),context: context,appBar: true);
         },
       ),
@@ -95,7 +97,8 @@ final customRoutesVireg = GoRouter(
             PersonalListModel extraPersonalistUpdate = state.extra as PersonalListModel;
             return transitionRouter(state: state, context: context, child: Layout(backButton:"/edit/ListPersoStep1/${state.pathParameters["idList"]}",child:ListPersoStep2(key: UniqueKey(),extraPersonalistUpdate:extraPersonalistUpdate,idList:state.pathParameters["idList"]),context: context,paddinLeftRight: 0.0));
           },
-      )
+      ),
+
     ],
     errorBuilder: (context, state) {
       Logger.Red.log("**************REDIRECT 404************");

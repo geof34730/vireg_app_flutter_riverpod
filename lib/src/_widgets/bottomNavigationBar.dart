@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../_class/Connectivity.dart';
+
 
 class WidgetbottomNavigationBar extends ConsumerWidget {
   const WidgetbottomNavigationBar({super.key, required int this.indexNav});
@@ -13,6 +15,7 @@ class WidgetbottomNavigationBar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     late ViregBottomNavigationBar objViregBottomNavigationBar = ViregBottomNavigationBar(ref: ref,context: context,indexNav:indexNav);
     int _selectedIndex = objViregBottomNavigationBar.getItemSelect();
+
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
       items: <BottomNavigationBarItem>[

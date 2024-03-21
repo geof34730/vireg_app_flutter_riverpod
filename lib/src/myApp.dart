@@ -5,7 +5,7 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'package:Vireg/src/_class/Connectivity.dart';
 import '_class/Connectivity.dart';
 import '_class/DeepLink.dart';
 
@@ -25,9 +25,6 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
-
-
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if(objDeeplinksInit==null){
         Logger.Green.log("NO DEEPLINK myapp");

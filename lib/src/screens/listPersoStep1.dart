@@ -14,6 +14,7 @@ import 'package:Vireg/src//_utils/front.dart';
 import '../_class/Connectivity.dart';
 import '../_services/SharePersonalList.dart';
 import '../_utils/logger.dart';
+import '../_widgets/dialogues.dart';
 
 var uuid = const Uuid();
 class ListPersoStep1 extends ConsumerStatefulWidget {
@@ -35,7 +36,6 @@ class _ListPersoStep1State extends ConsumerState<ListPersoStep1> {
 
   @override
   void initState() {
-   // ConectivityVireg(ref: ref,context: context).init();
     if (!loadDataEdit){
       if (widget.idList != null) {
         editMode = true;
@@ -101,8 +101,15 @@ class _ListPersoStep1State extends ConsumerState<ListPersoStep1> {
                   hintText: context.loc.listePersoLabelTitleField,
                   labelText:  context.loc.listePersoLabelTitleField,
                   contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+
                 ),
-                onChanged: (value) {changeText(value:value);}
+                onChanged: (value) {
+
+
+                  changeText(value:value);
+
+
+                }
             )),
         Padding(
             padding: EdgeInsets.only(
@@ -142,19 +149,33 @@ class _ListPersoStep1State extends ConsumerState<ListPersoStep1> {
             )),
         Center(
             child: ElevatedButton.icon(
-              style: (formValide ? const ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.green), foregroundColor: MaterialStatePropertyAll(Colors.white)) : const ButtonStyle()),
-              onPressed: (formValide
+              style: ((formValide &&  ref.watch(connectivityStatusProviders) == ConnectivityStatus.isConnected)
+                  ?
+                    const ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.green), foregroundColor: MaterialStatePropertyAll(Colors.white))
+                  :
+                    const ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.white60), foregroundColor: MaterialStatePropertyAll(Colors.grey))
+                  ),
+
+              onPressed: ((formValide &&  ref.watch(connectivityStatusProviders) == ConnectivityStatus.isConnected)
                   ? () {
                        (editMode
                           ?
-                          updatePersonalListStep1(next:true)
+                            updatePersonalListStep1(next:true)
                           :
-                           createList()
+                            createList()
                         );
                       }
                   :
+
+              (ref.watch(connectivityStatusProviders) == ConnectivityStatus.isConnected
+                  ?
                   null
-                  ),
+                  :
+                    () => {
+                      Dialogues(context: context).alertOffline(),
+                    }
+                 )
+                 ),
               icon: const Icon(
                 Icons.check,
                 size: 19.0,
@@ -191,20 +212,32 @@ class _ListPersoStep1State extends ConsumerState<ListPersoStep1> {
   }
 
   Future<void> updatePersonalListStep1({bool next =false}) async {
-      Logger.Green.log(PersonalListUpdate.color);
+      Logger.Red.log(PersonalListUpdate.ownListShare);
       if(PersonalListUpdate.ownListShare) {
-        print("Update serveur");
-        SharePersonalList(context: context).Share(personalList: PersonalListUpdate).then((value) async {
-          await Localstorelocal(context: context, ref: ref).updatePersonalList(PersonalList: PersonalListUpdate);
-        });
+        Logger.Blue.log("own list");
+        Logger.Blue.log(ref.watch(connectivityStatusProviders) == ConnectivityStatus.isConnected);
+        if(ref.watch(connectivityStatusProviders) == ConnectivityStatus.isConnected) {
+          print("Update serveur");
+          SharePersonalList(context: context).Share(personalList: PersonalListUpdate).then((value) async {
+            await Localstorelocal(context: context, ref: ref).updatePersonalList(PersonalList: PersonalListUpdate);
+          });
+          if(next){
+            nextPersonalList();
+          }
+        }
+        else {
+          Logger.Magenta.log("NO UPDATE SERVER BECAUSE YOU ARE OFFLINE");
+          Dialogues(context: context).alertOffline();
+        }
       }
       else{
         print("no Update serveur");
         await Localstorelocal(context: context, ref: ref).updatePersonalList(PersonalList: PersonalListUpdate);
+        if(next){
+          nextPersonalList();
+        }
       }
-      if(next){
-        nextPersonalList();
-      }
+
   }
 
   void nextPersonalList(){
@@ -212,6 +245,8 @@ class _ListPersoStep1State extends ConsumerState<ListPersoStep1> {
   }
 
 }
+
+
 
 
 

@@ -32,12 +32,14 @@ class SynchroServer {
 
   Future<List<dynamic>> init() async{
     dynamic loaderObj=Loader(context: context, snackBar: false);
-    checkUpdateApp();
+    //checkUpdateApp();
     LocalstorelocalObj = Localstorelocal(context: context,ref: ref);
     await LocalstorelocalObj.getJsonAllPersonalistLocalStore().then((value)  async {
       await getListLocal(value);
+      Logger.Red.log(ref.watch(connectivityStatusProviders) == ConnectivityStatus.isConnected);
       if (ref.watch(connectivityStatusProviders) == ConnectivityStatus.isConnected) {
         if(listIdListShare.length>0) {
+
           loaderObj.showLoader();
           Logger.Green.log("******check list server");
           await SharePersonalList(context: context).UpdateOrDeleteLoadListeShare(listIdListShare: listIdListShare).then((elementServer) async =>
@@ -50,10 +52,14 @@ class SynchroServer {
               })
           });
           loaderObj.hideLoader();
+
         }
         else{
           Logger.Green.log("don't check list server");
         }
+      }
+      else{
+        Logger.Green.log("******Don't check list server because i'm offLine");
       }
     });
     return LocalstorelocalObj.getJsonAllPersonalistLocalStore();
@@ -78,8 +84,6 @@ class SynchroServer {
         }
       }
     }
-
-
   }
 
   Future<void> deletePersonalist({required dynamic elementServer}) async {

@@ -11,17 +11,16 @@ import 'package:Vireg/src/localization/app_localizations_context.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:localstore/localstore.dart';
+
 import 'package:responsive_grid/responsive_grid.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
-import '../../global.dart';
+
+
 import '../_class/Loader.dart';
-import '../_class/SnackBar.dart';
+
 import '../_class/SyncroServer.dart';
 import '../_class/localstore.dart';
-import '../_services/Common.dart';
+
 import '../_services/SharePersonalList.dart';
 import '../_utils/front.dart';
 import '../_utils/logger.dart';
@@ -43,8 +42,8 @@ class _HomeState extends ConsumerState<Home> {
   @override
   void initState() {
     super.initState();
-
     Logger.Green.log("init state home");
+
   }
 
   @override
@@ -55,26 +54,22 @@ class _HomeState extends ConsumerState<Home> {
 
   @override
   Widget build(BuildContext context) {
+
     Logger.Green.log("build Home");
-
-        var connectivityStatusProvider = ref.watch(connectivityStatusProviders);
-        if (ref.watch(connectivityStatusProviders) == ConnectivityStatus.isConnected) {
-
-        }
-
-
+    Logger.Blue.log((isOnline(ref: ref) ?  "online" : "offline"));
     dynamic ResponsiveContentObj=ResponsiveContent(context: context);
     dynamic DialoguesObj=Dialogues(context: context);
     if (!initConfig){
       Localstorelocal(ref: ref,context: context).initLang();
       initConfig=true;
     }
+
     Future<List<dynamic>> futureOfListPerso=SynchroServer(ref: ref, context: context).init();
     return Center(
       child: Column(
         children: [
-          Visibility(visible: true,child: Text((ref.watch(connectivityStatusProviders) == ConnectivityStatus.isConnected ?  "online" : "offline"))),
-          Row(
+          Visibility(visible: false,child: Text((isOnline(ref: ref) ?  "online" : "offline"))),
+          /*Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -82,13 +77,13 @@ class _HomeState extends ConsumerState<Home> {
                     children:[
                       ElevatedButton(
                           onPressed: (){
-                            customRoutesVireg.go('/share/4cf683a2-4514-46e6-957d-36ae4bebf4ed');
+                            customRoutesVireg.go('/share/899ce07a-43cc-4b8c-a6e6-56e514ffb8e3');
                           },
-                          child: Text('share test 4cf683..')
+                          child: Text('share test 899ce07-..')
                       ),
                     ]
                 ),
-              ]),
+              ]),*/
           Column(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.center,

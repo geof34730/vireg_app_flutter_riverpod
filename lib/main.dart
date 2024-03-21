@@ -9,11 +9,12 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'global.dart' as globals;
-
+import 'package:url_strategy/url_strategy.dart';
 
 
 Future<void> main() async {
  // await dotenv.load(fileName: ".env");
+  setPathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   globals.versionApp=packageInfo.version;

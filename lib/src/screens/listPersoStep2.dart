@@ -42,7 +42,6 @@ class _ListPersoStep2State extends ConsumerState<ListPersoStep2> {
 
   @override
   void initState() {
-   // ConectivityVireg(ref: ref,context: context).init();
     UUIDList=widget.idList.toString();
     getListVerbsJson(idList: widget.idList.toString());
     super.initState();
@@ -272,9 +271,7 @@ class _ListPersoStep2State extends ConsumerState<ListPersoStep2> {
       Future.delayed(const Duration(milliseconds: 1000), () {
         Loader(context: context, snackBar: false).hideLoader();
       });
-      setState(() {
-
-      });
+      setState(() {});
     }
 }
 
