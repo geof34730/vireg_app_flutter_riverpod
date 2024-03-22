@@ -1,15 +1,15 @@
+import 'package:dio/dio.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'dart:convert';
+
+import '../_utils/logger.dart';
 
 part 'PersonalListModel.freezed.dart';
 part 'PersonalListModel.g.dart';
 
 PersonalListModel personalListModelFromJson(String str) => PersonalListModel.fromJson(json.decode(str));
 
-PersonalListModel personalListModelFromResponseDio(dynamic response) => PersonalListModel.fromJson(jsonDecode(response.data["data"].toString()));
-
-
-
+PersonalListModel personalListModelFromResponseDio(Response response) => PersonalListModel.fromJson(jsonDecode(response.data["data"].toString()));
 
 String personalListModelToJson(PersonalListModel data) => json.encode(data.toJson());
 
@@ -23,12 +23,10 @@ class PersonalListModel with _$PersonalListModel {
     @Default(false) bool isListShare,
     @Default(false) bool ownListShare,
     @Default("") String urlShare
-
-
   }) = _PersonalListModel;
-
   factory PersonalListModel.fromJson(Map<String, dynamic> json) => _$PersonalListModelFromJson(json);
 }
+
 
 @freezed
 class ListIdVerb with _$ListIdVerb {

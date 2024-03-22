@@ -10,7 +10,8 @@ import '../../global.dart' as globals;
 Widget Layout({required BuildContext context,String versionApp="",required child,bottomNavigationBar=false,double paddinLeftRight=15.0,appBar=true,indexBottomNavigationBar=0, String? backButton }) {
 
   return Scaffold(
-    appBar:  (appBar ? WidgetsEasySearchBar(backButton:backButton) : null),
+    appBar:  (appBar ? PreferredSize(
+      preferredSize: Size.fromHeight(AppBar().preferredSize.height),child:WidgetsEasySearchBar(backButton:backButton)) : null),
     bottomNavigationBar: (bottomNavigationBar
           ?
         WidgetbottomNavigationBar(indexNav: indexBottomNavigationBar)
@@ -20,11 +21,8 @@ Widget Layout({required BuildContext context,String versionApp="",required child
           style: TextStyle(
               color: Colors.black,
               fontSize: 12.00
-
           ),
           textAlign: TextAlign.center,
-
-
         )
     ),
     body: LoaderOverlay(

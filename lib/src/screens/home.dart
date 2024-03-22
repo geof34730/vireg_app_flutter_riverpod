@@ -43,7 +43,6 @@ class _HomeState extends ConsumerState<Home> {
   void initState() {
     super.initState();
     Logger.Green.log("init state home");
-
   }
 
   @override
@@ -69,21 +68,6 @@ class _HomeState extends ConsumerState<Home> {
       child: Column(
         children: [
           Visibility(visible: false,child: Text((isOnline(ref: ref) ?  "online" : "offline"))),
-          /*Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                    children:[
-                      ElevatedButton(
-                          onPressed: (){
-                            customRoutesVireg.go('/share/899ce07a-43cc-4b8c-a6e6-56e514ffb8e3');
-                          },
-                          child: Text('share test 899ce07-..')
-                      ),
-                    ]
-                ),
-              ]),*/
           Column(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.center,

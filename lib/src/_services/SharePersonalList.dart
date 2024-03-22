@@ -64,6 +64,8 @@ class SharePersonalList {
       ),
     );
     Logger.Blue.log(personalListModelFromResponseDio(response));
+   // return personalListModelFromResponseDio(response);
+    //Logger.Blue.log(PersonalListModel.fromResponseDio(response));
     return personalListModelFromResponseDio(response);
   }
 

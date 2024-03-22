@@ -120,6 +120,11 @@ class EasySearchBar extends StatefulWidget implements PreferredSizeWidget {
   /// Can be used to change suggestions list background color
   final Color? suggestionBackgroundColor;
 
+  final Color colorIconClose;
+
+
+
+
   /// Can be used to create custom suggestion item widget
   final Widget Function(String data)? suggestionBuilder;
 
@@ -128,6 +133,8 @@ class EasySearchBar extends StatefulWidget implements PreferredSizeWidget {
 
   /// Can be used to set the debounce time for async data fetch
   final Duration debounceDuration;
+
+
 
 
 
@@ -147,6 +154,7 @@ class EasySearchBar extends StatefulWidget implements PreferredSizeWidget {
       this.asyncSuggestions,
       this.searchCursorColor,
       this.searchHintText = '',
+      this.colorIconClose = Colors.black,
       this.searchBackgroundColor,
       this.suggestionLoaderBuilder,
       this.suggestionsElevation = 5,
@@ -616,7 +624,12 @@ class _EasySearchBarState extends State<EasySearchBar>
                                                           prefixIcon: IconTheme(
                                                               data: searchIconTheme,
                                                               child: IconButton(
-                                                                  icon: const Icon(Icons.close_rounded),
+                                                                  icon:  Icon(
+                                                                      Icons.close_rounded,
+                                                                        color: widget.colorIconClose,
+
+
+                                                                  ),
                                                                   onPressed: () {
                                                                     print(
                                                                         "5*******************************openOverlayLayer=false;");
