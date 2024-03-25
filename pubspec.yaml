@@ -101,7 +101,6 @@ flutter_icons:
     image_path: "assets/images/icon.png"
 
 flutter:
-
   uses-material-design: true
   generate: true
 

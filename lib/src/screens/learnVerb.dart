@@ -48,7 +48,7 @@ class _LearnVerbState extends ConsumerState<LearnVerb> {
     locallang=ref.watch(localLangProvider);
     //print("dataList.isEmpty: ${dataList.isEmpty}");
 
-    
+
 
 
     if(getdataListOK) {

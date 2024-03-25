@@ -4,7 +4,6 @@ import 'dart:async';
 
 import 'package:Vireg/src/_class/Connectivity.dart';
 import 'package:Vireg/src/router.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:Vireg/src/_models/PersonalListModel.dart';
 import 'package:Vireg/src/localization/app_localizations_context.dart';

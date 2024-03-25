@@ -102,7 +102,12 @@ class _WidgetsEasySearchBarState extends ConsumerState<WidgetsEasySearchBar> {
             ),
           )
         ],
-        onSearch: (value) => {Logger.Green.log('value')},
+        onSearch: (itemStringNoClean)  {
+          Logger.Red.log(itemStringNoClean);
+          String idVerbSelect=itemStringNoClean.substring(itemStringNoClean.indexOf("|") + 1, itemStringNoClean.length);
+          customRoutesVireg.go("/search/$idVerbSelect");
+
+        },
         asyncSuggestions: (value) async => await _fetchSuggestions(value));
   }
 
@@ -126,16 +131,16 @@ class _WidgetsEasySearchBarState extends ConsumerState<WidgetsEasySearchBar> {
     int z = 0;
     for (var datas in data) {
       if (datas["infinitif"] != null) {
-        verbs.add("${toTitleCase(datas["infinitif"])}|${z.toString()}");
+        verbs.add("${toTitleCase(datas["infinitif"])}|${datas["id"].toString()}");
       }
       if (datas["pastSimple"] != null) {
-        verbs.add("${toTitleCase(datas["pastSimple"])}|${z.toString()}");
+        verbs.add("${toTitleCase(datas["pastSimple"])}|${datas["id"].toString()}");
       }
       if (datas["pastParticipe"] != null) {
-        verbs.add("${toTitleCase(datas["pastParticipe"])}|${z.toString()}");
+        verbs.add("${toTitleCase(datas["pastParticipe"])}|${datas["id"].toString()}");
       }
       if (datas[ref.watch(localLangProvider)] != null) {
-        verbs.add("${toTitleCase(datas[ref.watch(localLangProvider)])}|${z.toString()}");
+        verbs.add("${toTitleCase(datas[ref.watch(localLangProvider)])}|${datas["id"].toString()}");
       }
       z++;
     }

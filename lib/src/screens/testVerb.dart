@@ -13,8 +13,9 @@ import 'package:flip_card/flip_card.dart';
 import '../_widgets/textFormVireg.dart';
 
 class TestVerb extends ConsumerStatefulWidget {
-  const TestVerb({Key? key,required this.idList, required this.personalList }) : super(key: key);
+  const TestVerb({Key? key,required this.idList, required this.personalList, required this.idVerb }) : super(key: key);
   final String? idList;
+  final String? idVerb;
   final String? personalList;
 
   @override
@@ -45,7 +46,7 @@ class _TestVerbState extends ConsumerState<TestVerb> {
   @override
   void initState() {
     personalList = (widget.personalList=='true' ? true : false);
-    readJson(idList: widget.idList.toString(), personalList: personalList);
+    readJson(idList: widget.idList.toString(),idVerb: widget.idVerb, personalList: personalList);
     super.initState();
   }
 
@@ -131,29 +132,35 @@ class _TestVerbState extends ConsumerState<TestVerb> {
                   label: Text(context.loc.testVerbsButtonSolutions,
                       style: TextStyle(fontSize: 19)),
                 ),
-                Visibility(
-                    visible: viewButtonNextTest,
-                    child: Padding(
-                        padding: const EdgeInsets.only(left: 20.0),
-                        child: ElevatedButton.icon(
-                          key:UniqueKey(),
-                          style: (goNextVerb() ? ButtonStyle(
-                              backgroundColor: MaterialStatePropertyAll(
-                                  Colors.green),
-                              foregroundColor: MaterialStatePropertyAll(
-                                  Colors.white)) : null),
-                          onPressed: (goNextVerb() ? () {
-                            readJson(idList: widget.idList.toString(),
-                                personalList: personalList);
-                          } : null),
-                          icon: const Icon(
-                            Icons.check,
-                            size: 19.0,
-                          ),
-                          label: Text(context.loc.testVerbsButtonSuivant,
-                              style: TextStyle(fontSize: 19)),
-                        ))
-                )
+                  Visibility(
+                    visible:  widget.idVerb==null,
+                    child: Visibility(
+                          visible: viewButtonNextTest,
+                          child: Padding(
+                              padding: const EdgeInsets.only(left: 20.0),
+                              child: ElevatedButton.icon(
+                                key:UniqueKey(),
+                                style: (goNextVerb() ? ButtonStyle(
+                                    backgroundColor: MaterialStatePropertyAll(
+                                        Colors.green
+                                    ),
+                                    foregroundColor: MaterialStatePropertyAll(
+                                        Colors.white
+                                    )
+                                )
+                                : null),
+                                onPressed: (goNextVerb() ? () {
+                                  readJson(idList: widget.idList.toString(),idVerb: widget.idVerb,personalList: personalList);
+                                } : null),
+                                icon: const Icon(
+                                  Icons.check,
+                                  size: 19.0,
+                                ),
+                                label: Text(context.loc.testVerbsButtonSuivant,
+                                    style: TextStyle(fontSize: 19)),
+                              ))
+                      )
+                  )
               ]))
         ],
       );
@@ -174,24 +181,23 @@ class _TestVerbState extends ConsumerState<TestVerb> {
     }
   }
 
-  Future<void> readJson({required String idList, String? valueSearch,required bool personalList}) async {
-    List<dynamic> data = await GetDataVerbs().getDataJson(idList: idList,personalList:personalList);
+  Future<void> readJson({required String idList,required String? idVerb, String? valueSearch,required bool personalList}) async {
     //print("************************ $data");
     bool resultSearch=false;
     int numberVerbData = 0;
-    if (resultSearch) {
+    if (idVerb!=null) {
+      List<dynamic> data = await GetDataVerbs().getDataJson(idList: "top200", idVerb: idVerb, personalList: personalList);
       //FirebaseAnalytics.instance.setCurrentScreen(screenName: "search");
       //manageInsterstitial();
-      /*
-      int numericItem = int.parse(numItem);
-      StockFrancais = toTitleCase(data[numericItem][ref.watch(localLangProvider)]);
-      StockInfinitif = toTitleCase(data[numericItem]['infinitif']);
-      StockPastSimple = toTitleCase(data[numericItem]['pastSimple']);
-      StockPastParticipe = toTitleCase(data[numericItem]['pastParticipe']);
-       */
+      StockFrancais = toTitleCase(data[0][ref.watch(localLangProvider)]);
+      StockInfinitif = toTitleCase(data[0]['infinitif']);
+      StockPastSimple = toTitleCase(data[0]['pastSimple']);
+      StockPastParticipe = toTitleCase(data[0]['pastParticipe']);
+
     } else {
       //FirebaseAnalytics.instance.setCurrentScreen(screenName: "verb_$typeListe");
       //manageInsterstitial();
+      List<dynamic> data = await GetDataVerbs().getDataJson(idList: idList, idVerb: null, personalList: personalList);
       int randomNumberCarbData = Random().nextInt(data.length);
       StockFrancais = data[randomNumberCarbData][ref.watch(localLangProvider)];
       StockInfinitif = data[randomNumberCarbData]['infinitif'];
@@ -203,25 +209,6 @@ class _TestVerbState extends ConsumerState<TestVerb> {
     controllerInfinitif.text = "";
     controllerPastSimple.text = "";
     controllerPastParticipe.text = "";
-
-
-    if (resultSearch) {
-      if (StockFrancais == valueSearch) {
-        controllerFrancais.text = StockFrancais;
-      }
-      if (StockInfinitif == valueSearch) {
-        controllerInfinitif.text = StockInfinitif;
-      }
-      if (StockPastSimple == valueSearch) {
-        controllerPastSimple.text = StockPastSimple;
-      }
-      if (StockPastParticipe == valueSearch) {
-        controllerPastParticipe.text = StockPastParticipe;
-      }
-      setState(() {
-        viewButtonNextTest = false;
-      });
-    } else {
       switch (Random().nextInt(4)) {
         case 0:
           {
@@ -249,9 +236,5 @@ class _TestVerbState extends ConsumerState<TestVerb> {
         viewButtonNextTest = true;
         readJsonOk=true;
       });
-
-    }
   }
-
-
 }

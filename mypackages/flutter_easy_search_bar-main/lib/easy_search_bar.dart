@@ -30,7 +30,7 @@ library easy_search_bar;
 import 'dart:async';
 
 import 'package:easy_search_bar/widgets/filterable_list.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -122,9 +122,6 @@ class EasySearchBar extends StatefulWidget implements PreferredSizeWidget {
 
   final Color colorIconClose;
 
-
-
-
   /// Can be used to create custom suggestion item widget
   final Widget Function(String data)? suggestionBuilder;
 
@@ -133,10 +130,6 @@ class EasySearchBar extends StatefulWidget implements PreferredSizeWidget {
 
   /// Can be used to set the debounce time for async data fetch
   final Duration debounceDuration;
-
-
-
-
 
   const EasySearchBar(
       {Key? key,
@@ -172,10 +165,7 @@ class EasySearchBar extends StatefulWidget implements PreferredSizeWidget {
       this.debounceDuration = const Duration(milliseconds: 400),
       required this.callBackBackNav,
       this.searchTextKeyboardType = TextInputType.text,
-      required this.canPop
-
-      })
-
+      required this.canPop})
       : assert(elevation == null || elevation >= 0.0),
         super(key: key);
   final dynamic Function() callBackBackNav;
@@ -253,9 +243,7 @@ class _EasySearchBarState extends State<EasySearchBar>
 
     if (widget.suggestionLoaderBuilder != null) {
       child = widget.suggestionLoaderBuilder!();
-    } else if (defaultTargetPlatform == TargetPlatform.iOS) {
-      child = const CupertinoActivityIndicator();
-    } else {
+    } else  {
       child = const CircularProgressIndicator();
     }
 
@@ -382,8 +370,7 @@ class _EasySearchBarState extends State<EasySearchBar>
     final ModalRoute<dynamic>? parentRoute = ModalRoute.of(context);
     final bool canPop = widget.canPop;
 
-
-        //parentRoute?.canPop ?? false;
+    //parentRoute?.canPop ?? false;
 
     //assert(widget.leading == null || !scaffold!.hasDrawer, 'Cannot use leading with drawer');
     //assert(widget.leading == null || !canPop, 'Cannot use leading when back button exists');
@@ -492,8 +479,12 @@ class _EasySearchBarState extends State<EasySearchBar>
                                                       child: IconButton(
                                                           icon: const Icon(Icons
                                                               .arrow_back_outlined),
-                                                          onPressed:(){widget.callBackBackNav();},
-                                                          tooltip: MaterialLocalizations.of(context)
+                                                          onPressed: () {
+                                                            widget
+                                                                .callBackBackNav();
+                                                          },
+                                                          tooltip: MaterialLocalizations
+                                                                  .of(context)
                                                               .backButtonTooltip),
                                                     ),
                                                   ),
@@ -624,11 +615,11 @@ class _EasySearchBarState extends State<EasySearchBar>
                                                           prefixIcon: IconTheme(
                                                               data: searchIconTheme,
                                                               child: IconButton(
-                                                                  icon:  Icon(
-                                                                      Icons.close_rounded,
-                                                                        color: widget.colorIconClose,
-
-
+                                                                  icon: Icon(
+                                                                    Icons
+                                                                        .close_rounded,
+                                                                    color: widget
+                                                                        .colorIconClose,
                                                                   ),
                                                                   onPressed: () {
                                                                     print(

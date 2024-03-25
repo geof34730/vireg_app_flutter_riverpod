@@ -8,7 +8,6 @@ import 'package:Vireg/src/screens/listVerb.dart';
 import 'package:Vireg/src/screens/share.dart';
 import 'package:Vireg/src/screens/testVerb.dart';
 import 'package:Vireg/src/screens/update.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
@@ -45,6 +44,13 @@ final customRoutesVireg = GoRouter(
         },
       ),
       GoRoute(
+        name:"Search",
+        path: '/search/:idVerb',
+        pageBuilder: (context, state) {
+          return transitionRouter(state: state, context: context, child: Layout(backButton:"/",child:TestVerb(key: UniqueKey(),idList:null,idVerb:state.pathParameters["idVerb"], personalList: 'false',),bottomNavigationBar: false,indexBottomNavigationBar: 0,context: context));
+        },
+      ),
+      GoRoute(
         name:"Share",
         path: '/share/:idList',
         builder: (BuildContext context, GoRouterState state) {
@@ -65,7 +71,7 @@ final customRoutesVireg = GoRouter(
         name:"testVerb",
         path: '/testVerb/:idList/:perso',
         pageBuilder: (context, state) {
-          return transitionRouter(state: state, context: context, child: Layout(backButton:"/",child:TestVerb(key: UniqueKey(),idList:state.pathParameters["idList"],personalList:state.pathParameters["perso"]),bottomNavigationBar: true,indexBottomNavigationBar: 1,context: context));
+          return transitionRouter(state: state, context: context, child: Layout(backButton:"/",child:TestVerb(key: UniqueKey(),idList:state.pathParameters["idList"],idVerb:null,personalList:state.pathParameters["perso"]),bottomNavigationBar: true,indexBottomNavigationBar: 1,context: context));
         },
       ),
       GoRoute(

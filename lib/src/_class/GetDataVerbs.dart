@@ -8,7 +8,7 @@ import '../_utils/logger.dart';
 class GetDataVerbs  {
   final db = Localstore.instance;
 
-  Future<List<dynamic>> getDataJson({required String idList, bool personalList = false}) async {
+  Future<List<dynamic>> getDataJson({required String idList, String? idVerb=null, bool personalList = false}) async {
       final String AllVerbsReponse = await rootBundle.loadString('assets/data/all.json');
       final List<dynamic> dataAllVerbs = await json.decode(AllVerbsReponse);
       List<dynamic> data = [];
@@ -31,11 +31,26 @@ class GetDataVerbs  {
         for (var element in dataAllVerbs) {
           for (var element1 in dataJsonFile) {
             if (element1['id'] == element['id']) {
+              Logger.Red.log(idVerb);
+              if(idVerb!=null) {
+                Logger.Yellow.log("search");
+                Logger.Yellow.log("dsss ${element['id']} - ${idVerb}");
+                if(element['id'].toString() == idVerb) {
+                  Logger.Yellow.log(element);
+                  data.add(element);
+                  return data;
+                }
+              }
+              else {
+                Logger.Yellow.log("no search");
                 data.add(element);
+              }
             }
           }
         }
       }
+      Logger.Yellow.log(data);
+
      return data;
   }
 

@@ -17,6 +17,7 @@ import '../_providers/localLang.dart';
 import '../_models/PersonalListModel.dart';
 import '../_services/SharePersonalList.dart';
 import '../_utils/front.dart';
+import '../_utils/logger.dart';
 import '../_widgets/dialogues.dart';
 import '../router.dart';
 import 'home.dart';
@@ -212,16 +213,16 @@ class _ListPersoStep2State extends ConsumerState<ListPersoStep2> {
   }
 
   Future<void> updataDataShare() async {
-    print("update data share Function $UUIDList");
+    Logger.Green.log("update data share Function $UUIDList");
       if(PersonalListUpdate.ownListShare) {
-        print("go update server");
+        Logger.Green.log("go update server");
         SharePersonalList(context:context).Share(personalList: PersonalListUpdate);
       }
       else{
-        print("NO go update server");
+        Logger.Green.log("NO go update server");
       }
     setState(() {
-      print("setstate ok");
+      Logger.Green.log("setstate ok");
     });
   }
 
@@ -231,7 +232,7 @@ class _ListPersoStep2State extends ConsumerState<ListPersoStep2> {
   }
 
   Future<void> addInList({required idVerbs}) async {
-    print("addInList: $idVerbs");
+    Logger.Green.log("addInList: $idVerbs");
     PersonalListUpdate = await PersonalListUpdate.copyWith(ListIdVerbs: [
         ...PersonalListUpdate.ListIdVerbs,
         ListIdVerb(id: idVerbs),
@@ -242,7 +243,7 @@ class _ListPersoStep2State extends ConsumerState<ListPersoStep2> {
   }
 
   Future<void> deleteInList({required idVerbs}) async {
-    print("deleteInList: $idVerbs");
+    Logger.Green.log("deleteInList: $idVerbs");
     String StringVerbFrancais="";
     form2Valide=false;
     PersonalListUpdate = await PersonalListUpdate.copyWith(ListIdVerbs: [
@@ -254,7 +255,7 @@ class _ListPersoStep2State extends ConsumerState<ListPersoStep2> {
   }
 
   Future<void> addOrDeleteInList({required idVerbs}) async {
-     print("addOrDeleteInList: $idVerbs");
+    Logger.Green.log("addOrDeleteInList: $idVerbs");
       Loader(context: context, snackBar: false).showLoader();
       bool isInList = await isIdInList(idVerbs: idVerbs);
       if (isInList) {
