@@ -141,7 +141,7 @@ class _ListPersoStep2State extends ConsumerState<ListPersoStep2> {
                             ?
                               addOrDeleteInList(idVerbs: idVerbs)
                             :
-                              Dialogues(context: context).alertOffline()
+                              Dialogues(context: context, lang:ref.watch(localLangProvider)).alertOffline()
                           )
                           :
                               addOrDeleteInList(idVerbs: idVerbs)

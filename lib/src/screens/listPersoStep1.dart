@@ -12,6 +12,7 @@ import 'package:Vireg/src/_class/Localstore.dart';
 import 'package:Vireg/src//_utils/front.dart';
 
 import '../_class/Connectivity.dart';
+import '../_providers/localLang.dart';
 import '../_services/SharePersonalList.dart';
 import '../_utils/logger.dart';
 import '../_widgets/dialogues.dart';
@@ -172,7 +173,7 @@ class _ListPersoStep1State extends ConsumerState<ListPersoStep1> {
                   null
                   :
                     () => {
-                      Dialogues(context: context).alertOffline(),
+                      Dialogues(context: context, lang:ref.watch(localLangProvider)).alertOffline(),
                     }
                  )
                  ),
@@ -227,7 +228,7 @@ class _ListPersoStep1State extends ConsumerState<ListPersoStep1> {
         }
         else {
           Logger.Magenta.log("NO UPDATE SERVER BECAUSE YOU ARE OFFLINE");
-          Dialogues(context: context).alertOffline();
+          Dialogues(context: context, lang:ref.watch(localLangProvider)).alertOffline();
         }
       }
       else{

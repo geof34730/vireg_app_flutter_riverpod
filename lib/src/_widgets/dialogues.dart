@@ -10,12 +10,16 @@ import '../_services/SharePersonalList.dart';
 
 
 class Dialogues extends ConsumerWidget {
+
+
   const Dialogues({
     required BuildContext this.context,
+    required String this.lang
 
   });
 
   final BuildContext context;
+  final String lang;
 
 
 
@@ -228,6 +232,7 @@ class Dialogues extends ConsumerWidget {
                                           email: controllerEmail.text,
                                           urlLinkShareFirebase: personalList.urlShare,
                                           listName: personalList.title,
+                                          lang:lang
                                         ).then((value) async => {
                                           manageReturnShareByEmail(reponseCode: value["code"], controllerEmail: controllerEmail).then((value2) => {
                                             succesSendShareByEMail = value2,

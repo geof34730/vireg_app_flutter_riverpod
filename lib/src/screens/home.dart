@@ -20,6 +20,7 @@ import '../_class/Loader.dart';
 import '../_class/SyncroServer.dart';
 import '../_class/localstore.dart';
 
+import '../_providers/localLang.dart';
 import '../_services/SharePersonalList.dart';
 import '../_utils/front.dart';
 import '../_utils/logger.dart';
@@ -56,7 +57,7 @@ class _HomeState extends ConsumerState<Home> {
     Logger.Green.log("build Home");
     Logger.Blue.log((isOnline(ref: ref) ?  "online" : "offline"));
     dynamic ResponsiveContentObj=ResponsiveContent(context: context);
-    dynamic DialoguesObj=Dialogues(context: context);
+    dynamic DialoguesObj=Dialogues(context: context, lang:ref.watch(localLangProvider));
     if (!initConfig){
       Localstorelocal(ref: ref,context: context).initLang();
       initConfig=true;

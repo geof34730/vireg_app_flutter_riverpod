@@ -94,7 +94,9 @@ class SharePersonalList {
     );
   }
 
-  Future<dynamic> sendShareByEMail({required String pseudo, required String email, required String urlLinkShareFirebase, required String listName }) async {
+  Future<dynamic> sendShareByEMail({required String lang,required String pseudo, required String email, required String urlLinkShareFirebase, required String listName }) async {
+
+   Logger.Blue.log(lang);
     String urlEnv = "$URL_API/personalList/sendshare";
     final url = Uri.parse(urlEnv);
     Logger.Blue.log(url);
@@ -105,6 +107,7 @@ class SharePersonalList {
         '"email": "$email",'
         '"urlLinkShareFirebase": "$urlLinkShareFirebase",'
         '"pseudo":"${capitalize(pseudo)}",'
+        '"langDest":"${lang}",'
         '"listName":"${capitalize(listName)}"'
         '}';
     Logger.Green.log(json);
