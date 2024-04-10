@@ -10,7 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'global.dart' as globals;
 import 'package:url_strategy/url_strategy.dart';
-
+import 'firebase_options.dart';
 
 Future<void> main() async {
  // await dotenv.load(fileName: ".env");

@@ -113,25 +113,33 @@ class _TestVerbState extends ConsumerState<TestVerb> {
           Padding(
               padding: const EdgeInsets.only(
                   left: 10.0, right: 10.0, top: 10.00),
-              child: Row(mainAxisSize: MainAxisSize.min, children: [
-                ElevatedButton.icon(
-                  key:UniqueKey(),
-                  onPressed: () {
-                    controllerFrancais.text = StockFrancais;
-                    controllerInfinitif.text = StockInfinitif;
-                    controllerPastSimple.text = StockPastSimple;
-                    controllerPastParticipe.text = StockPastParticipe;
-                    if (mounted) {
-                      setState(() {});
-                    }
-                  },
-                  icon: const Icon(
-                    Icons.visibility,
-                    size: 19.0,
+              child:
+              Wrap(
+                  alignment: WrapAlignment.center,
+                  verticalDirection: VerticalDirection.down,
+                  spacing: 10.0,
+                  // gap between adjacent chips
+                  runSpacing: 10.0,
+                  // gap between lines
+                  children: [
+                  ElevatedButton.icon(
+                    key:UniqueKey(),
+                    onPressed: () {
+                      controllerFrancais.text = StockFrancais;
+                      controllerInfinitif.text = StockInfinitif;
+                      controllerPastSimple.text = StockPastSimple;
+                      controllerPastParticipe.text = StockPastParticipe;
+                      if (mounted) {
+                        setState(() {});
+                      }
+                    },
+                    icon: const Icon(
+                      Icons.visibility,
+                      size: 19.0,
+                    ),
+                    label: Text(context.loc.testVerbsButtonSolutions,
+                        style: TextStyle(fontSize: 19)),
                   ),
-                  label: Text(context.loc.testVerbsButtonSolutions,
-                      style: TextStyle(fontSize: 19)),
-                ),
                   Visibility(
                     visible:  widget.idVerb==null,
                     child: Visibility(
