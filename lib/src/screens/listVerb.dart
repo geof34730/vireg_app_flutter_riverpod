@@ -55,7 +55,7 @@ class _ListVerbState extends ConsumerState<ListVerb> {
         child: TextField(
           controller: searchController,
           decoration: InputDecoration(
-              hintText: 'Filtrer...',
+              hintText: '${context.loc.searchFilter}...',
               border: const OutlineInputBorder(),
               suffixIcon: searchController.text.isNotEmpty
                   ? Padding(

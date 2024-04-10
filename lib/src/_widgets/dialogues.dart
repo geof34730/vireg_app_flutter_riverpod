@@ -161,8 +161,8 @@ class Dialogues extends ConsumerWidget {
                           Icons.close,
                         ))
                   ]),
-                  title: const Text(
-                    'Partager votre liste personnalisée par email',
+                  title: Text(
+                    context.loc.sendListByMailTitle,
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 18.00),
                   ),
@@ -177,17 +177,17 @@ class Dialogues extends ConsumerWidget {
                                 width: 280,
                                 child: TextFormField(
                                   controller: controllerPseudo..text,
-                                  decoration: const InputDecoration(
-                                    hintText: 'Votre prénom où Pseudo',
+                                  decoration: InputDecoration(
+                                    hintText: context.loc.sendListByMailLabelTextPseudo,
                                     hintStyle: TextStyle(fontSize: 14.00),
-                                    labelText: 'Saisissez votre prénom où pseudo',
+                                    labelText: context.loc.sendListByMailLabelTextPseudo,
                                     labelStyle: TextStyle(fontSize: 14.00),
                                     contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                                     focusedBorder: OutlineInputBorder(borderSide: BorderSide(width: 1, color: Colors.lightBlue)),
                                   ),
                                   validator: (String? value) {
                                     if (value == null || value.isEmpty) {
-                                      return 'Saisissez votre prénom où pseudo';
+                                      return context.loc.sendListByMailLabelTextPseudo;
                                     }
                                     return null;
                                   },
@@ -199,9 +199,9 @@ class Dialogues extends ConsumerWidget {
                                     child: TextFormField(
                                       controller: controllerEmail..text,
                                       decoration: InputDecoration(
-                                        hintText: 'Saisissez l\'email du destinataire',
+                                        hintText: context.loc.sendListByMailLabelTextEmail,
                                         hintStyle: const TextStyle(fontSize: 14.00),
-                                        labelText: 'Saisissez l\'email du destinataire',
+                                        labelText: context.loc.sendListByMailLabelTextEmail,
                                         labelStyle: const TextStyle(fontSize: 14.00),
                                         contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
                                         enabledBorder: const OutlineInputBorder(borderSide: BorderSide(width: 2, color: Colors.lightBlue)),
@@ -213,7 +213,7 @@ class Dialogues extends ConsumerWidget {
                                       ),
                                       validator: (String? value) {
                                         if (!isEmail(value!)) {
-                                          return 'Saisissez l\'email du destinataire';
+                                          return context.loc.sendListByMailLabelTextEmail;
                                         }
                                         return null;
                                       },
@@ -253,25 +253,25 @@ class Dialogues extends ConsumerWidget {
                                     icon: const Icon(
                                       Icons.send,
                                     ),
-                                    label: const Text(
-                                      "ENVOYER",
+                                    label:  Text(
+                                      context.loc.sendListByMailButton,
                                       style: TextStyle(fontWeight: FontWeight.bold),
                                     ))),
                             Visibility(
                               visible: succesSendShareByEMail,
-                              child: const Padding(
+                              child: Padding(
                                   padding: EdgeInsets.only(top: 10.0),
                                   child: Text(
-                                    "Votre invitation a été envoyée avec succès.",
+                                    context.loc.sendListByMailConfirmation,
                                     style: TextStyle(color: Colors.green),
                                   )),
                             ),
                             Visibility(
                               visible: errorSendShareByEMail,
-                              child: const Padding(
+                              child:  Padding(
                                   padding: EdgeInsets.only(top: 10.0),
                                   child: Text(
-                                    "Une erreur s'est produite.",
+                                    context.loc.sendListByMailError,
                                     style: TextStyle(color: Colors.red),
                                   )),
                             )
