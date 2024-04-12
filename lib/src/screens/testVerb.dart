@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:diacritic/diacritic.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../_class/PlaySoond.dart';
@@ -157,8 +158,13 @@ class _TestVerbState extends ConsumerState<TestVerb> {
                                     )
                                 )
                                 : null),
-                                onPressed: (goNextVerb() ? () {
+                                onPressed: (goNextVerb() ? () async {
+                                  await FirebaseAnalytics.instance.setCurrentScreen(
+                                      screenName:"Test next"
+                                  );
                                   readJson(idList: widget.idList.toString(),idVerb: widget.idVerb,personalList: personalList);
+
+
                                 } : null),
                                 icon: const Icon(
                                   Icons.check,

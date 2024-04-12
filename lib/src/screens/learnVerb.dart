@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../_class/PlaySoond.dart';
@@ -338,7 +339,7 @@ class _LearnVerbState extends ConsumerState<LearnVerb> {
     }
   }
 
-  void learnNext(){
+  Future<void> learnNext() async {
     if(learnNumCard <= dataList.length - 1) {
       if (positionCard == 'back') {
         cardKeys[learnNumCard].currentState?.toggleCard();
@@ -346,7 +347,13 @@ class _LearnVerbState extends ConsumerState<LearnVerb> {
       positionCard = "front";
       learnNumCard = learnNumCard + 1;
       //widget.returnManageInsterstitial.call();
+      await FirebaseAnalytics.instance.setCurrentScreen(
+          screenName:"Learn next"
+      );
       setState(() {});
+
+
+
     }
   }
 

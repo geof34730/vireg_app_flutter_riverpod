@@ -11,7 +11,7 @@ import '_class/DeepLink.dart';
 
 import '_class/SnackBar.dart';
 import '_providers/localLang.dart';
-
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 import '_utils/logger.dart';
 import 'router.dart';
@@ -37,6 +37,7 @@ class MyApp extends ConsumerWidget {
     });
 
     return MaterialApp.router(
+
       theme: getThemeData(),
       routerConfig: customRoutesVireg,
       locale: Locale(ref.watch(localLangProvider)),
@@ -46,3 +47,4 @@ class MyApp extends ConsumerWidget {
     );
   }
 }
+

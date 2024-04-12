@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart';
@@ -95,7 +96,6 @@ class SharePersonalList {
   }
 
   Future<dynamic> sendShareByEMail({required String lang,required String pseudo, required String email, required String urlLinkShareFirebase, required String listName }) async {
-
    Logger.Blue.log(lang);
     String urlEnv = "$URL_API/personalList/sendshare";
     final url = Uri.parse(urlEnv);

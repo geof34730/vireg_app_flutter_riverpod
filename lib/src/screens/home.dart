@@ -4,6 +4,7 @@ import 'dart:async';
 
 import 'package:Vireg/src/_class/Connectivity.dart';
 import 'package:Vireg/src/router.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/services.dart';
 import 'package:Vireg/src/_models/PersonalListModel.dart';
 import 'package:Vireg/src/localization/app_localizations_context.dart';
@@ -176,7 +177,10 @@ class _HomeState extends ConsumerState<Home> {
                                     heroTag: UniqueKey(),
                                     elevation: 10,
                                     backgroundColor: Colors.blue,
-                                    onPressed: () {
+                                    onPressed: () async {
+                                    await  FirebaseAnalytics.instance.setCurrentScreen(
+                                          screenName:"button create liste perso"
+                                      );
                                       customRoutesVireg.go("/add/ListPersoStep1");
                                     },
                                     child: const Icon(

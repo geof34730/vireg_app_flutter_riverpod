@@ -1,3 +1,5 @@
+
+
 import 'package:Vireg/src/_models/PersonalListModel.dart';
 import 'package:Vireg/src/_widgets/Layout.dart';
 import 'package:Vireg/src/screens/home.dart';
@@ -8,6 +10,8 @@ import 'package:Vireg/src/screens/listVerb.dart';
 import 'package:Vireg/src/screens/share.dart';
 import 'package:Vireg/src/screens/testVerb.dart';
 import 'package:Vireg/src/screens/update.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
@@ -17,6 +21,7 @@ import '_class/Connectivity.dart';
 import '_utils/logger.dart';
 final _navKey = GlobalKey<NavigatorState>();
 
+
 final customRoutesVireg = GoRouter(
     navigatorKey: _navKey,
     debugLogDiagnostics: true,
@@ -25,6 +30,7 @@ final customRoutesVireg = GoRouter(
         name:"Home",
         path: '/',
         pageBuilder: (context, state) {
+          trackScreen(screenState:state);
           return transitionRouter(state: state, context: context, child: Layout(backButton:null,child: Home(key: UniqueKey()), context: context));
         },
       ),
@@ -32,6 +38,7 @@ final customRoutesVireg = GoRouter(
         name:"Update",
         path: '/update',
         pageBuilder: (context, state) {
+          trackScreen(screenState:state);
           return transitionRouter(state: state, context: context, child:Layout(backButton:null,child:Update(key: UniqueKey()),context: context));
         },
       ),
@@ -39,7 +46,7 @@ final customRoutesVireg = GoRouter(
         name:"LearnVerb",
         path: '/learnVerb/:idList/:perso',
         pageBuilder: (context, state) {
-
+          trackScreen(screenState:state);
           return transitionRouter(state: state, context: context, child: Layout(backButton:"/",child:LearnVerb(key: UniqueKey(),idList:state.pathParameters["idList"],personalList:state.pathParameters["perso"]),bottomNavigationBar: true,indexBottomNavigationBar: 0,context: context));
         },
       ),
@@ -47,6 +54,7 @@ final customRoutesVireg = GoRouter(
         name:"Search",
         path: '/search/:idVerb',
         pageBuilder: (context, state) {
+          trackScreen(screenState:state);
           return transitionRouter(state: state, context: context, child: Layout(backButton:"/",child:TestVerb(key: UniqueKey(),idList:null,idVerb:state.pathParameters["idVerb"], personalList: 'false',),bottomNavigationBar: false,indexBottomNavigationBar: 0,context: context));
         },
       ),
@@ -54,7 +62,8 @@ final customRoutesVireg = GoRouter(
         name:"Share",
         path: '/share/:idList',
         builder: (BuildContext context, GoRouterState state) {
-          print("***************** share deep link");
+          trackScreen(screenState:state);
+          Logger.Blue.log("***************** share deep link");
           Logger.Blue.log("Go router capte Share");
           return Layout(child:Share(key: UniqueKey(),idList:state.pathParameters["idList"]),context: context,appBar: true);
         },
@@ -64,6 +73,7 @@ final customRoutesVireg = GoRouter(
         name:"ListVerb",
         path: '/listVerb/:idList/:perso',
         pageBuilder: (context, state) {
+          trackScreen(screenState:state);
           return transitionRouter(state: state, context: context, child: Layout(backButton:"/",child:ListVerb(key: UniqueKey(),idList:state.pathParameters["idList"],personalList:state.pathParameters["perso"]),bottomNavigationBar: true,indexBottomNavigationBar: 2,context: context,paddinLeftRight: 0.0));
         },
       ),
@@ -71,6 +81,7 @@ final customRoutesVireg = GoRouter(
         name:"testVerb",
         path: '/testVerb/:idList/:perso',
         pageBuilder: (context, state) {
+          trackScreen(screenState:state);
           return transitionRouter(state: state, context: context, child: Layout(backButton:"/",child:TestVerb(key: UniqueKey(),idList:state.pathParameters["idList"],idVerb:null,personalList:state.pathParameters["perso"]),bottomNavigationBar: true,indexBottomNavigationBar: 1,context: context));
         },
       ),
@@ -78,6 +89,7 @@ final customRoutesVireg = GoRouter(
         name: 'addListPersoStep1',
         path: '/add/ListPersoStep1',
         pageBuilder: (context, state) {
+          trackScreen(screenState:state);
           return transitionRouter(state: state, context: context, child: Layout(backButton:"/",child:ListPersoStep1(key: UniqueKey()),context: context));
         },
       ),
@@ -85,6 +97,7 @@ final customRoutesVireg = GoRouter(
           name: 'addListPersoStep2',
           path: '/addListPersoStep2/:idList',
           pageBuilder: (context, state) {
+            trackScreen(screenState:state);
             PersonalListModel extraPersonalistUpdate = state.extra as PersonalListModel;
             return transitionRouter(state: state, context: context, child: Layout(backButton:"/",child:ListPersoStep2(key: UniqueKey(),extraPersonalistUpdate:extraPersonalistUpdate,idList:state.pathParameters["idList"]),context: context,paddinLeftRight: 0.0));
           },
@@ -93,6 +106,7 @@ final customRoutesVireg = GoRouter(
         name: 'editListPersoStep1',
         path: '/edit/ListPersoStep1/:idList',
         pageBuilder: (context, state) {
+          trackScreen(screenState:state);
           return transitionRouter(state: state, context: context, child: Layout(backButton:"/",child:ListPersoStep1(key: UniqueKey(),idList:state.pathParameters["idList"]),context: context));
         },
       ),
@@ -100,6 +114,7 @@ final customRoutesVireg = GoRouter(
           name: 'editListPersoStep2',
           path: '/editListPersoStep2/:idList',
           pageBuilder: (context, state) {
+            trackScreen(screenState:state);
             PersonalListModel extraPersonalistUpdate = state.extra as PersonalListModel;
             return transitionRouter(state: state, context: context, child: Layout(backButton:"/edit/ListPersoStep1/${state.pathParameters["idList"]}",child:ListPersoStep2(key: UniqueKey(),extraPersonalistUpdate:extraPersonalistUpdate,idList:state.pathParameters["idList"]),context: context,paddinLeftRight: 0.0));
           },
@@ -112,6 +127,16 @@ final customRoutesVireg = GoRouter(
       return Layout(child:Home(key: UniqueKey()),context: context);
     },
 );
+
+
+
+trackScreen({required GoRouterState screenState}) async {
+  Logger.Magenta.log("track: ${screenState.name.toString()}");
+  await FirebaseAnalytics.instance.setCurrentScreen(
+      screenName:screenState.name.toString()
+  );
+}
+
 
 
   transitionRouter({required GoRouterState state, required BuildContext context, required Widget child}){
