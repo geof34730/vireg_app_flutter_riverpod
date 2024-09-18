@@ -1,6 +1,8 @@
 import 'package:Vireg/src/_utils/string.dart';
 import 'package:Vireg/src/localization/app_localizations_context.dart';
 import 'package:Vireg/src/router.dart';
+
+
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -67,10 +69,13 @@ class _WidgetsEasySearchBarState extends ConsumerState<WidgetsEasySearchBar> {
             Image.asset(
               'assets/images/logonav.png',
               fit: BoxFit.fitHeight,
-            )
+            ),
+
           ],
         ),
         actions: [
+
+
           DropdownButtonHideUnderline(
             child: DropdownButton<Locale>(
               value: listLangSupported.elementAt(numItemLangSelect),
@@ -101,6 +106,7 @@ class _WidgetsEasySearchBarState extends ConsumerState<WidgetsEasySearchBar> {
               }).toList(),
             ),
           )
+
         ],
         onSearch: (itemStringNoClean)  {
           Logger.Red.log(itemStringNoClean);
