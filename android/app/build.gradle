@@ -54,6 +54,7 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        multiDexEnabled true
     }
     signingConfigs {
         release {
@@ -78,6 +79,6 @@ flutter {
 }
 
 dependencies {
-
-
+    implementation 'com.google.android.gms:play-services-ads:23.5.0'
+    implementation 'androidx.multidex:multidex:2.0.1'
 }

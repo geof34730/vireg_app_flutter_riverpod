@@ -4,7 +4,9 @@ import 'dart:async';
 
 import 'package:Vireg/src/_class/Connectivity.dart';
 import 'package:Vireg/src/router.dart';
+
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:Vireg/src/_models/PersonalListModel.dart';
 import 'package:Vireg/src/localization/app_localizations_context.dart';
@@ -29,6 +31,12 @@ import '../_widgets/boxCard.dart';
 import '../_widgets/boxCardListPerso.dart';
 import '../_widgets/dialogues.dart';
 
+
+
+import '../../admanager_non_web_specific.dart' if (dart.library.html) 'package:admanager_web/admanager_web.dart';
+
+
+import '../../admanager_non_web_specific.dart' if (dart.library.html) '../../admanager_web_specific.dart';
 bool initConfig=false;
 
 class Home extends ConsumerStatefulWidget {
@@ -39,10 +47,14 @@ class Home extends ConsumerStatefulWidget {
 
 class _HomeState extends ConsumerState<Home> {
   final FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
-
+  final _adRewarded = AdRewarded();
+  bool _adRewardedReady = false;
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if(kIsWeb){loadRewarded();};
+    });
     Logger.Green.log("init state home");
   }
 
@@ -54,7 +66,6 @@ class _HomeState extends ConsumerState<Home> {
 
   @override
   Widget build(BuildContext context) {
-
     Logger.Green.log("build Home");
     Logger.Blue.log((isOnline(ref: ref) ?  "online" : "offline"));
     dynamic ResponsiveContentObj=ResponsiveContent(context: context);
@@ -73,6 +84,12 @@ class _HomeState extends ConsumerState<Home> {
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.center,
               children:[
+                Padding(
+                  padding:EdgeInsets.only(top:10.0),
+                  child:AdBlock(
+                  size: [AdBlockSize.leaderboard],
+                    adUnitId: "/2247258577/Travel/Europe",
+                  )),
                 Padding(
                   padding: EdgeInsets.only(
                       top: ResponsiveContentObj.choseSize(mobileSize: 10.00, otherSize: 15.00),
@@ -286,5 +303,24 @@ class _HomeState extends ConsumerState<Home> {
   }
 
 
+
+  void loadRewarded() {
+    if (kIsWeb) {
+      _adRewarded?.load(
+        adUnitId: '/22639388115/rewarded_web_example',
+        onAdLoaded: () =>
+            setState(() {
+              _adRewardedReady = true;
+            }),
+      );
+    }
+  }
 }
+
+
+
+
+
+
+
 

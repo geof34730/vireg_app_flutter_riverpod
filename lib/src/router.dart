@@ -18,10 +18,11 @@ import 'package:go_router/go_router.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
 import '_class/Connectivity.dart';
+import '_class/InterstitialAdManager.dart';
 import '_utils/logger.dart';
 final _navKey = GlobalKey<NavigatorState>();
 
-
+final InterstitialAdManager _adManager = InterstitialAdManager();
 final customRoutesVireg = GoRouter(
     navigatorKey: _navKey,
     debugLogDiagnostics: true,
@@ -39,6 +40,7 @@ final customRoutesVireg = GoRouter(
         path: '/update',
         pageBuilder: (context, state) {
           trackScreen(screenState:state);
+          _adManager.showInterstitialAd();
           return transitionRouter(state: state, context: context, child:Layout(backButton:null,child:Update(key: UniqueKey()),context: context));
         },
       ),
@@ -47,6 +49,7 @@ final customRoutesVireg = GoRouter(
         path: '/learnVerb/:idList/:perso',
         pageBuilder: (context, state) {
           trackScreen(screenState:state);
+          _adManager.showInterstitialAd();
           return transitionRouter(state: state, context: context, child: Layout(backButton:"/",child:LearnVerb(key: UniqueKey(),idList:state.pathParameters["idList"],personalList:state.pathParameters["perso"]),bottomNavigationBar: true,indexBottomNavigationBar: 0,context: context));
         },
       ),
@@ -55,6 +58,7 @@ final customRoutesVireg = GoRouter(
         path: '/search/:idVerb',
         pageBuilder: (context, state) {
           trackScreen(screenState:state);
+          _adManager.showInterstitialAd();
           return transitionRouter(state: state, context: context, child: Layout(backButton:"/",child:TestVerb(key: UniqueKey(),idList:null,idVerb:state.pathParameters["idVerb"], personalList: 'false',),bottomNavigationBar: false,indexBottomNavigationBar: 0,context: context));
         },
       ),
@@ -74,6 +78,7 @@ final customRoutesVireg = GoRouter(
         path: '/listVerb/:idList/:perso',
         pageBuilder: (context, state) {
           trackScreen(screenState:state);
+          _adManager.showInterstitialAd();
           return transitionRouter(state: state, context: context, child: Layout(backButton:"/",child:ListVerb(key: UniqueKey(),idList:state.pathParameters["idList"],personalList:state.pathParameters["perso"]),bottomNavigationBar: true,indexBottomNavigationBar: 2,context: context,paddinLeftRight: 0.0));
         },
       ),
@@ -82,6 +87,7 @@ final customRoutesVireg = GoRouter(
         path: '/testVerb/:idList/:perso',
         pageBuilder: (context, state) {
           trackScreen(screenState:state);
+          _adManager.showInterstitialAd();
           return transitionRouter(state: state, context: context, child: Layout(backButton:"/",child:TestVerb(key: UniqueKey(),idList:state.pathParameters["idList"],idVerb:null,personalList:state.pathParameters["perso"]),bottomNavigationBar: true,indexBottomNavigationBar: 1,context: context));
         },
       ),
@@ -90,6 +96,7 @@ final customRoutesVireg = GoRouter(
         path: '/add/ListPersoStep1',
         pageBuilder: (context, state) {
           trackScreen(screenState:state);
+          _adManager.showInterstitialAd();
           return transitionRouter(state: state, context: context, child: Layout(backButton:"/",child:ListPersoStep1(key: UniqueKey()),context: context));
         },
       ),
@@ -98,6 +105,7 @@ final customRoutesVireg = GoRouter(
           path: '/addListPersoStep2/:idList',
           pageBuilder: (context, state) {
             trackScreen(screenState:state);
+            _adManager.showInterstitialAd();
             PersonalListModel extraPersonalistUpdate = state.extra as PersonalListModel;
             return transitionRouter(state: state, context: context, child: Layout(backButton:"/",child:ListPersoStep2(key: UniqueKey(),extraPersonalistUpdate:extraPersonalistUpdate,idList:state.pathParameters["idList"]),context: context,paddinLeftRight: 0.0));
           },
@@ -107,6 +115,7 @@ final customRoutesVireg = GoRouter(
         path: '/edit/ListPersoStep1/:idList',
         pageBuilder: (context, state) {
           trackScreen(screenState:state);
+          _adManager.showInterstitialAd();
           return transitionRouter(state: state, context: context, child: Layout(backButton:"/",child:ListPersoStep1(key: UniqueKey(),idList:state.pathParameters["idList"]),context: context));
         },
       ),
@@ -115,6 +124,7 @@ final customRoutesVireg = GoRouter(
           path: '/editListPersoStep2/:idList',
           pageBuilder: (context, state) {
             trackScreen(screenState:state);
+            _adManager.showInterstitialAd();
             PersonalListModel extraPersonalistUpdate = state.extra as PersonalListModel;
             return transitionRouter(state: state, context: context, child: Layout(backButton:"/edit/ListPersoStep1/${state.pathParameters["idList"]}",child:ListPersoStep2(key: UniqueKey(),extraPersonalistUpdate:extraPersonalistUpdate,idList:state.pathParameters["idList"]),context: context,paddinLeftRight: 0.0));
           },

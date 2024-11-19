@@ -7,6 +7,7 @@ import 'package:Vireg/src/localization/app_localizations_context.dart';
 import '../_Utils/string.dart';
 import '../_class/GetDataVerbs.dart';
 import 'package:flip_card/flip_card.dart';
+import 'package:Vireg/src/router.dart';
 
 
 import '../_utils/logger.dart';
@@ -352,7 +353,7 @@ class _LearnVerbState extends ConsumerState<LearnVerb> {
       );
       setState(() {});
 
-
+     // _adManager.showInterstitialAd();
 
     }
   }

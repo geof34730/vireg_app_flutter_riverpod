@@ -45,21 +45,22 @@ class ConnectivityStatusNotifier extends StateNotifier<ConnectivityStatus> {
     });
 
 
-    Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
+    Connectivity().onConnectivityChanged.listen((List<ConnectivityResult> results) {
       Logger.Red.log("CHANGE CONNECTIVITY");
-      switch (result) {
-        case ConnectivityResult.mobile:
-        case ConnectivityResult.wifi:
-        case ConnectivityResult.ethernet:
-        case ConnectivityResult.vpn:
-          newState = ConnectivityStatus.isConnected;
-          break;
-        case ConnectivityResult.none:
-        case ConnectivityResult.bluetooth:
-        case ConnectivityResult.other:
-
-          newState = ConnectivityStatus.isDisonnected;
-          break;
+      for (var result in results) {
+        switch (result) {
+          case ConnectivityResult.mobile:
+          case ConnectivityResult.wifi:
+          case ConnectivityResult.ethernet:
+          case ConnectivityResult.vpn:
+            newState = ConnectivityStatus.isConnected;
+            break;
+          case ConnectivityResult.none:
+          case ConnectivityResult.bluetooth:
+          case ConnectivityResult.other:
+            newState = ConnectivityStatus.isDisonnected;
+            break;
+        }
       }
       if (newState != lastResult) {
         state = newState!;

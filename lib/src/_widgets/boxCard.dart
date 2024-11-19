@@ -1,3 +1,4 @@
+import 'package:Vireg/src/_class/InterstitialAdManager.dart';
 import 'package:Vireg/src/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

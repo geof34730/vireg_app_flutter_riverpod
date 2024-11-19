@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:loader_overlay/loader_overlay.dart';
@@ -6,12 +7,11 @@ import 'EasySearchBar.dart';
 import 'bottomNavigationBar.dart';
 import 'drawerDevTools.dart';
 import '../../global.dart' as globals;
-
 Widget Layout({required BuildContext context,String versionApp="",required child,bottomNavigationBar=false,double paddinLeftRight=15.0,appBar=true,indexBottomNavigationBar=0, String? backButton }) {
 
   return Scaffold(
     appBar:  (appBar ? PreferredSize(
-      preferredSize: Size.fromHeight(AppBar().preferredSize.height),child:WidgetsEasySearchBar(backButton:backButton)) : null),
+    preferredSize: Size.fromHeight(AppBar().preferredSize.height),child:WidgetsEasySearchBar(backButton:backButton)) : null),
     bottomNavigationBar: (bottomNavigationBar
           ?
         WidgetbottomNavigationBar(indexNav: indexBottomNavigationBar)
@@ -28,12 +28,15 @@ Widget Layout({required BuildContext context,String versionApp="",required child
     body: LoaderOverlay(
           overlayColor: Colors.black.withOpacity(0.6),
           useDefaultLoading: false,
+          overlayHeight: 150.0,
+          overlayWidth: 150.0,
+          /*
           overlayWidget: const Center(
             child: SpinKitFadingCircle(
               color: Colors.blue,
               size: 150.0,
             ),
-          ),
+          ),*/
           child: SingleChildScrollView(
                 child:Padding(
                  padding: EdgeInsets.only(left: paddinLeftRight,right: paddinLeftRight),

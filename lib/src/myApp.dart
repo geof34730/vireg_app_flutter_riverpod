@@ -20,6 +20,7 @@ late dynamic objDeeplinksInit=null;
 
 class MyApp extends ConsumerWidget {
   final PendingDynamicLinkData? initialLink;
+
   const MyApp({this.initialLink, Key? key}) : super(key: key);
 
 
@@ -37,7 +38,6 @@ class MyApp extends ConsumerWidget {
     });
 
     return MaterialApp.router(
-
       theme: getThemeData(),
       routerConfig: customRoutesVireg,
       locale: Locale(ref.watch(localLangProvider)),
