@@ -20,13 +20,15 @@ class BoxCardListPerso extends ConsumerWidget {
     required this.context,
     required this.personalList,
     required this.onClickShare,
-    required this.alerOfflineBoxCard
+    required this.alerOfflineBoxCard,
+    required this.refreshState
 
   });
     final BuildContext context;
     final PersonalListModel personalList;
     final dynamic Function({required String idList}) onClickShare;
     final dynamic Function() alerOfflineBoxCard;
+    final dynamic Function() refreshState;
 
     @override
     Widget build(BuildContext context, WidgetRef ref) {
@@ -208,12 +210,13 @@ Card boxCardChildPerso({required WidgetRef ref,  required BuildContext context,r
                                       ?
                                         (ref.watch(connectivityStatusProviders) == ConnectivityStatus.isConnected
                                           ?
-                                          localstoreLocalObj.deletePersonalList(personalList: personalList)
+                                          localstoreLocalObj.deletePersonalList(personalList: personalList).then((value) => refreshState.call())
                                           :
                                           alerOfflineBoxCard.call()
                                         )
                                       :
-                                      localstoreLocalObj.deletePersonalList(personalList: personalList)
+                                      localstoreLocalObj.deletePersonalList(personalList: personalList).then((value) => refreshState.call()),
+
                                       )
                                     )
                                   }

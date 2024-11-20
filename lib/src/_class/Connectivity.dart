@@ -38,15 +38,21 @@ class ConnectivityStatusNotifier extends StateNotifier<ConnectivityStatus> {
           newState = ConnectivityStatus.isDisonnected;
           break;
       }
-      if (newState != lastResult) {
+
+      if (newState != null && newState != lastResult) {
         state = newState!;
         lastResult = newState;
       }
+      /*
+      if (newState != lastResult) {
+        state = newState!;
+        lastResult = newState;
+      }*/
     });
 
 
     Connectivity().onConnectivityChanged.listen((List<ConnectivityResult> results) {
-      Logger.Red.log("CHANGE CONNECTIVITY");
+      Logger.Red.log("CHANGE CONNECTIVITY: $results");
       for (var result in results) {
         switch (result) {
           case ConnectivityResult.mobile:

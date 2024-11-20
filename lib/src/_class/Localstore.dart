@@ -97,14 +97,16 @@ class Localstorelocal  {
     db.collection('personalList').doc(PersonalList.id).set(PersonalList.toJson());
   }
 
-  deletePersonalList({required PersonalListModel personalList}){
+  Future<String> deletePersonalList({required PersonalListModel personalList}) async{
     Logger.Green.log("personalList.ownListShare: ${personalList.ownListShare}");
     if(personalList.ownListShare){
-      SharePersonalList(context:context).DeleteList(personalList: personalList).then((value) => db.collection('personalList').doc(personalList.id).delete()).then((value) => customRoutesVireg.go("Home"));
+      await SharePersonalList(context:context).DeleteList(personalList: personalList).then((value) => db.collection('personalList').doc(personalList.id).delete());
     }
     else{
-      db.collection('personalList').doc(personalList.id).delete().then((value) => customRoutesVireg.goNamed("Home"));
+     await  db.collection('personalList').doc(personalList.id).delete();
     }
+
+    return "ok";
   }
    ////////END  PERSONALLIST////////////
 }

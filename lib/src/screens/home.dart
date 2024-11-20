@@ -84,12 +84,12 @@ class _HomeState extends ConsumerState<Home> {
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.center,
               children:[
-                Padding(
+                /*Padding(
                   padding:EdgeInsets.only(top:10.0),
                   child:AdBlock(
                   size: [AdBlockSize.leaderboard],
                     adUnitId: "/2247258577/Travel/Europe",
-                  )),
+                  )),*/
                 Padding(
                   padding: EdgeInsets.only(
                       top: ResponsiveContentObj.choseSize(mobileSize: 10.00, otherSize: 15.00),
@@ -153,7 +153,8 @@ class _HomeState extends ConsumerState<Home> {
                                           context:context,
                                           personalList:personalListModelFromJson(jsonEncode(snapshot.data![i]).toString()),
                                           onClickShare: ({required String idList}) async => shareListPerso(personalList: personalListModelFromJson(jsonEncode(snapshot.data![i]).toString()),DialoguesObj:DialoguesObj) ,
-                                          alerOfflineBoxCard: () async => DialoguesObj.alertOffline()
+                                          alerOfflineBoxCard: () async => DialoguesObj.alertOffline(),
+                                          refreshState: () async => setState(() {})
                                       )
                                   ),
                                 ],
@@ -175,7 +176,7 @@ class _HomeState extends ConsumerState<Home> {
                                         onPressed: () {
                                           (ref.watch(connectivityStatusProviders) == ConnectivityStatus.isConnected
                                               ?
-                                          customRoutesVireg.go("/")
+                                              setState(() {})
                                               :
                                           DialoguesObj.alertOffline()
                                           );

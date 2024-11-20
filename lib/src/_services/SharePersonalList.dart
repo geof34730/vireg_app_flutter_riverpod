@@ -85,8 +85,8 @@ class SharePersonalList {
 
   Future<void> DeleteList({required PersonalListModel personalList}) async {
     Logger.Green.log("deletelist");
-    final response = await dio.delete(
-      "$URL_API/personalList/${personalList.id}",
+    final response = await dio.get(
+      "$URL_API/personalList/delete/${personalList.id}",
       options: Options(
         headers: {
           "Content-type": "application/json;charset=utf-8",
